@@ -2,6 +2,21 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.0.2] — Agent tooling & knowledge graph
+
+No changes to the debate engine itself; this release adds the agent-native
+development scaffolding around it.
+
+- **graphify knowledge graph** — `graphify-out/` holds a queryable graph of the repo
+  (140 nodes, 17 communities) plus `GRAPH_REPORT.md` and an interactive `graph.html`.
+  The graphify skill is vendored under `.claude/` and `.agents/`, and `CLAUDE.md` now
+  instructs agents to query the graph before grepping.
+- **Cross-CLI agent config** — `AGENTS.md` (shared agent instructions), `.codex/hooks.json`
+  and `.claude/settings.json` (per-CLI hooks/permissions), making the repo navigable by
+  every CLI in the planned debate lineup.
+- **Toolchain** — `.tool-versions` now pins `python 3.12.8` alongside `nodejs 24.16.0`
+  (graphify is Python).
+
 ## [0.0.1] — Kaizen MVP v0
 
 First runnable cut: orchestrate a structured debate between *real*, cross-vendor AI
