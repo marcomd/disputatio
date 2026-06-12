@@ -3,6 +3,7 @@
   "version": "0.0.3",
   "description": "Structured debate between real AI coding-agent CLIs (Kaizen MVP v0)",
   "type": "module",
+  "license": "Apache-2.0",
   "scripts": {
     "debate": "node src/index.ts",
     "test": "node --test \"test/*.test.ts\""

@@ -97,4 +97,4 @@ worthless) — the partial transcript and raw captures are kept.
 
 ## License
 
-TBD.
+Apache License 2.0. See [LICENSE](./LICENSE).
