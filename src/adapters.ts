@@ -21,7 +21,7 @@ function runCli(cmd: string, args: string[], cwd: string, timeoutMs: number): Pr
     let timedOut = false;
     const timer = setTimeout(() => {
       timedOut = true;
-      child.kill("SIGTERM"); // v0: kills the child; process-tree kill is a later hardening (see 3_ADAPTERS.md)
+      child.kill("SIGTERM"); // v0: kills the child; process-tree kill is a later hardening (see docs/3_ADAPTERS.md)
     }, timeoutMs);
     child.stdout.on("data", (d) => { stdout += d.toString(); });
     child.stderr.on("data", (d) => { stderr += d.toString(); });

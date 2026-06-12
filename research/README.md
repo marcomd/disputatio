@@ -3,7 +3,7 @@
 This folder preserves the investigation into how each candidate agent CLI can be
 driven **non-interactively (headless)** and how its output can be **captured in a
 structured way**. It is the raw evidence behind the adapter design in
-`../3_ADAPTERS.md`.
+`../docs/3_ADAPTERS.md`.
 
 ## Provenance
 

@@ -116,7 +116,7 @@ Follow these three working principles when developing in this repo:
   big speculative rewrite. Each change should leave the tool runnable and a little
   better; capture lessons in `research/` so improvements compound.
 
-## Known v0 limitations (from `4_PLAN.md`)
+## Known v0 limitations (from `docs/4_PLAN.md`)
 
 No scholastic `consolidatio`/`respondeo` protocol yet; reaction rounds are parallel
 snapshots (agents don't see each other's same-round reactions); timeout kills only the
@@ -127,8 +127,8 @@ spend cap (no flag exists — budget control is claude-only).
 
 ## Design docs
 
-`1_IDEA.md` (vision) → `2_CONCEPT.md` (disputatio protocol, roles, convergence) →
-`3_ADAPTERS.md` (per-CLI headless integration) → `4_PLAN.md` (plan, milestones, honest
+`docs/1_IDEA.md` (vision) → `docs/2_CONCEPT.md` (disputatio protocol, roles, convergence) →
+`docs/3_ADAPTERS.md` (per-CLI headless integration) → `docs/4_PLAN.md` (plan, milestones, honest
 status). `research/` holds per-CLI headless research and **verified canary runs** —
 consult it before changing any adapter invocation.
 

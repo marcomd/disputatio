@@ -1,8 +1,8 @@
 {
   "/Users/mark/Lavoro/AI/Disputatio/package.json": {
-    "mtime": 1781276935.3610754,
-    "ast_hash": "a7fed38bfa098495db00f3c04a1e51f2",
-    "semantic_hash": ""
+    "mtime": 1781213133.0414913,
+    "ast_hash": "38c97b9013b5d14b28bd4b78dfa74907",
+    "semantic_hash": "38c97b9013b5d14b28bd4b78dfa74907"
   },
   "/Users/mark/Lavoro/AI/Disputatio/.claude/settings.json": {
     "mtime": 1781164739.980802,
@@ -15,8 +15,8 @@
     "semantic_hash": "a7ca9b03506affa3a29a406980d74d56"
   },
   "/Users/mark/Lavoro/AI/Disputatio/src/adapters.ts": {
-    "mtime": 1781278784.6077728,
-    "ast_hash": "1e1cef7a43990eb30dd89502e23ec44a",
+    "mtime": 1781259621.8187184,
+    "ast_hash": "d5d9ef28c1138d35b35715451f11d9eb",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/src/debate.ts": {
@@ -25,8 +25,8 @@
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/src/index.ts": {
-    "mtime": 1781278784.4729698,
-    "ast_hash": "6fb03c4c265803b2dae042a33311ca21",
+    "mtime": 1781259621.6630082,
+    "ast_hash": "446078db8d5a3868d3e566e8ccabb8f3",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/CHANGELOG.md": {
@@ -34,19 +34,39 @@
     "ast_hash": "7fa070af473293a404919322f7787e51",
     "semantic_hash": ""
   },
+  "/Users/mark/Lavoro/AI/Disputatio/3_ADAPTERS.md": {
+    "mtime": 1780684066.2648268,
+    "ast_hash": "65d5ab62b30282a08185eef6e048514b",
+    "semantic_hash": "65d5ab62b30282a08185eef6e048514b"
+  },
+  "/Users/mark/Lavoro/AI/Disputatio/4_PLAN.md": {
+    "mtime": 1781259575.562666,
+    "ast_hash": "bbc0651ab536c207f130c5210e347422",
+    "semantic_hash": ""
+  },
+  "/Users/mark/Lavoro/AI/Disputatio/2_CONCEPT.md": {
+    "mtime": 1780674302.289911,
+    "ast_hash": "9a636d734dbfbb2d86d7776163ddc758",
+    "semantic_hash": "9a636d734dbfbb2d86d7776163ddc758"
+  },
+  "/Users/mark/Lavoro/AI/Disputatio/1_IDEA.md": {
+    "mtime": 1780670315.0413296,
+    "ast_hash": "2a5025b95717b44e881b7f52a226606a",
+    "semantic_hash": "2a5025b95717b44e881b7f52a226606a"
+  },
   "/Users/mark/Lavoro/AI/Disputatio/README.md": {
-    "mtime": 1781278784.042549,
-    "ast_hash": "f963aadcd94366e7c2892739d56f5926",
+    "mtime": 1781259575.1172643,
+    "ast_hash": "1ac2fb7237a89c94b200b5d409cab6dd",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/AGENTS.md": {
-    "mtime": 1781278784.1860566,
-    "ast_hash": "1c5de748df569ae15fa297f7598caadd",
-    "semantic_hash": ""
+    "mtime": 1781164937.5895846,
+    "ast_hash": "1a2856789b4b0f673f438ea6f3201434",
+    "semantic_hash": "1a2856789b4b0f673f438ea6f3201434"
   },
   "/Users/mark/Lavoro/AI/Disputatio/CLAUDE.md": {
-    "mtime": 1781278784.3319864,
-    "ast_hash": "5087abbef4152b8f07c3b032d07503c2",
+    "mtime": 1781259621.38434,
+    "ast_hash": "2bd48bb81de9c599ee3fa276560035db",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/research/cursor-and-aider-headless.md": {
@@ -55,9 +75,9 @@
     "semantic_hash": "f9c5d1c56116c34fded7fc9f2e39f4a4"
   },
   "/Users/mark/Lavoro/AI/Disputatio/research/README.md": {
-    "mtime": 1781278803.295262,
-    "ast_hash": "d417ccb90a3c63253779b50a15bfb7e5",
-    "semantic_hash": ""
+    "mtime": 1780677679.4819899,
+    "ast_hash": "c39ffbff77e717a8f3aec3db35de908f",
+    "semantic_hash": "c39ffbff77e717a8f3aec3db35de908f"
   },
   "/Users/mark/Lavoro/AI/Disputatio/research/claude-code-headless.md": {
     "mtime": 1780677733.4269662,
@@ -70,13 +90,13 @@
     "semantic_hash": "6f7025412c89222c7c7d8cc4e1b8ba1f"
   },
   "/Users/mark/Lavoro/AI/Disputatio/research/pre-m0-handrun.md": {
-    "mtime": 1781278803.4343665,
-    "ast_hash": "06ed4f0c60fdde9ff7a0ed67381fb319",
-    "semantic_hash": ""
+    "mtime": 1780831228.2085044,
+    "ast_hash": "af07f1074b73888f73e42a382887d19f",
+    "semantic_hash": "af07f1074b73888f73e42a382887d19f"
   },
   "/Users/mark/Lavoro/AI/Disputatio/research/canary-results.md": {
-    "mtime": 1781259791.7637455,
-    "ast_hash": "ffbcce3e9285032988a4e6c444470897",
+    "mtime": 1781259621.5225198,
+    "ast_hash": "9da182d9287810cb75cb3a5559025d67",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/research/codex-cli-headless.md": {
@@ -155,13 +175,13 @@
     "semantic_hash": "09ae294796d4c59cf2d63c2c41045ea1"
   },
   "/Users/mark/Lavoro/AI/Disputatio/src/config.ts": {
-    "mtime": 1781259791.4785323,
-    "ast_hash": "9e81074aa6a3fadd2a5cc42077dd9a5f",
-    "semantic_hash": ""
+    "mtime": 1781212844.0366175,
+    "ast_hash": "cdf13099af36c7e2121c2704cefd8d62",
+    "semantic_hash": "cdf13099af36c7e2121c2704cefd8d62"
   },
   "/Users/mark/Lavoro/AI/Disputatio/examples/debate.yaml": {
-    "mtime": 1781276182.342619,
-    "ast_hash": "df38c44f99b458bc7b81f0fa9ae6e1fb",
+    "mtime": 1781259575.7019508,
+    "ast_hash": "baa60160f8c123372e2ebd30d622dbcf",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/assets/images/Cover.jpg": {
@@ -172,26 +192,6 @@
   "/Users/mark/Lavoro/AI/Disputatio/research/real-run-2026-06-11-repo-grounded.md": {
     "mtime": 1781259576.1737804,
     "ast_hash": "13f19845097264e59fec667dbbbeeddd",
-    "semantic_hash": ""
-  },
-  "/Users/mark/Lavoro/AI/Disputatio/docs/3_ADAPTERS.md": {
-    "mtime": 1781278802.9730024,
-    "ast_hash": "d2ad1f0a5bb7cf03c278653fd9def841",
-    "semantic_hash": ""
-  },
-  "/Users/mark/Lavoro/AI/Disputatio/docs/4_PLAN.md": {
-    "mtime": 1781278803.1262848,
-    "ast_hash": "89cc1c4ede13652c4c4b45b55b354c77",
-    "semantic_hash": ""
-  },
-  "/Users/mark/Lavoro/AI/Disputatio/docs/2_CONCEPT.md": {
-    "mtime": 1780674302.289911,
-    "ast_hash": "9a636d734dbfbb2d86d7776163ddc758",
-    "semantic_hash": ""
-  },
-  "/Users/mark/Lavoro/AI/Disputatio/docs/1_IDEA.md": {
-    "mtime": 1780670315.0413296,
-    "ast_hash": "2a5025b95717b44e881b7f52a226606a",
     "semantic_hash": ""
   }
 }

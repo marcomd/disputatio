@@ -6,8 +6,8 @@
 > the project's biggest technical risk.
 >
 > **Grounding:** every per-CLI claim here is backed by the local runs in
-> `research/canary-results.md` (verified on this machine, 2026-06-05) or the
-> official-doc reports in `research/`. Where a claim is documented but not yet run
+> `../research/canary-results.md` (verified on this machine, 2026-06-05) or the
+> official-doc reports in `../research/`. Where a claim is documented but not yet run
 > locally, it is marked **[to verify]**.
 
 ---
@@ -22,7 +22,7 @@
 | OpenAI Codex | `codex` | 0.137.0 | rich JSONL stream |
 | Google Antigravity | `agy` | 1.0.4→1.0.5 | **text-only** |
 
-**Deferred** (future adapters, research preserved in `research/`): Cursor
+**Deferred** (future adapters, research preserved in `../research/`): Cursor
 (`cursor-agent`), Aider. **Reference only:** Gemini CLI (`gemini`) — deprecated,
 sunsets 2026-06-18; kept because `agy` partly inherits its architecture.
 

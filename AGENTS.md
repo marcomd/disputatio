@@ -43,7 +43,7 @@ node src/index.ts path/to/task.md 1 /path/to/repo
   results into `Participant` / `AgentResult`.
 - `research/`: headless CLI research, canary results, and verified notes. Read these
   before changing adapter invocations.
-- `1_IDEA.md`, `2_CONCEPT.md`, `3_ADAPTERS.md`, `4_PLAN.md`: design and roadmap
+- `docs/1_IDEA.md`, `docs/2_CONCEPT.md`, `docs/3_ADAPTERS.md`, `docs/4_PLAN.md`: design and roadmap
   documents. Keep terminology and implementation aligned with them.
 
 ## Non-Negotiable Invariants

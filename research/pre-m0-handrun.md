@@ -1,6 +1,6 @@
 # Pre-M0 hand-run debate — result (2026-06-07)
 
-The cheapest premise test from `4_PLAN.md` §8/§11: a **manually orchestrated**
+The cheapest premise test from `../docs/4_PLAN.md` §8/§11: a **manually orchestrated**
 *disputatio* debate, run by Claude using the real CLIs, on a **real past design
 task whose outcome the user knows** — the original brainstorm that founded this
 project (decision actually taken: drop `recursivemas`, build Disputatio on
@@ -28,7 +28,7 @@ is: claude said *"almost certainly operates at the API/SDK layer"*; agy said
 > **Contamination caught live (adapter lesson):** `agy`'s print mode is agentic and
 > autonomously **read `rounds/r1-claude.json`** before writing its own proposal
 > (*"I will read the contents of rounds/r1-claude.json to see what Claude
-> proposed"*). So agy's R1 was **not independent**. → Confirms `3_ADAPTERS.md`: the
+> proposed"*). So agy's R1 was **not independent**. → Confirms `../docs/3_ADAPTERS.md`: the
 > transport layer must run each agent in its **own isolated dir** and keep sibling
 > outputs out of the workspace. A real, unplanned finding.
 
@@ -99,7 +99,7 @@ it stands regardless of the premise question.
 mutation* — is exactly where the executable-evidence moat is **weakest**, because
 plans have nothing to run. The moat lives in **code / implementation review** ("I
 ran the suite and it fails"). The cheap/safe scope chosen is the one that cannot
-exercise the differentiator. The concept docs (`2_CONCEPT.md` §9, `4_PLAN.md` §8)
+exercise the differentiator. The concept docs (`../docs/2_CONCEPT.md` §9, `../docs/4_PLAN.md` §8)
 have not confronted this.
 
 ## Implication for next steps

@@ -77,7 +77,7 @@ const participants = specs.map(buildParticipant);
 
 const vendors = new Set(participants.map((p) => p.vendor));
 if (vendors.size < participants.length) {
-  console.error("[disputatio] ⚠️ participants are not all cross-vendor — correlated-error risk (2_CONCEPT.md §2)");
+  console.error("[disputatio] ⚠️ participants are not all cross-vendor — correlated-error risk (docs/2_CONCEPT.md §2)");
 }
 
 const outcome = await runDebate(task, participants, rounds, repoPath);

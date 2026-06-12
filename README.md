@@ -13,7 +13,7 @@ agent, have another critique it, iterate, converge.
 > **Status: experimental, early MVP (v0).** Rough but runnable. The core premise —
 > that cross-harness debate produces materially better decisions than a single
 > strong agent — is **not yet validated**; v0 exists to dogfood the workflow on
-> real tasks. See [`4_PLAN.md`](./4_PLAN.md) for the honest state and roadmap.
+> real tasks. See [`4_PLAN.md`](./docs/4_PLAN.md) for the honest state and roadmap.
 
 ## Why real harnesses (not custom LLM agents)
 
@@ -89,10 +89,10 @@ worthless) — the partial transcript and raw captures are kept.
 
 | Doc                                | What                                                                                |
 | ---------------------------------- | ----------------------------------------------------------------------------------- |
-| [`1_IDEA.md`](./1_IDEA.md)         | Original vision                                                                     |
-| [`2_CONCEPT.md`](./2_CONCEPT.md)   | Refined concept: the *disputatio* protocol, roles, executable evidence, convergence |
-| [`3_ADAPTERS.md`](./3_ADAPTERS.md) | Headless-integration design for each agent CLI                                      |
-| [`4_PLAN.md`](./4_PLAN.md)         | Implementation plan, stack rationale, milestones                                    |
+| [`1_IDEA.md`](./docs/1_IDEA.md)         | Original vision                                                                     |
+| [`2_CONCEPT.md`](./docs/2_CONCEPT.md)   | Refined concept: the *disputatio* protocol, roles, executable evidence, convergence |
+| [`3_ADAPTERS.md`](./docs/3_ADAPTERS.md) | Headless-integration design for each agent CLI                                      |
+| [`4_PLAN.md`](./docs/4_PLAN.md)         | Implementation plan, stack rationale, milestones                                    |
 | [`research/`](./research/)         | Headless-mode research + real canary runs per CLI                                   |
 
 ## License

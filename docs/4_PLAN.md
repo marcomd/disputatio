@@ -2,7 +2,7 @@
 
 > The bridge from concept to code. Builds on `1_IDEA.md` (vision), `2_CONCEPT.md`
 > (the *disputatio* protocol, roles, executable evidence, convergence), and
-> `3_ADAPTERS.md` (the headless-integration design grounded in `research/`).
+> `3_ADAPTERS.md` (the headless-integration design grounded in `../research/`).
 >
 > Scope of this document: the **MVP** — debate over a **text artifact (a plan)**,
 > no repository mutation, no UI, whose job is to **validate the premise** that
@@ -70,7 +70,7 @@ src/
 ├── prompts/        # role + trailer-contract prompt fragments (per phase)
 ├── cli/            # citty commands: run / resume / finalize / doctor
 └── eval/           # premise-validation harness
-fixtures/           # captured real outputs from research/canary-results.md
+fixtures/           # captured real outputs from ../research/canary-results.md
 test/
 ```
 
@@ -156,7 +156,7 @@ interface AdapterManifest {
 The one place all per-CLI difference lives. Output: a uniform
 `RawAgentRun { stdout, stderr, exitCode, outcome: AgentOutcome }`.
 
-Hard rules (every one canaried in `research/canary-results.md`):
+Hard rules (every one canaried in `../research/canary-results.md`):
 
 - **`stdin: '/dev/null'`** on every spawn (Codex hang mitigation).
 - **Capture stdout and stderr separately** (progress on stderr for codex).
@@ -325,7 +325,7 @@ finding predicts debate will mostly *confirm*:**
   doesn't (a valid, money-saving finding).
 
 **Cost budget (real):** one debate is dozens of frontier-agent calls (a single
-word cost $0.10 — `research/canary-results.md`). M2 = that matrix × 5–10 tasks ×
+word cost $0.10 — `../research/canary-results.md`). M2 = that matrix × 5–10 tasks ×
 2 conditions, re-run during development. Cap per-debate spend
 (`--max-budget-usd`), cache within the TTL, and use cheaper models in the
 `verifier` phase. Budget the eval explicitly — cost bites precisely at the gate.
@@ -367,7 +367,7 @@ can drive it too (structured output on `doctor`, machine-readable `state.json`).
 
 - **Unit (fast, no network):** the parsers and the transport classifier are the
   highest-risk code → test them against **fixtures captured from real runs**
-  (`research/canary-results.md`): the claude success/error JSON, the codex JSONL
+  (`../research/canary-results.md`): the claude success/error JSON, the codex JSONL
   (incl. `turn.failed`), the agy raw text, malformed trailers. The "subtype lies
   on error" case gets an explicit regression test.
 - **A `fake-agent` binary:** a tiny script that emulates each adapter's framing
@@ -404,7 +404,7 @@ full engine before the gate is the exact trap this plan exists to avoid.
 > **worktree isolation** forward from "Later" (evidence commands wrote into the target repo)
 > and added the **<2-proposals abort**, **per-turn raw captures**, a **config
 > file**, and the first **offline test suite** — all hardening of the M1 gate
-> path, not engine-building. Details: `research/real-run-2026-06-11-repo-grounded.md`.
+> path, not engine-building. Details: `../research/real-run-2026-06-11-repo-grounded.md`.
 
 ---
 
