@@ -1,0 +1,6 @@
+{"type":"thread.started","thread_id":"019eb76e-e764-7971-87d1-6527e3bfb8f9"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"intermediate thought"}}
+{"type":"item.completed","item":{"id":"item_1","type":"reasoning","text":"not the answer"}}
+{"type":"item.completed","item":{"id":"item_2","type":"agent_message","text":"pong"}}
+{"type":"turn.completed","usage":{"input_tokens":15178,"cached_input_tokens":2432,"output_tokens":22,"reasoning_output_tokens":15}}

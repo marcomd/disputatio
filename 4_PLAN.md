@@ -293,6 +293,11 @@ must isolate the moat, not "more voices":
   the user's real process (upfront brainstorm + first agent + self-critique) — not
   a strawman; **(B)** Disputatio (the unattended gate path, with at least one
   objection required to carry `command-output` evidence).
+- **Model-strength parity (added 2026-06-11):** the debaters must be of comparable
+  tier across vendors (e.g. Sonnet vs GPT-5.x vs Gemini Pro — NOT Sonnet vs Flash).
+  A noticeably weaker second debater stacks the deck against debate: its objections
+  are shallower, and a null result then means "the cheap model is weak," not
+  "debate doesn't help." Pin the lineup in the eval's `debate.yaml`.
 
 **The scoring problem (must be solved, not hand-waved):** plan/design artifacts
 have **no objective known-good reference** the way code-with-tests does, and an
@@ -324,6 +329,10 @@ word cost $0.10 — `research/canary-results.md`). M2 = that matrix × 5–10 ta
 2 conditions, re-run during development. Cap per-debate spend
 (`--max-budget-usd`), cache within the TTL, and use cheaper models in the
 `verifier` phase. Budget the eval explicitly — cost bites precisely at the gate.
+Two cost facts from the 2026-06-11 real run: a single repo-grounded turn cost
+**$0.91** (so the per-turn claude cap is now $2, configurable), and **`agy` has no
+spend cap at all** (no flag exists) — budget control is per-vendor-asymmetric, so
+a total-run budget in the orchestrator is the eventual answer.
 
 **The test cheaper than building M0–M2 — run it pre-M0 (see §11).** The
 questionnaire signal is in (above) and leans negative-but-confounded. The
@@ -386,6 +395,16 @@ Sequencing rule (`3_ADAPTERS.md` §8, sharpened): do **not** build the N-agent
 framework — and specifically not `consolidatio` or `humanloop` — before M2. The
 premise is unvalidated; two cross-vendor agents, unattended, test it. Building the
 full engine before the gate is the exact trap this plan exists to avoid.
+
+> **Deviation, recorded honestly (2026-06-11):** the `codex` adapter was pulled
+> forward from M3 — not because the premise advanced, but because repo-grounded
+> runs need an explicit, policy-appropriate lineup. The default lineup is now
+> `claude+codex`; optional adapters belong in explicit `--config`. `consolidatio`
+> remains deferred (the default is still N=2). The same real run also pulled
+> **worktree isolation** forward from "Later" (evidence commands wrote into the target repo)
+> and added the **<2-proposals abort**, **per-turn raw captures**, a **config
+> file**, and the first **offline test suite** — all hardening of the M1 gate
+> path, not engine-building. Details: `research/real-run-2026-06-11-repo-grounded.md`.
 
 ---
 

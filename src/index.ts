@@ -1,36 +1,107 @@
-// CLI entry (Kaizen v0). Run with: node src/index.ts <task-file.md> [rounds] [repo-path]
+// CLI entry (Kaizen v0). Run with: node src/index.ts <task-file.md> [rounds] [repo-path] [--config debate.yaml]
 
 import { mkdir, writeFile, readFile } from "node:fs/promises";
-import { claudeAdapter, agyAdapter } from "./adapters.ts";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
+import { claudeAdapter, agyAdapter, codexAdapter, type Participant } from "./adapters.ts";
+import { parseDebateConfig, type ParticipantSpec } from "./config.ts";
 import { runDebate } from "./debate.ts";
 
-const args = process.argv.slice(2);
-if (args.length === 0 || args[0] === "-h" || args[0] === "--help") {
-  console.error("usage: disputatio <task-file.md> [rounds=1] [repo-path]");
+const execFileAsync = promisify(execFile);
+
+function usage(exitCode: number): never {
+  console.error("usage: disputatio <task-file.md> [rounds] [repo-path] [--config debate.yaml]");
   console.error("  task-file  markdown file describing the task/quaestio");
   console.error("  rounds     number of reaction rounds after proposals (default 1)");
-  console.error("  repo-path  optional: run agents in this repo so they can gather read-only evidence");
-  process.exit(args.length === 0 ? 1 : 0);
+  console.error("  repo-path  optional: agents gather read-only evidence in a throwaway");
+  console.error("             git worktree of this repo (git repos only; HEAD is what they see)");
+  console.error("  --config   debate.yaml selecting participants/models/budgets (see examples/debate.yaml)");
+  console.error("             default lineup without config: claude + codex");
+  process.exit(exitCode);
 }
 
-const [taskFile, roundsArg, repoPath] = args;
-const task = await readFile(taskFile, "utf8");
-const rounds = Number(roundsArg ?? "1");
+const args = process.argv.slice(2);
+if (args.length === 0 || args[0] === "-h" || args[0] === "--help") usage(args.length === 0 ? 1 : 0);
 
-// Cross-vendor by design: claude -> Anthropic, agy -> Google. Diversity is the point.
-const participants = [claudeAdapter("sonnet"), agyAdapter("Gemini 3.5 Flash (High)")];
+let configPath: string | undefined;
+const positionals: string[] = [];
+for (let i = 0; i < args.length; i++) {
+  if (args[i] === "--config") {
+    configPath = args[++i];
+    if (!configPath) usage(1);
+  } else {
+    positionals.push(args[i]);
+  }
+}
+const [taskFile, roundsArg, repoArg] = positionals;
+if (!taskFile) usage(1);
+
+const task = await readFile(taskFile, "utf8");
+const cfg = configPath ? parseDebateConfig(await readFile(configPath, "utf8")) : {};
+
+const rounds = roundsArg !== undefined ? Number(roundsArg) : cfg.rounds ?? 1;
+if (!Number.isInteger(rounds) || rounds < 0) {
+  console.error(`[disputatio] rounds must be a non-negative integer, got "${roundsArg}"`);
+  process.exit(1);
+}
+const repoPath = repoArg ?? cfg.repo;
+const timeoutMs = (cfg.timeoutMinutes ?? 10) * 60_000;
+
+// READ-ONLY invariant: evidence gathering happens in a throwaway git worktree,
+// never in the real checkout — so the repo must be a git repo. Fail fast here.
+if (repoPath) {
+  try {
+    await execFileAsync("git", ["-C", repoPath, "rev-parse", "--is-inside-work-tree"]);
+  } catch {
+    console.error(`[disputatio] ${repoPath} is not a git repository — evidence mode requires git (agents run in a throwaway worktree)`);
+    process.exit(1);
+  }
+  const { stdout } = await execFileAsync("git", ["-C", repoPath, "status", "--porcelain"]);
+  if (stdout.trim() !== "") {
+    console.error(`[disputatio] ⚠️ ${repoPath} has uncommitted changes — agents see HEAD only, not your working tree`);
+  }
+}
+
+function buildParticipant(s: ParticipantSpec): Participant {
+  switch (s.adapter) {
+    case "claude": return claudeAdapter(s.model ?? "sonnet", { maxBudgetUsd: s.maxBudgetUsd, timeoutMs });
+    case "agy": return agyAdapter(s.model ?? "Gemini 3.5 Flash (High)", { timeoutMs });
+    case "codex": return codexAdapter(s.model, { bin: s.bin, timeoutMs });
+  }
+}
+
+// Cross-vendor by design: claude→Anthropic, codex→OpenAI, agy→Google. Diversity is
+// the point. Default lineup is claude+codex; optional adapters go through --config.
+const specs: ParticipantSpec[] = cfg.participants ?? [{ adapter: "claude" }, { adapter: "codex" }];
+const participants = specs.map(buildParticipant);
 
 const vendors = new Set(participants.map((p) => p.vendor));
 if (vendors.size < participants.length) {
   console.error("[disputatio] ⚠️ participants are not all cross-vendor — correlated-error risk (2_CONCEPT.md §2)");
 }
 
-const out = await runDebate(task, participants, rounds, repoPath);
+const outcome = await runDebate(task, participants, rounds, repoPath);
 
 const id = `debate-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 const dir = `.debate/${id}`;
-await mkdir(dir, { recursive: true });
-await writeFile(`${dir}/debate.md`, out, "utf8");
+await mkdir(`${dir}/raw`, { recursive: true });
+await writeFile(`${dir}/debate.md`, outcome.transcript, "utf8");
+
+// Per-turn raw CLI captures: when a turn FAILS, the envelope/stderr here is the
+// only way to diagnose it (lesson from debate-2026-06-11: "is_error=true" with
+// everything else discarded was undiagnosable).
+for (let i = 0; i < outcome.turns.length; i++) {
+  const t = outcome.turns[i];
+  const slug = t.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
+  await writeFile(`${dir}/raw/${String(i + 1).padStart(2, "0")}-${slug}.json`, JSON.stringify(t, null, 2), "utf8");
+}
+
+if (outcome.aborted) {
+  console.error(`[disputatio] debate ABORTED: ${outcome.aborted}`);
+  console.error(`[disputatio] partial transcript + raw captures kept for diagnosis`);
+  console.log(`${dir}/debate.md`); // still expose the artifact path for inspection
+  process.exit(1);
+}
 
 console.error(`[disputatio] done`);
 console.log(`${dir}/debate.md`); // stdout = the artifact path (agent-native friendly)

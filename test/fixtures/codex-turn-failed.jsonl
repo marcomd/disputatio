@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019e98b8-0000-0000-0000-000000000000"}
+{"type":"turn.started"}
+{"type":"error","message":"The 'not-a-real-model-xyz' model is not supported when using Codex with a ChatGPT account."}
+{"type":"turn.failed","error":{"message":"The 'not-a-real-model-xyz' model is not supported when using Codex with a ChatGPT account."}}

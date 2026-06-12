@@ -2,6 +2,39 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.0.3] — Hardening after the first real-repo run
+
+Every change here traces to the 2026-06-11 repo-grounded run
+(`research/real-run-2026-06-11-repo-grounded.md`): two undiagnosable turn failures,
+a monologue "debate", agent writes inside the target repo, and a lineup that needed
+explicit per-run policy checks.
+
+- **`codex` adapter** (`src/adapters.ts`) — third cross-vendor voice (OpenAI), JSONL
+  tier: `codex exec --json -s read-only --ephemeral`, final text = last
+  `agent_message`, success = exit 0 + `turn.completed` + no `error`/`turn.failed`.
+  Configurable `bin` (a stale asdf shim can shadow the real binary; exit 126/127 is
+  reported as a setup problem with a hint).
+- **`--config debate.yaml`** (`src/config.ts`) — explicit participant lineup, models,
+  budgets, rounds, repo, timeout. Minimal no-dependency YAML subset, strict
+  line-numbered errors. **Default lineup is now `claude+codex`**; optional adapters
+  belong in explicit config.
+- **Read-only evidence is now structural** — repo mode runs each turn in a detached
+  throwaway **git worktree of HEAD**, never the real checkout; `agy` gets `--sandbox`;
+  claude's allowlist switched to comma-separated rules (the space-separated string was
+  mis-parsed) + `--permission-mode dontAsk` + `--disallowedTools Edit,Write`.
+- **Degenerate-debate guard** (`src/debate.ts`) — fewer than 2 successful proposals
+  aborts the run (exit 1) instead of letting one agent debate a monologue.
+- **Diagnosable failures** — per-turn raw CLI captures persisted under
+  `.debate/<id>/raw/`; claude errors read from the `errors[]` array (budget-exhaustion
+  envelopes have no `result` string); budget default raised to $2; timeout default
+  raised to 10m (config `timeoutMinutes`), with agy's `--print-timeout` matched.
+- **Prompt hygiene** — the context fed back to agents in reaction rounds no longer
+  contains cost footnotes or raw error dumps (the artifact keeps them).
+- **First test suite** — 25 `node:test` tests (`npm test`): adapter classifiers against
+  fixtures captured from real runs (incl. the "subtype lies" and budget-exhaustion
+  regressions), fake CLI shims for timeout/exit-code paths, worktree isolation against
+  a real git repo, config parser. No real agent calls.
+
 ## [0.0.2] — Agent tooling & knowledge graph
 
 No changes to the debate engine itself; this release adds the agent-native

@@ -303,7 +303,7 @@ first. The premise (debate > single agent) is still unvalidated.
 > are also Anthropic, the whole debate becomes single-vendor — correlated errors
 > and mutual deference, i.e. the exact false-consensus failure `2_CONCEPT.md` §2
 > warns about. This is invisible at the transport layer, so the canary cannot
-> catch it. The user's own intent (`remember.txt`) already pins `agy` →
+> catch it. The intended public lineup pins `agy` →
 > **Gemini Flash 3.5** and `codex` → GPT; honour that. Diversity is a *config-time*
 > property the engine must guard, not assume.
 >

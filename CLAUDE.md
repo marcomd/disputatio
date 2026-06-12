@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 Disputatio orchestrates a structured debate between *real* AI coding-agent CLIs
-(`claude`, `agy`) run as their native harnesses — not as raw LLM API calls. The
+(`claude`, `codex`, `agy`) run as their native harnesses — not as raw LLM API calls. The
 whole point is **cross-vendor diversity** plus **executable evidence**: agents run in
 a real repo and can back objections with a failing test, not just rhetoric. v0 is an
 experimental MVP; the core premise (debate beats a single strong agent) is **not yet
@@ -20,55 +20,81 @@ node src/index.ts examples/task.md
 # N reaction rounds
 node src/index.ts examples/task.md 2
 
-# point agents at a real repo for READ-ONLY evidence gathering (the actual moat)
+# point agents at a real repo for READ-ONLY evidence gathering (the actual moat);
+# agents run in a throwaway git worktree of HEAD, never the real checkout
 node src/index.ts path/to/task.md 1 /path/to/repo
+
+# explicit lineup/models/budgets (see examples/debate.yaml)
+node src/index.ts path/to/task.md 1 /path/to/repo --config examples/debate.yaml
+
+# test suite (fixture-based fake CLIs — no real agent calls, fast)
+npm test
 ```
 
 - Runs on **Node ≥ 24**, which executes TypeScript natively — **no build step, no
   `tsc`, no transpile**. Edit `.ts` and run it directly. (`.tool-versions` pins
   `nodejs 24.16.0`; this repo uses asdf — prefix bash with `useAll;` to get node on PATH.)
-- No test suite, linter, or framework. The "tests" are real debate runs.
-- Output: a transcript at `.debate/debate-<timestamp>/debate.md`. **stdout = the
-  artifact path only** (agent-native friendly); all progress/logging goes to **stderr**.
-- Requires `claude` and `agy` CLIs installed and **already authenticated** — auth is
-  out of scope.
+- Tests: `node:test`, zero deps, in `test/` (fixtures captured from real runs + fake
+  CLI shims in `test/fakes/`). Run `npm test` after changing `src/`. Real debate runs
+  remain the integration test.
+- Output: a transcript at `.debate/debate-<timestamp>/debate.md` plus per-turn raw CLI
+  captures in `.debate/debate-<timestamp>/raw/` (the only way to diagnose a failed
+  turn). **stdout = the artifact path only** (agent-native friendly); all
+  progress/logging goes to **stderr**. **<2 successful proposals → abort, exit 1.**
+- Requires the lineup's CLIs installed and **already authenticated** — auth is out of
+  scope. Default lineup: `claude` + `codex`; optional adapters belong in explicit
+  per-run config after checking account and repository policy.
 
-## Architecture (three files, clean layers)
+## Architecture (four files, clean layers)
 
-- **`src/index.ts`** — CLI entry. Parses args, fixes the participant lineup
-  (`claudeAdapter` + `agyAdapter`), runs the cross-vendor sanity check, writes the
-  transcript.
+- **`src/index.ts`** — CLI entry. Parses args + `--config`, builds the participant
+  lineup (default `claude`+`codex`), validates the repo is git, runs the cross-vendor
+  sanity check, writes transcript + raw captures, exits 1 on abort.
+- **`src/config.ts`** — `debate.yaml` parsing (deliberately minimal YAML subset, no
+  deps, strict line-numbered errors). Do not grow it into a YAML parser — switch to a
+  library when real YAML is needed.
 - **`src/adapters.ts`** — transport layer. One job: spawn a CLI, capture output,
   classify success/failure. `Participant` = `{ id, display, vendor, run(prompt, cwd) }`.
-- **`src/debate.ts`** — orchestration. Round 1 = parallel independent proposals;
-  then N reaction rounds where each agent reacts to the full transcript snapshot.
+- **`src/debate.ts`** — orchestration. Round 1 = parallel independent proposals
+  (abort if <2 succeed); then N reaction rounds where each agent reacts to the full
+  transcript snapshot.
 
-Data flow: `index` builds `Participant[]` → `runDebate` → per-turn `runIsolated` →
-`Participant.run` → `runCli` (spawn). Results accumulate into one markdown string.
+Data flow: `index` builds `Participant[]` → `runDebate` → per-turn `runIsolated`
+(temp dir, or throwaway git worktree in repo mode) → `Participant.run` → `runCli`
+(spawn). Results accumulate into a transcript string + per-turn `Turn[]` records.
 
 ## Non-obvious invariants — do not break these
 
 These are grounded in real local runs (`research/canary-results.md`,
-`research/pre-m0-handrun.md`). Changing them silently reintroduces bugs that were
-already caught:
+`research/pre-m0-handrun.md`, `research/real-run-2026-06-11-repo-grounded.md`). Changing them
+silently reintroduces bugs that were already caught:
 
-- **Isolation is a correctness requirement, not hygiene.** Each agent runs in a
-  throwaway temp dir (or the passed repo). Without it, agentic CLIs like `agy` read
-  sibling files and contaminate the debate — observed in the hand-run. Keep
-  `runIsolated`'s temp-dir-per-turn behavior.
+- **Isolation is a correctness requirement, not hygiene.** Each agent turn runs in a
+  throwaway temp dir, or — in repo mode — a **detached throwaway git worktree of
+  HEAD**, never the real checkout. Without the temp dir, agentic CLIs like `agy` read
+  sibling files and contaminate the debate (hand-run); without the worktree, evidence
+  commands can write logs/tmp/test-state into the target repo. Keep both.
 - **stdin is ignored (`stdio: ["ignore", ...]`).** Codex hangs waiting for stdin EOF
   otherwise. Do not switch to inheriting/piping stdin.
 - **Classify `claude` success on `is_error` + exit code — NOT `subtype`.** On error,
   `subtype` stays `"success"` while `is_error` flips `true`. Success =
-  `code === 0 && j.is_error === false`.
-- **`agy` is text-only.** No `--output-format`/`--json`; trimmed stdout *is* the
-  answer. `claude` uses a JSON envelope.
+  `code === 0 && j.is_error === false`. **Error messages: read `errors[]` first** —
+  budget-exhaustion envelopes have NO `result` string (repo-grounded run, canaried).
+- **`agy` is text-only and must run `--sandbox`.** No `--output-format`/`--json`;
+  trimmed stdout *is* the answer. Plain print mode can auto-execute terminal commands
+  during evidence gathering. `claude` uses a JSON envelope; `codex` a JSONL stream
+  (last `agent_message`; success needs `turn.completed` and no `error`/`turn.failed`
+  event).
 - **Participants must be cross-vendor.** Diversity of reasoning is the entire premise;
   `index.ts` warns when the lineup isn't all distinct `vendor`s. Preserve that check
-  when adding adapters (the next planned voice is `codex`).
-- `claude` is invoked with a **read-only allowlist** (`Read Glob Grep`, plus
-  `Bash(npm test*)` / `pytest` / `bun test` / `git diff` etc.) and a
-  `--max-budget-usd` cap. Keep new evidence tools read-only.
+  when adding adapters.
+- **Keep evidence tools read-only.** `claude`: comma-separated allowlist (the rules
+  contain spaces — space-separated strings get mis-parsed) + `--permission-mode
+  dontAsk` + `--max-budget-usd` (default $2; $1 was exceeded by one real turn);
+  `codex`: `-s read-only` (OS-enforced); `agy`: `--sandbox`.
+- **Exit 126/127 from a spawned CLI is a setup failure, not an agent failure** (stale
+  asdf shims shadow real binaries on this machine — `codex` needs
+  `bin: /opt/homebrew/bin/codex` in debate.yaml). Keep the hint in `spawnFailure`.
 
 ## Best practices
 
@@ -94,7 +120,10 @@ Follow these three working principles when developing in this repo:
 
 No scholastic `consolidatio`/`respondeo` protocol yet; reaction rounds are parallel
 snapshots (agents don't see each other's same-round reactions); timeout kills only the
-direct child (no process-tree kill); no `codex` adapter yet.
+direct child (no process-tree kill); repo mode shows agents HEAD only (uncommitted
+changes invisible, untracked artifacts like `node_modules` absent); a worktree shares
+the repo's object store (CLI sandboxes are the second defense layer); `agy` has no
+spend cap (no flag exists — budget control is claude-only).
 
 ## Design docs
 

@@ -1,0 +1,20 @@
+# Disputatio debate config.
+# Minimal YAML subset: flat "key: value" pairs + one participants list. No nesting.
+
+rounds: 1
+timeoutMinutes: 10
+# repo: /path/to/repo   # optional: read-only evidence gathering (git repos only;
+#                       # agents work in a throwaway worktree of HEAD)
+
+participants:
+  - adapter: claude
+    model: sonnet
+    maxBudgetUsd: 2
+  - adapter: codex
+    bin: /opt/homebrew/bin/codex   # a stale asdf shim shadows the brew codex on this machine
+    # model: gpt-5.5               # omit = the account's default model
+
+# Optional third participant; enable only when its credentials and policy are
+# appropriate for the target repository.
+# - adapter: agy
+#   model: Gemini 3.5 Flash (High)

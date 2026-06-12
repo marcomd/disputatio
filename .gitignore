@@ -2,3 +2,6 @@ cache/
 node_modules/
 .debate/
 *.log
+remember.*
+examples/private*
+graphify-out/cost.json

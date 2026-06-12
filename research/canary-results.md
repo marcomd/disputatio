@@ -136,8 +136,8 @@ agy -p "hi" --json                 # → "flags provided but not defined: -json"
 
 ### Print mode is AGENTIC and auto-reads the workspace
 - A probe run (`agy --model foo -p "hi"`) did **not** just answer — it
-  autonomously **listed the directory, read `1_IDEA.md`/`2_CONCEPT.md`/
-  `remember.txt`/the research files, and ran a version command**, then produced a
+  autonomously **listed the directory, read project docs and research files,
+  and ran a version command**, then produced a
   long summary — **without** `--dangerously-skip-permissions`. → In print mode
   `agy` auto-executes **read-only** workspace tools by default. Good for
   evidence-gathering, but means: (a) it incurs real token/latency cost even for
@@ -171,3 +171,48 @@ agy -p "hi" --json                 # → "flags provided but not defined: -json"
 5. **Fixed-cost overhead matters** (Claude's 27k-token system prompt). Hermetic
    modes (`--bare`, `codex --ignore-user-config`) are cost levers, not just
    reproducibility levers.
+
+---
+
+# Addendum — canaries of 2026-06-11 (after a repo-grounded run)
+
+Triggered by a repo-grounded run (`research/real-run-2026-06-11-repo-grounded.md`):
+two turns failed undiagnosably, so the exact failure envelopes were canaried.
+
+## Claude: budget-exceeded envelope (the `is_error=true` mystery, solved)
+
+```bash
+claude -p "…pong" --output-format json --model sonnet --max-budget-usd 0.01 </dev/null
+```
+- **EXIT 1**. Envelope (trimmed): `subtype:"error_max_budget_usd"`, `is_error:true`,
+  **NO `result` field at all**, `errors:["Reached maximum budget ($0.01)"]`,
+  `total_cost_usd:0.166962` (the budget is checked *after* the spend).
+- **Parsing lesson:** on budget exhaustion the human-readable message is in the
+  **`errors` array**, not `result`. An adapter reading only `result` reports the
+  useless `is_error=true`. Read order: `errors[]` → `result` → fallback.
+- Here `subtype` IS informative (`error_max_budget_usd`) — but classification still
+  keys on `is_error` (the 2026-06-05 canary showed `subtype` can lie).
+
+## Codex 0.139.0 (Homebrew): recipe re-confirmed
+
+```bash
+/opt/homebrew/bin/codex exec --json -s read-only --skip-git-repo-check --ephemeral "…pong" </dev/null
+```
+- **EXIT 0**, JSONL exactly as on 0.137.0 (`thread.started` → `turn.started` →
+  `item.completed`/`agent_message` → `turn.completed`). Adapter recipe unchanged.
+- ⚠️ **Stale-shim trap (this machine):** `which codex` resolves to an asdf shim of
+  an ancient npm codex (0.1.x, 2025-05) installed under nodejs 22.14.0. From any
+  cwd whose `.tool-versions` pins another node, the shim fails with **EXIT 126**
+  ("No version is set for command codex"). The real 0.139.0 is the Homebrew cask at
+  `/opt/homebrew/bin/codex` — shadowed by the shim. Hence: the codex adapter takes a
+  `bin` override (debate.yaml), and exit 126/127 is classified as a *setup* failure
+  with a hint, not an agent failure.
+
+## agy: `--sandbox` print mode works
+
+```bash
+agy --sandbox -p "…pong" </dev/null   # → "pong", EXIT 0
+```
+- Output identical to non-sandbox print mode. Required from now on: the repo-grounded run
+  showed plain print mode can **auto-execute terminal commands** during evidence
+  gathering — not just read-only workspace tools as the 2026-06-05 probe suggested.

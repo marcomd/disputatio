@@ -1,0 +1,6 @@
+#!/bin/sh
+# Fake agent CLI for tests: behavior driven by FAKE_* env vars.
+[ -n "$FAKE_SLEEP" ] && sleep "$FAKE_SLEEP"
+[ -n "$FAKE_STDOUT_FILE" ] && cat "$FAKE_STDOUT_FILE"
+[ -n "$FAKE_STDERR" ] && echo "$FAKE_STDERR" >&2
+exit "${FAKE_EXIT:-0}"
