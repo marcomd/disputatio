@@ -37,6 +37,12 @@ Disputatio is built around.
 ### Usage
 
 ```bash
+# preflight: canary every participant CLI (runnable + authenticated) before
+# spending tokens on a real debate. Exit 0 = all healthy, exit 1 = something's off.
+# Run this first, especially on a new machine.
+node src/index.ts --doctor
+node src/index.ts --doctor --config examples/debate.yaml   # check a specific lineup
+
 # one proposal round + one reaction round (pure reasoning, isolated temp dirs)
 node src/index.ts examples/task.md
 

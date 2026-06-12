@@ -95,6 +95,10 @@ node src/index.ts path/to/task.md 1 /path/to/repo
   unless the user explicitly asks for them.
 - Keep generated debate transcripts and cache artifacts out of unrelated changes.
 
+## Private area
+
+Don't read remember.txt as it could contain private information.
+
 ## graphify
 
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.

@@ -6,17 +6,21 @@ import { promisify } from "node:util";
 import { claudeAdapter, agyAdapter, codexAdapter, type Participant } from "./adapters.ts";
 import { parseDebateConfig, type ParticipantSpec } from "./config.ts";
 import { runDebate } from "./debate.ts";
+import { runDoctor, allHealthy, formatDiagnoses, CANARY_TIMEOUT_MS } from "./doctor.ts";
 
 const execFileAsync = promisify(execFile);
 
 function usage(exitCode: number): never {
   console.error("usage: disputatio <task-file.md> [rounds] [repo-path] [--config debate.yaml]");
+  console.error("       disputatio --doctor [--config debate.yaml]");
   console.error("  task-file  markdown file describing the task/quaestio");
   console.error("  rounds     number of reaction rounds after proposals (default 1)");
   console.error("  repo-path  optional: agents gather read-only evidence in a throwaway");
   console.error("             git worktree of this repo (git repos only; HEAD is what they see)");
   console.error("  --config   debate.yaml selecting participants/models/budgets (see examples/debate.yaml)");
   console.error("             default lineup without config: claude + codex");
+  console.error("  --doctor   preflight: canary every participant CLI (runnable + authenticated),");
+  console.error("             report status, exit 0 if all healthy. Run this before a real debate.");
   process.exit(exitCode);
 }
 
@@ -24,20 +28,48 @@ const args = process.argv.slice(2);
 if (args.length === 0 || args[0] === "-h" || args[0] === "--help") usage(args.length === 0 ? 1 : 0);
 
 let configPath: string | undefined;
+let doctorMode = false;
 const positionals: string[] = [];
 for (let i = 0; i < args.length; i++) {
   if (args[i] === "--config") {
     configPath = args[++i];
     if (!configPath) usage(1);
+  } else if (args[i] === "--doctor") {
+    doctorMode = true;
   } else {
     positionals.push(args[i]);
   }
 }
+
+const cfg = configPath ? parseDebateConfig(await readFile(configPath, "utf8")) : {};
+
+// Cross-vendor by design: claude→Anthropic, codex→OpenAI, agy→Google. Diversity is
+// the point. Default lineup is claude+codex; optional adapters go through --config.
+const specs: ParticipantSpec[] = cfg.participants ?? [{ adapter: "claude" }, { adapter: "codex" }];
+
+function buildParticipant(s: ParticipantSpec, timeoutMs: number): Participant {
+  switch (s.adapter) {
+    case "claude": return claudeAdapter(s.model ?? "sonnet", { maxBudgetUsd: s.maxBudgetUsd, timeoutMs });
+    case "agy": return agyAdapter(s.model ?? "Gemini 3.5 Flash (High)", { timeoutMs });
+    case "codex": return codexAdapter(s.model, { bin: s.bin, timeoutMs });
+  }
+}
+
+// --doctor: preflight only — needs the lineup (+ optional --config), nothing else.
+// Branch BEFORE the task-file/rounds/repo logic so `--doctor` never gets mistaken
+// for a task file. Short canary timeout: a hung preflight is a broken preflight.
+if (doctorMode) {
+  const participants = specs.map((s) => buildParticipant(s, CANARY_TIMEOUT_MS));
+  console.error(`[disputatio] doctor — canary: ${participants.map((p) => p.id).join(", ")}`);
+  const diagnoses = await runDoctor(participants);
+  console.error(formatDiagnoses(diagnoses));
+  process.exit(allHealthy(diagnoses) ? 0 : 1);
+}
+
 const [taskFile, roundsArg, repoArg] = positionals;
 if (!taskFile) usage(1);
 
 const task = await readFile(taskFile, "utf8");
-const cfg = configPath ? parseDebateConfig(await readFile(configPath, "utf8")) : {};
 
 const rounds = roundsArg !== undefined ? Number(roundsArg) : cfg.rounds ?? 1;
 if (!Number.isInteger(rounds) || rounds < 0) {
@@ -62,18 +94,7 @@ if (repoPath) {
   }
 }
 
-function buildParticipant(s: ParticipantSpec): Participant {
-  switch (s.adapter) {
-    case "claude": return claudeAdapter(s.model ?? "sonnet", { maxBudgetUsd: s.maxBudgetUsd, timeoutMs });
-    case "agy": return agyAdapter(s.model ?? "Gemini 3.5 Flash (High)", { timeoutMs });
-    case "codex": return codexAdapter(s.model, { bin: s.bin, timeoutMs });
-  }
-}
-
-// Cross-vendor by design: claude→Anthropic, codex→OpenAI, agy→Google. Diversity is
-// the point. Default lineup is claude+codex; optional adapters go through --config.
-const specs: ParticipantSpec[] = cfg.participants ?? [{ adapter: "claude" }, { adapter: "codex" }];
-const participants = specs.map(buildParticipant);
+const participants = specs.map((s) => buildParticipant(s, timeoutMs));
 
 const vendors = new Set(participants.map((p) => p.vendor));
 if (vendors.size < participants.length) {

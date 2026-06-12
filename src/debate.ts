@@ -54,7 +54,7 @@ function withGitLock<T>(fn: () => Promise<T>): Promise<T> {
 //   into the target repo. In a worktree those writes land in the disposable copy
 //   and die with it. Trade-off: agents see HEAD only (uncommitted changes are invisible) and
 //   untracked build artifacts (node_modules, …) are absent.
-async function runIsolated(p: Participant, prompt: string, repoPath?: string): Promise<AgentResult> {
+export async function runIsolated(p: Participant, prompt: string, repoPath?: string): Promise<AgentResult> {
   const dir = await mkdtemp(join(tmpdir(), "disputatio-"));
   try {
     if (!repoPath) return await p.run(prompt, dir);

@@ -1,16 +1,16 @@
 # Graph Report - Disputatio  (2026-06-12)
 
 ## Corpus Check
-- 37 files · ~47,569 words
+- 37 files · ~47,563 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 471 nodes · 497 edges · 37 communities (30 shown, 7 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 13 edges (avg confidence: 0.8)
+- 559 nodes · 581 edges · 42 communities (34 shown, 8 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.79)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9917dda1`
+- Built from commit: `02d02c11`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -52,6 +52,11 @@
 - [[_COMMUNITY_Community 34|Community 34]]
 - [[_COMMUNITY_Community 35|Community 35]]
 - [[_COMMUNITY_Community 36|Community 36]]
+- [[_COMMUNITY_Community 37|Community 37]]
+- [[_COMMUNITY_Community 38|Community 38]]
+- [[_COMMUNITY_Community 39|Community 39]]
+- [[_COMMUNITY_Community 40|Community 40]]
+- [[_COMMUNITY_Community 41|Community 41]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `What You Must Do When Invoked` - 16 edges
@@ -59,16 +64,22 @@
 3. `/graphify` - 14 edges
 4. `What You Must Do When Invoked` - 14 edges
 5. `Disputatio: Implementation Plan` - 13 edges
-6. `Claude Code — Headless / Non-Interactive Mode (research, 2026-06-05)` - 12 edges
-7. `codexAdapter` - 12 edges
-8. `Disputatio: Refined Concept` - 11 edges
-9. `OpenAI Codex CLI — Headless / Automation Mode (research, 2026-06-05)` - 11 edges
-10. `Disputatio: Agent Adapters — Headless Invocation & Output Capture` - 10 edges
+6. `Disputatio: Implementation Plan` - 13 edges
+7. `Claude Code — Headless / Non-Interactive Mode (research, 2026-06-05)` - 12 edges
+8. `OpenAI Codex CLI — Headless / Automation Mode (research, 2026-06-05)` - 11 edges
+9. `Disputatio: Refined Concept` - 11 edges
+10. `Disputatio: Refined Concept` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `README Codex Adapter Deferred Note` --conceptually_related_to--> `codexAdapter`  [AMBIGUOUS]
   README.md → src/adapters.ts
 - `Codex Binary Override Example` --references--> `codexAdapter`  [EXTRACTED]
+  examples/debate.yaml → src/adapters.ts
+- `Graphify Query Path Explain Commands` --conceptually_related_to--> `Claude Graphify Grep Hook`  [INFERRED]
+  .agents/skills/graphify/SKILL.md → .claude/settings.json
+- `Graphify Update And Hook Workflow` --conceptually_related_to--> `Codex Graphify Hook Check`  [INFERRED]
+  .agents/skills/graphify/SKILL.md → .codex/hooks.json
+- `Example Debate Config` --references--> `claudeAdapter`  [EXTRACTED]
   examples/debate.yaml → src/adapters.ts
 
 ## Import Cycles
@@ -81,11 +92,11 @@
 - **AI Debate Participant Lineup** — Cover_claude_participant, Cover_codex_participant, Cover_gemini_participant [EXTRACTED 1.00]
 - **AI Tribunal Visual Metaphor** — Cover_claude_participant, Cover_codex_participant, Cover_gemini_participant, Cover_judge_role, Cover_scales_of_justice, Cover_gavel [INFERRED 0.84]
 
-## Communities (37 total, 7 thin omitted)
+## Communities (42 total, 8 thin omitted)
 
 ### Community 0 - "Debate Engine & Transport Core"
-Cohesion: 0.08
-Nodes (43): AgentResult, agyAdapter, Antigravity Text-Only Output, claudeAdapter, Claude JSON Envelope Classification, codexAdapter, Codex JSONL Stream Classification, Participant Protocol (+35 more)
+Cohesion: 0.09
+Nodes (38): AgentResult, agyAdapter, Antigravity Text-Only Output, claudeAdapter, Claude JSON Envelope Classification, codexAdapter, Codex JSONL Stream Classification, Participant Protocol (+30 more)
 
 ### Community 1 - "Headless CLI Capabilities"
 Cohesion: 0.07
@@ -112,8 +123,8 @@ Cohesion: 0.31
 Nodes (10): AI Agent Adjudication, AI Debate Courtroom, Claude Participant, Codex Participant, Gavel, Gemini Participant, Holographic Interfaces, Judge Role (+2 more)
 
 ### Community 7 - "Design Document Chain"
-Cohesion: 0.20
-Nodes (9): description, engines, node, name, scripts, debate, test, type (+1 more)
+Cohesion: 0.18
+Nodes (10): description, engines, node, license, name, scripts, debate, test (+2 more)
 
 ### Community 8 - "Tool Permissions & Aider"
 Cohesion: 0.32
@@ -176,8 +187,8 @@ Cohesion: 0.20
 Nodes (8): Architecture, Development Style, Git And Workspace Hygiene, graphify, Non-Negotiable Invariants, Project Context, Runtime And Commands, Verification Guidance
 
 ### Community 29 - "Community 29"
-Cohesion: 0.20
-Nodes (8): Architecture (four files, clean layers), Best practices, Commands, Design docs, graphify, Known v0 limitations (from `4_PLAN.md`), Non-obvious invariants — do not break these, What this is
+Cohesion: 0.18
+Nodes (9): Architecture (four files, clean layers), Best practices, Commands, Design docs, graphify, Known v0 limitations (from `4_PLAN.md`), Known v0 limitations (from `docs/4_PLAN.md`), Non-obvious invariants — do not break these (+1 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.20
@@ -203,14 +214,30 @@ Nodes (5): Files, Installed versions on this machine (2026-06-05), Provenance, R
 Cohesion: 0.40
 Nodes (4): [0.0.1] — Kaizen MVP v0, [0.0.2] — Agent tooling & knowledge graph, [0.0.3] — Hardening after the first real-repo run, Changelog
 
+### Community 37 - "Community 37"
+Cohesion: 0.07
+Nodes (26): 1. Use Real Agent Harnesses, 2. Local First, 3. Markdown as Source of Truth, 4. Debate Over Chat, Agent Adapter Model, Architecture, Branch Isolation, Consensus Engine (+18 more)
+
+### Community 38 - "Community 38"
+Cohesion: 0.08
+Nodes (24): 10. Open risks and decisions, 1. Positioning, 2. Premise and validation, 3. The Disputatio protocol, 4. Roles and participants, 5. Executable evidence, 6. Convergence and human-in-the-loop, 7. Contribution contract (+16 more)
+
+### Community 39 - "Community 39"
+Cohesion: 0.11
+Nodes (17): 10. Testing strategy, 11. Milestones, 12. Open decisions carried in, 1. Stack & rationale, 2. Architecture & modules, 3. Domain model & data, 4. Transport layer (the risky core), 5. Normalization layer (+9 more)
+
+### Community 40 - "Community 40"
+Cohesion: 0.12
+Nodes (15): 1. Scope, 2. Architecture: separate Transport from Normalization, 3. The output contract — three levels, 4.1 Claude Code (`claude`) — rich JSON envelope, 4.2 OpenAI Codex (`codex`) — rich JSONL stream, 4.3 Google Antigravity (`agy`) — text-only, 4. Per-CLI adapter specs (grounded in canary), 5. Capability tiers → minimum adapter requirement (+7 more)
+
 ## Ambiguous Edges - Review These
 - `codexAdapter` → `README Codex Adapter Deferred Note`  [AMBIGUOUS]
   README.md · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **309 isolated node(s):** `name`, `version`, `description`, `type`, `debate` (+304 more)
+- **372 isolated node(s):** `name`, `version`, `description`, `type`, `license` (+367 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -218,13 +245,13 @@ _Questions this graph is uniquely positioned to answer:_
 - **What is the exact relationship between `codexAdapter` and `README Codex Adapter Deferred Note`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **Why does `What You Must Do When Invoked` connect `Community 20` to `Community 22`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+  _High betweenness centrality (0.003) - this node is a cross-community bridge._
 - **Why does `/graphify` connect `Community 22` to `Community 20`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+  _High betweenness centrality (0.003) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _309 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _372 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Debate Engine & Transport Core` be split into smaller, more focused modules?**
-  _Cohesion score 0.08084163898117387 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09103840682788052 - nodes in this community are weakly interconnected._
 - **Should `Headless CLI Capabilities` be split into smaller, more focused modules?**
   _Cohesion score 0.07084785133565621 - nodes in this community are weakly interconnected._
 - **Should `Source Code Modules` be split into smaller, more focused modules?**

@@ -2,6 +2,36 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.0.4] — `doctor` preflight (M0, canary half)
+
+The first half of the M0 milestone (`docs/4_PLAN.md`): before a real debate spends
+tokens, prove every participant CLI actually round-trips. This is also what lets
+colleagues test Disputatio on a fresh machine — the #1 onboarding failure is a CLI
+that's missing, shadowed by a stale shim, or not authenticated.
+
+- **`doctor` preflight** (`src/doctor.ts`, new) — `node src/index.ts --doctor` canaries
+  each participant with a trivial "pong" prompt, run isolated through the *same* adapter
+  classifiers a real turn uses. Surfaces missing binary, stale asdf shim (exit 126/127),
+  expired auth, or a broken CLI — fast (90s canary timeout, not the 10m debate timeout)
+  and, on spawn failures, free (exit 127 before any tokens are spent). Exit 0 = all
+  healthy, exit 1 = something's off.
+- **Honest classification** — canary success is `r.ok` (a well-formed success envelope),
+  **never** a text match on the reply, so doctor doesn't go flaky on model
+  verbosity/punctuation. Each failed `Diagnosis` carries the raw adapter error, so the
+  codex stale-shim footgun (0.1.x shadowing 0.139.0) stays diagnosable from doctor
+  output alone.
+- **Wiring** (`src/index.ts`) — `--doctor` branches to the preflight *before* any
+  task-file/rounds/repo logic, so it's never mistaken for a task file; `buildParticipant`
+  refactored to take an explicit `timeoutMs` (doctor passes the short canary timeout).
+  `runIsolated` exported from `src/debate.ts` for reuse.
+- **Tests** — 4 `node:test` tests (`test/doctor.test.ts`) exercising the canary fan-out,
+  failure classification, the `allHealthy` gate, and report formatting via stub
+  participants (the CLI transport is already covered by `adapters.test.ts`). Suite now 29
+  tests, no real agent calls.
+- **Deferred, on purpose** (Kaizen) — a `--version` probe ("is it installed", a cheaper
+  question than "is it authenticated") and a Node ≥ 24 check are the natural next M0
+  increment and belong on the adapter, behind the anti-corruption boundary.
+
 ## [0.0.3] — Hardening after the first real-repo run
 
 Every change here traces to the 2026-06-11 repo-grounded run

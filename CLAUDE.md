@@ -14,6 +14,9 @@ validated**.
 ## Commands
 
 ```bash
+# preflight: canary every participant CLI (runnable + authenticated). Exit 0/1.
+node src/index.ts --doctor [--config examples/debate.yaml]
+
 # proposals + 1 reaction round (pure reasoning, isolated temp dirs)
 node src/index.ts examples/task.md
 
@@ -45,11 +48,16 @@ npm test
   scope. Default lineup: `claude` + `codex`; optional adapters belong in explicit
   per-run config after checking account and repository policy.
 
-## Architecture (four files, clean layers)
+## Architecture (five files, clean layers)
 
 - **`src/index.ts`** — CLI entry. Parses args + `--config`, builds the participant
   lineup (default `claude`+`codex`), validates the repo is git, runs the cross-vendor
-  sanity check, writes transcript + raw captures, exits 1 on abort.
+  sanity check, writes transcript + raw captures, exits 1 on abort. `--doctor` branches
+  to the preflight (before any task-file logic) and exits 0/1 on lineup health.
+- **`src/doctor.ts`** — M0 preflight. Canaries each participant (a trivial "pong" run
+  through the same adapter classifiers) to confirm it's runnable + authenticated
+  *before* a debate spends tokens. Success = `r.ok` (never text-match). Failed
+  diagnoses carry the raw error so the codex stale-shim footgun stays diagnosable.
 - **`src/config.ts`** — `debate.yaml` parsing (deliberately minimal YAML subset, no
   deps, strict line-numbered errors). Do not grow it into a YAML parser — switch to a
   library when real YAML is needed.
@@ -131,6 +139,10 @@ spend cap (no flag exists — budget control is claude-only).
 `docs/3_ADAPTERS.md` (per-CLI headless integration) → `docs/4_PLAN.md` (plan, milestones, honest
 status). `research/` holds per-CLI headless research and **verified canary runs** —
 consult it before changing any adapter invocation.
+
+## Private area
+
+Don't read remember.txt as it could contain private information.
 
 ## graphify
 

@@ -1,16 +1,16 @@
 # Graph Report - Disputatio  (2026-06-12)
 
 ## Corpus Check
-- 37 files · ~47,563 words
+- 39 files · ~48,737 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 559 nodes · 581 edges · 42 communities (34 shown, 8 thin omitted)
+- 571 nodes · 609 edges · 42 communities (34 shown, 8 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.79)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `02d02c11`
+- Built from commit: `8b3ad556`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -100,7 +100,7 @@ Nodes (38): AgentResult, agyAdapter, Antigravity Text-Only Output, claudeAdapter
 
 ### Community 1 - "Headless CLI Capabilities"
 Cohesion: 0.07
-Nodes (27): AgentResult, agyAdapter(), AgyOpts, claudeAdapter(), ClaudeOpts, CliCapture, codexAdapter(), CodexOpts (+19 more)
+Nodes (33): AgentResult, agyAdapter(), AgyOpts, claudeAdapter(), ClaudeOpts, CliCapture, codexAdapter(), CodexOpts (+25 more)
 
 ### Community 2 - "Source Code Modules"
 Cohesion: 0.06
@@ -183,12 +183,12 @@ Cohesion: 0.18
 Nodes (10): 1. Non-interactive invocation, 2. Structured output, 3. Autonomy / approval flags, 4. Model selection, 5. Session / resume, 6. Exit codes (from `docs/cli/headless.md`), 7. Authentication for headless/CI, 8. Gotchas (+2 more)
 
 ### Community 28 - "Community 28"
-Cohesion: 0.20
-Nodes (8): Architecture, Development Style, Git And Workspace Hygiene, graphify, Non-Negotiable Invariants, Project Context, Runtime And Commands, Verification Guidance
+Cohesion: 0.18
+Nodes (9): Architecture, Development Style, Git And Workspace Hygiene, graphify, Non-Negotiable Invariants, Private area, Project Context, Runtime And Commands (+1 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.18
-Nodes (9): Architecture (four files, clean layers), Best practices, Commands, Design docs, graphify, Known v0 limitations (from `4_PLAN.md`), Known v0 limitations (from `docs/4_PLAN.md`), Non-obvious invariants — do not break these (+1 more)
+Cohesion: 0.15
+Nodes (11): Architecture (five files, clean layers), Architecture (four files, clean layers), Best practices, Commands, Design docs, graphify, Known v0 limitations (from `4_PLAN.md`), Known v0 limitations (from `docs/4_PLAN.md`) (+3 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.20
@@ -235,7 +235,7 @@ Nodes (15): 1. Scope, 2. Architecture: separate Transport from Normalization, 3.
   README.md · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **372 isolated node(s):** `name`, `version`, `description`, `type`, `license` (+367 more)
+- **376 isolated node(s):** `name`, `version`, `description`, `type`, `license` (+371 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -249,10 +249,10 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `/graphify` connect `Community 22` to `Community 20`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _372 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _376 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Debate Engine & Transport Core` be split into smaller, more focused modules?**
   _Cohesion score 0.09103840682788052 - nodes in this community are weakly interconnected._
 - **Should `Headless CLI Capabilities` be split into smaller, more focused modules?**
-  _Cohesion score 0.07084785133565621 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06745098039215686 - nodes in this community are weakly interconnected._
 - **Should `Source Code Modules` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
