@@ -10,6 +10,8 @@ if [ -n "$FAKE_HANG" ]; then
   sleep 8        # outlive the per-test bound unless the whole group is killed
   exit 0
 fi
+# FAKE_ARGV_FILE: record argv (one arg per line) so tests can assert passed flags.
+[ -n "$FAKE_ARGV_FILE" ] && printf '%s\n' "$@" > "$FAKE_ARGV_FILE"
 [ -n "$FAKE_STDOUT_FILE" ] && cat "$FAKE_STDOUT_FILE"
 [ -n "$FAKE_STDERR" ] && echo "$FAKE_STDERR" >&2
 exit "${FAKE_EXIT:-0}"

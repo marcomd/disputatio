@@ -10,11 +10,16 @@ participants:
   - adapter: claude
     model: sonnet
     maxBudgetUsd: 2
+    # effort: high                 # reasoning effort, to dose token spend.
+    #                              # claude values: low | medium | high | xhigh | max
   - adapter: codex
     bin: /opt/homebrew/bin/codex   # a stale asdf shim shadows the brew codex on this machine
     # model: gpt-5.5               # omit = the account's default model
+    # effort: medium               # codex values: minimal | low | medium | high
+    #                              # (note: codex's value set differs from claude's)
 
 # Optional third participant; enable only when its credentials and policy are
-# appropriate for the target repository.
+# appropriate for the target repository. agy has NO effort key — encode the effort
+# in the model name instead (e.g. "(High)").
 # - adapter: agy
 #   model: Gemini 3.5 Flash (High)

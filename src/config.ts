@@ -13,6 +13,12 @@ export type ParticipantSpec = {
   model?: string;        // omit = the adapter's default (codex: the account default)
   bin?: string;          // override the binary path (e.g. a shadowed codex install)
   maxBudgetUsd?: number; // claude only
+  effort?: string;       // reasoning effort, to dose token spend. claude: --effort
+                         // (low|medium|high|xhigh|max); codex: model_reasoning_effort
+                         // (minimal|low|medium|high). NOT supported by agy (effort is
+                         // baked into the model name, e.g. "Gemini 3.5 Flash (High)").
+                         // Free-form string: the CLI validates it (errors surface in
+                         // the raw capture / --doctor), so this parser stays version-agnostic.
 };
 
 export type DebateConfig = {
@@ -24,7 +30,7 @@ export type DebateConfig = {
 
 const ADAPTERS = new Set<string>(["claude", "agy", "codex"]);
 const TOP_KEYS = new Set<string>(["rounds", "repo", "timeoutMinutes", "participants"]);
-const PARTICIPANT_KEYS = new Set<string>(["adapter", "model", "bin", "maxBudgetUsd"]);
+const PARTICIPANT_KEYS = new Set<string>(["adapter", "model", "bin", "maxBudgetUsd", "effort"]);
 const NUMERIC_KEYS = new Set<string>(["rounds", "timeoutMinutes", "maxBudgetUsd"]);
 
 function fail(lineNo: number, msg: string): never {

@@ -60,7 +60,10 @@ npm test
   diagnoses carry the raw error so the codex stale-shim footgun stays diagnosable.
 - **`src/config.ts`** — `debate.yaml` parsing (deliberately minimal YAML subset, no
   deps, strict line-numbered errors). Do not grow it into a YAML parser — switch to a
-  library when real YAML is needed.
+  library when real YAML is needed. Per-participant keys: `adapter`, `model`, `bin`,
+  `maxBudgetUsd` (claude only), `effort`. `effort` is a **free-form string** passed
+  through to the CLI — the parser does NOT validate it (the CLI does; bad values
+  surface in the raw capture / `--doctor`), so the parser stays version-agnostic.
 - **`src/adapters.ts`** — transport layer. One job: spawn a CLI, capture output,
   classify success/failure. `Participant` = `{ id, display, vendor, run(prompt, cwd) }`.
 - **`src/debate.ts`** — orchestration. Round 1 = parallel independent proposals
@@ -100,6 +103,11 @@ silently reintroduces bugs that were already caught:
   contain spaces — space-separated strings get mis-parsed) + `--permission-mode
   dontAsk` + `--max-budget-usd` (default $2; $1 was exceeded by one real turn);
   `codex`: `-s read-only` (OS-enforced); `agy`: `--sandbox`.
+- **Reasoning `effort` is per-CLI, not uniform.** `claude` takes a native
+  `--effort {low,medium,high,xhigh,max}`; `codex` has no flag — set it via the config
+  override `-c model_reasoning_effort="…"` ({minimal,low,medium,high}); `agy` has NO
+  effort control (effort is baked into the model name, e.g. `(High)`) and `index.ts`
+  warns if `effort` is set for it. Keep the per-CLI mapping when adding adapters.
 - **Exit 126/127 from a spawned CLI is a setup failure, not an agent failure** (stale
   asdf shims shadow real binaries on this machine — `codex` needs
   `bin: /opt/homebrew/bin/codex` in debate.yaml). Keep the hint in `spawnFailure`.

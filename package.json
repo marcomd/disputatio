@@ -1,6 +1,6 @@
 {
   "name": "disputatio",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Structured debate between real AI coding-agent CLIs (Kaizen MVP v0)",
   "type": "module",
   "license": "Apache-2.0",
@@ -8,5 +8,7 @@
     "debate": "node src/index.ts",
     "test": "node --test \"test/*.test.ts\""
   },
-  "engines": { "node": ">=24" }
+  "engines": {
+    "node": ">=24"
+  }
 }

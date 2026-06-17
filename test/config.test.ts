@@ -37,6 +37,14 @@ test("rejects unknown top-level keys with the line number", () => {
   assert.throws(() => parseDebateConfig("round: 2\n"), /line 1: unknown key "round"/);
 });
 
+test("parses per-participant effort (free-form string)", () => {
+  const cfg = parseDebateConfig(
+    "participants:\n  - adapter: claude\n    effort: high\n  - adapter: codex\n    effort: low\n",
+  );
+  assert.equal(cfg.participants?.[0].effort, "high");
+  assert.equal(cfg.participants?.[1].effort, "low");
+});
+
 test("rejects unknown participant keys", () => {
   assert.throws(
     () => parseDebateConfig("participants:\n  - adapter: claude\n    budget: 2\n"),

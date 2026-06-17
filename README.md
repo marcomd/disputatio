@@ -54,7 +54,9 @@ node src/index.ts examples/task.md 2
 # agents work in a throwaway git worktree of HEAD, never your real checkout
 node src/index.ts path/to/task.md 1 /path/to/your/repo
 
-# choose the lineup/models/budgets explicitly (see examples/debate.yaml)
+# choose the lineup/models/budgets/effort explicitly (see examples/debate.yaml).
+# per-participant `effort` doses token spend — claude: low|medium|high|xhigh|max;
+# codex: minimal|low|medium|high; agy: encode it in the model name (no effort key).
 node src/index.ts path/to/task.md 1 /path/to/your/repo --config examples/debate.yaml
 
 # run the test suite (fixture-based, no real agent calls)

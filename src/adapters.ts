@@ -81,7 +81,7 @@ function spawnFailure(r: CliCapture): string | null {
 }
 
 // --- Claude Code: rich JSON envelope -------------------------------------------------
-export type ClaudeOpts = { maxBudgetUsd?: number; timeoutMs?: number };
+export type ClaudeOpts = { maxBudgetUsd?: number; timeoutMs?: number; effort?: string };
 
 export function claudeAdapter(model = "sonnet", opts: ClaudeOpts = {}): Participant {
   // $2 default: a repo-grounded turn approached the old $1 cap.
@@ -104,6 +104,8 @@ export function claudeAdapter(model = "sonnet", opts: ClaudeOpts = {}): Particip
         "--permission-mode", "dontAsk", // headless: deny anything not allowlisted, never prompt
         "--no-session-persistence",
         "--max-budget-usd", String(budget),
+        // Reasoning effort, to dose token spend. Native flag; values: low|medium|high|xhigh|max.
+        ...(opts.effort ? ["--effort", opts.effort] : []),
       ], cwd, timeoutMs);
       if (r.timedOut) return { ok: false, error: "timeout", raw: r };
       const spawnErr = spawnFailure(r);
@@ -160,7 +162,7 @@ export function agyAdapter(model = "Gemini 3.5 Flash (High)", opts: AgyOpts = {}
 }
 
 // --- Codex (OpenAI): JSONL stream ----------------------------------------------------
-export type CodexOpts = { bin?: string; timeoutMs?: number };
+export type CodexOpts = { bin?: string; timeoutMs?: number; effort?: string };
 
 export function codexAdapter(model?: string, opts: CodexOpts = {}): Participant {
   // `bin` is configurable because a stale shim can shadow the real binary
@@ -182,6 +184,9 @@ export function codexAdapter(model?: string, opts: CodexOpts = {}): Participant 
         "--skip-git-repo-check",
         "--ephemeral",
         ...(model ? ["-m", model] : []),
+        // Reasoning effort, to dose token spend. No dedicated flag: set it via a
+        // config override. Values: minimal|low|medium|high.
+        ...(opts.effort ? ["-c", `model_reasoning_effort="${opts.effort}"`] : []),
         prompt,
       ], cwd, timeoutMs);
       if (r.timedOut) return { ok: false, error: "timeout", raw: r };

@@ -49,9 +49,12 @@ const specs: ParticipantSpec[] = cfg.participants ?? [{ adapter: "claude" }, { a
 
 function buildParticipant(s: ParticipantSpec, timeoutMs: number): Participant {
   switch (s.adapter) {
-    case "claude": return claudeAdapter(s.model ?? "sonnet", { maxBudgetUsd: s.maxBudgetUsd, timeoutMs });
-    case "agy": return agyAdapter(s.model ?? "Gemini 3.5 Flash (High)", { timeoutMs });
-    case "codex": return codexAdapter(s.model, { bin: s.bin, timeoutMs });
+    case "claude": return claudeAdapter(s.model ?? "sonnet", { maxBudgetUsd: s.maxBudgetUsd, timeoutMs, effort: s.effort });
+    case "agy":
+      // agy has no effort flag — effort is baked into the model name (e.g. "(High)").
+      if (s.effort) console.error(`[disputatio] ⚠️ agy ignores "effort" — encode it in the model name (e.g. "Gemini 3.5 Flash (High)")`);
+      return agyAdapter(s.model ?? "Gemini 3.5 Flash (High)", { timeoutMs });
+    case "codex": return codexAdapter(s.model, { bin: s.bin, timeoutMs, effort: s.effort });
   }
 }
 

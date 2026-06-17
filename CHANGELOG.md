@@ -2,6 +2,26 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.0.6] — Per-participant reasoning `effort` in `debate.yaml`
+
+- **Per-participant `effort`** (`src/config.ts`, `src/adapters.ts`, `src/index.ts`) — a
+  new optional `effort` key on each participant doses token/time spend per turn, mapped
+  to each CLI's real mechanism: `claude` → native `--effort` (`low|medium|high|xhigh|max`);
+  `codex` → config override `-c model_reasoning_effort="…"` (`minimal|low|medium|high`),
+  since codex has no dedicated flag; `agy` has NO effort control (effort is baked into
+  the model name, e.g. `(High)`), so `index.ts` warns and ignores it. Verified against
+  the installed CLIs (`claude --help`, `codex exec --help`) on 2026-06-17.
+- **Free-form, version-agnostic** — `effort` is passed through to the CLI as-is; the
+  parser does NOT hard-code the allowed values (the CLI validates them, and bad values
+  surface in the raw capture / `--doctor`), so it can't drift out of sync with CLI
+  versions.
+- **Tests** — `test/config.test.ts` parses per-participant `effort`;
+  `test/adapters.test.ts` asserts `claude` receives `--effort high` (and nothing when
+  unset) and `codex` receives the `model_reasoning_effort="high"` override (and nothing
+  when unset), via a new `FAKE_ARGV_FILE` capture in the fake CLI shims.
+- **Docs** — `examples/debate.yaml`, `README.md`, and `CLAUDE.md` document the per-CLI
+  effort mapping and that agy has no effort key.
+
 ## [0.0.5] — Process-group kill + first three-vendor repo-grounded run
 
 - **Process-group kill on timeout** (`src/adapters.ts`) — `runCli` now spawns

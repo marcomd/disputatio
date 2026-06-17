@@ -4,6 +4,7 @@
 
 import { test, beforeEach } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { tmpdir } from "node:os";
@@ -27,6 +28,35 @@ test("claude: success envelope → ok with text and cost", async () => {
   assert.equal(r.ok, true);
   assert.equal(r.ok && r.text, "pong");
   assert.equal(r.ok && r.costUsd, 0.10388775);
+});
+
+test("claude: effort is passed as --effort when set, omitted when absent", async () => {
+  const argvFile = join(tmpdir(), `disputatio-claude-argv-${process.pid}.txt`);
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "claude-success.json");
+  process.env.FAKE_ARGV_FILE = argvFile;
+
+  await claudeAdapter("sonnet", { effort: "high" }).run("ping", cwd);
+  let argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.ok(argv.includes("--effort"), "expected --effort in argv");
+  assert.equal(argv[argv.indexOf("--effort") + 1], "high");
+
+  await claudeAdapter("sonnet").run("ping", cwd);
+  argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.ok(!argv.includes("--effort"), "expected no --effort when effort is unset");
+});
+
+test("codex: effort is passed as model_reasoning_effort override when set, omitted when absent", async () => {
+  const argvFile = join(tmpdir(), `disputatio-codex-argv-${process.pid}.txt`);
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "codex-success.jsonl");
+  process.env.FAKE_ARGV_FILE = argvFile;
+
+  await codexAdapter(undefined, { bin: join(here, "fakes", "codex"), effort: "high" }).run("ping", cwd);
+  let argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.ok(argv.includes(`model_reasoning_effort="high"`), `expected the config override in argv, got ${JSON.stringify(argv)}`);
+
+  await codexAdapter(undefined, { bin: join(here, "fakes", "codex") }).run("ping", cwd);
+  argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.ok(!argv.some((a) => a.startsWith("model_reasoning_effort")), "expected no effort override when unset");
 });
 
 test("claude: budget-exceeded envelope (no `result` string) → error from `errors` array", async () => {

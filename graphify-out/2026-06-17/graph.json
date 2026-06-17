@@ -194,7 +194,7 @@
       "label": "here",
       "file_type": "code",
       "source_file": "test/adapters.test.ts",
-      "source_location": "L13",
+      "source_location": "L12",
       "id": "test_adapters_test_here",
       "community": 1,
       "norm_label": "here"
@@ -203,7 +203,7 @@
       "label": "fixtures",
       "file_type": "code",
       "source_file": "test/adapters.test.ts",
-      "source_location": "L14",
+      "source_location": "L13",
       "id": "test_adapters_test_fixtures",
       "community": 1,
       "norm_label": "fixtures"
@@ -212,7 +212,7 @@
       "label": "cwd",
       "file_type": "code",
       "source_file": "test/adapters.test.ts",
-      "source_location": "L17",
+      "source_location": "L16",
       "id": "test_adapters_test_cwd",
       "community": 1,
       "norm_label": "cwd"
@@ -698,7 +698,7 @@
       "label": "runCli()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L28",
+      "source_location": "L16",
       "id": "src_adapters_runcli",
       "community": 1,
       "norm_label": "runcli()"
@@ -707,7 +707,7 @@
       "label": "AgentResult",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L63",
+      "source_location": "L33",
       "id": "src_adapters_agentresult",
       "community": 1,
       "norm_label": "agentresult"
@@ -716,7 +716,7 @@
       "label": "Participant",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L67",
+      "source_location": "L37",
       "id": "src_adapters_participant",
       "community": 1,
       "norm_label": "participant"
@@ -725,7 +725,7 @@
       "label": "spawnFailure()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L76",
+      "source_location": "L46",
       "id": "src_adapters_spawnfailure",
       "community": 1,
       "norm_label": "spawnfailure()"
@@ -734,7 +734,7 @@
       "label": "ClaudeOpts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L84",
+      "source_location": "L54",
       "id": "src_adapters_claudeopts",
       "community": 1,
       "norm_label": "claudeopts"
@@ -743,7 +743,7 @@
       "label": "claudeAdapter()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L86",
+      "source_location": "L56",
       "id": "src_adapters_claudeadapter",
       "community": 1,
       "norm_label": "claudeadapter()"
@@ -752,7 +752,7 @@
       "label": "AgyOpts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L136",
+      "source_location": "L104",
       "id": "src_adapters_agyopts",
       "community": 1,
       "norm_label": "agyopts"
@@ -761,7 +761,7 @@
       "label": "agyAdapter()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L138",
+      "source_location": "L106",
       "id": "src_adapters_agyadapter",
       "community": 1,
       "norm_label": "agyadapter()"
@@ -770,7 +770,7 @@
       "label": "CodexOpts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L165",
+      "source_location": "L133",
       "id": "src_adapters_codexopts",
       "community": 1,
       "norm_label": "codexopts"
@@ -779,7 +779,7 @@
       "label": "codexAdapter()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L167",
+      "source_location": "L135",
       "id": "src_adapters_codexadapter",
       "community": 1,
       "norm_label": "codexadapter()"
@@ -1022,7 +1022,7 @@
       "label": "participants",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L100",
+      "source_location": "L97",
       "id": "src_index_participants",
       "community": 1,
       "norm_label": "participants"
@@ -1031,7 +1031,7 @@
       "label": "vendors",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L102",
+      "source_location": "L99",
       "id": "src_index_vendors",
       "community": 1,
       "norm_label": "vendors"
@@ -1067,7 +1067,7 @@
       "label": "DebateConfig",
       "file_type": "code",
       "source_file": "src/config.ts",
-      "source_location": "L24",
+      "source_location": "L18",
       "id": "src_config_debateconfig",
       "community": 5,
       "norm_label": "debateconfig"
@@ -1076,7 +1076,7 @@
       "label": "ADAPTERS",
       "file_type": "code",
       "source_file": "src/config.ts",
-      "source_location": "L31",
+      "source_location": "L25",
       "id": "src_config_adapters",
       "community": 5,
       "norm_label": "adapters"
@@ -1085,7 +1085,7 @@
       "label": "TOP_KEYS",
       "file_type": "code",
       "source_file": "src/config.ts",
-      "source_location": "L32",
+      "source_location": "L26",
       "id": "src_config_top_keys",
       "community": 5,
       "norm_label": "top_keys"
@@ -1094,7 +1094,7 @@
       "label": "PARTICIPANT_KEYS",
       "file_type": "code",
       "source_file": "src/config.ts",
-      "source_location": "L33",
+      "source_location": "L27",
       "id": "src_config_participant_keys",
       "community": 5,
       "norm_label": "participant_keys"
@@ -1103,7 +1103,7 @@
       "label": "NUMERIC_KEYS",
       "file_type": "code",
       "source_file": "src/config.ts",
-      "source_location": "L34",
+      "source_location": "L28",
       "id": "src_config_numeric_keys",
       "community": 5,
       "norm_label": "numeric_keys"
@@ -1112,7 +1112,7 @@
       "label": "fail()",
       "file_type": "code",
       "source_file": "src/config.ts",
-      "source_location": "L36",
+      "source_location": "L30",
       "id": "src_config_fail",
       "community": 5,
       "norm_label": "fail()"
@@ -1121,7 +1121,7 @@
       "label": "scalar()",
       "file_type": "code",
       "source_file": "src/config.ts",
-      "source_location": "L40",
+      "source_location": "L34",
       "id": "src_config_scalar",
       "community": 5,
       "norm_label": "scalar()"
@@ -1130,7 +1130,7 @@
       "label": "parseDebateConfig()",
       "file_type": "code",
       "source_file": "src/config.ts",
-      "source_location": "L53",
+      "source_location": "L47",
       "id": "src_config_parsedebateconfig",
       "community": 5,
       "norm_label": "parsedebateconfig()"
@@ -1154,28 +1154,10 @@
       "norm_label": "changelog"
     },
     {
-      "label": "[0.0.5] \u2014 Process-group kill + first three-vendor repo-grounded run",
-      "file_type": "document",
-      "source_file": "CHANGELOG.md",
-      "source_location": "L5",
-      "id": "disputatio_changelog_0_0_5_process_group_kill_first_three_vendor_repo_grounded_run",
-      "community": 35,
-      "norm_label": "[0.0.5] \u2014 process-group kill + first three-vendor repo-grounded run"
-    },
-    {
-      "label": "[0.0.4] \u2014 `doctor` preflight (M0, canary half)",
-      "file_type": "document",
-      "source_file": "CHANGELOG.md",
-      "source_location": "L24",
-      "id": "disputatio_changelog_0_0_4_doctor_preflight_m0_canary_half",
-      "community": 35,
-      "norm_label": "[0.0.4] \u2014 `doctor` preflight (m0, canary half)"
-    },
-    {
       "label": "[0.0.3] \u2014 Hardening after the first real-repo run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L54",
+      "source_location": "L5",
       "id": "disputatio_changelog_0_0_3_hardening_after_the_first_real_repo_run",
       "community": 35,
       "norm_label": "[0.0.3] \u2014 hardening after the first real-repo run"
@@ -1184,7 +1166,7 @@
       "label": "[0.0.2] \u2014 Agent tooling & knowledge graph",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L87",
+      "source_location": "L38",
       "id": "disputatio_changelog_0_0_2_agent_tooling_knowledge_graph",
       "community": 35,
       "norm_label": "[0.0.2] \u2014 agent tooling & knowledge graph"
@@ -1193,7 +1175,7 @@
       "label": "[0.0.1] \u2014 Kaizen MVP v0",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L102",
+      "source_location": "L53",
       "id": "disputatio_changelog_0_0_1_kaizen_mvp_v0",
       "community": 35,
       "norm_label": "[0.0.1] \u2014 kaizen mvp v0"
@@ -1256,7 +1238,7 @@
       "label": "How it works (v0)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L72",
+      "source_location": "L70",
       "id": "disputatio_readme_how_it_works_v0",
       "community": 30,
       "norm_label": "how it works (v0)"
@@ -1265,7 +1247,7 @@
       "label": "Known v0 limitations (next steps)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L85",
+      "source_location": "L83",
       "id": "disputatio_readme_known_v0_limitations_next_steps",
       "community": 30,
       "norm_label": "known v0 limitations (next steps)"
@@ -1274,7 +1256,7 @@
       "label": "Design documents",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L98",
+      "source_location": "L94",
       "id": "disputatio_readme_design_documents",
       "community": 30,
       "norm_label": "design documents"
@@ -1283,7 +1265,7 @@
       "label": "License",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L108",
+      "source_location": "L104",
       "id": "disputatio_readme_license",
       "community": 30,
       "norm_label": "license"
@@ -1328,7 +1310,7 @@
       "label": "Architecture",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L44",
+      "source_location": "L36",
       "id": "disputatio_agents_architecture",
       "community": 28,
       "norm_label": "architecture"
@@ -1337,7 +1319,7 @@
       "label": "Non-Negotiable Invariants",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L64",
+      "source_location": "L49",
       "id": "disputatio_agents_non_negotiable_invariants",
       "community": 28,
       "norm_label": "non-negotiable invariants"
@@ -1346,7 +1328,7 @@
       "label": "Development Style",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L88",
+      "source_location": "L66",
       "id": "disputatio_agents_development_style",
       "community": 28,
       "norm_label": "development style"
@@ -1355,7 +1337,7 @@
       "label": "Verification Guidance",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L101",
+      "source_location": "L79",
       "id": "disputatio_agents_verification_guidance",
       "community": 28,
       "norm_label": "verification guidance"
@@ -1364,7 +1346,7 @@
       "label": "Git And Workspace Hygiene",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L116",
+      "source_location": "L90",
       "id": "disputatio_agents_git_and_workspace_hygiene",
       "community": 28,
       "norm_label": "git and workspace hygiene"
@@ -1373,7 +1355,7 @@
       "label": "Private area",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L124",
+      "source_location": "L98",
       "id": "disputatio_agents_private_area",
       "community": 28,
       "norm_label": "private area"
@@ -1382,7 +1364,7 @@
       "label": "graphify",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L128",
+      "source_location": "L102",
       "id": "disputatio_agents_graphify",
       "community": 28,
       "norm_label": "graphify"
@@ -1436,7 +1418,7 @@
       "label": "Non-obvious invariants \u2014 do not break these",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L77",
+      "source_location": "L74",
       "id": "disputatio_claude_non_obvious_invariants_do_not_break_these",
       "community": 29,
       "norm_label": "non-obvious invariants \u2014 do not break these"
@@ -1445,7 +1427,7 @@
       "label": "Best practices",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L122",
+      "source_location": "L107",
       "id": "disputatio_claude_best_practices",
       "community": 29,
       "norm_label": "best practices"
@@ -1454,7 +1436,7 @@
       "label": "Known v0 limitations (from `docs/4_PLAN.md`)",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L142",
+      "source_location": "L127",
       "id": "disputatio_claude_known_v0_limitations_from_docs_4_plan_md",
       "community": 29,
       "norm_label": "known v0 limitations (from `docs/4_plan.md`)"
@@ -1463,7 +1445,7 @@
       "label": "Design docs",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L150",
+      "source_location": "L136",
       "id": "disputatio_claude_design_docs",
       "community": 29,
       "norm_label": "design docs"
@@ -1472,7 +1454,7 @@
       "label": "Private area",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L157",
+      "source_location": "L143",
       "id": "disputatio_claude_private_area",
       "community": 29,
       "norm_label": "private area"
@@ -1481,7 +1463,7 @@
       "label": "graphify",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L168",
+      "source_location": "L147",
       "id": "disputatio_claude_graphify",
       "community": 29,
       "norm_label": "graphify"
@@ -1764,60 +1746,6 @@
       "id": "research_readme_installed_versions_on_this_machine_2026_06_05",
       "community": 34,
       "norm_label": "installed versions on this machine (2026-06-05)"
-    },
-    {
-      "label": "real-run-2026-06-12-ilovecoding-v0.9.md",
-      "file_type": "document",
-      "source_file": "research/real-run-2026-06-12-ilovecoding-v0.9.md",
-      "source_location": "L1",
-      "id": "research_real_run_2026_06_12_ilovecoding_v0_9_md",
-      "community": 42,
-      "norm_label": "real-run-2026-06-12-ilovecoding-v0.9.md"
-    },
-    {
-      "label": "Real run 2026-06-12 \u2014 I Love Coding v0.9, three-vendor repo-grounded debate",
-      "file_type": "document",
-      "source_file": "research/real-run-2026-06-12-ilovecoding-v0.9.md",
-      "source_location": "L1",
-      "id": "research_real_run_2026_06_12_ilovecoding_v0_9_real_run_2026_06_12_i_love_coding_v0_9_three_vendor_repo_grounded_debate",
-      "community": 42,
-      "norm_label": "real run 2026-06-12 \u2014 i love coding v0.9, three-vendor repo-grounded debate"
-    },
-    {
-      "label": "1. The deadlock \u2014 timeout killed only the direct child (FIXED)",
-      "file_type": "document",
-      "source_file": "research/real-run-2026-06-12-ilovecoding-v0.9.md",
-      "source_location": "L10",
-      "id": "research_real_run_2026_06_12_ilovecoding_v0_9_1_the_deadlock_timeout_killed_only_the_direct_child_fixed",
-      "community": 42,
-      "norm_label": "1. the deadlock \u2014 timeout killed only the direct child (fixed)"
-    },
-    {
-      "label": "2. The debate itself \u2014 premise signal (leans positive, N=1)",
-      "file_type": "document",
-      "source_file": "research/real-run-2026-06-12-ilovecoding-v0.9.md",
-      "source_location": "L37",
-      "id": "research_real_run_2026_06_12_ilovecoding_v0_9_2_the_debate_itself_premise_signal_leans_positive_n_1",
-      "community": 42,
-      "norm_label": "2. the debate itself \u2014 premise signal (leans positive, n=1)"
-    },
-    {
-      "label": "3. Evidence tier \u2014 citations, not failing tests (as predicted)",
-      "file_type": "document",
-      "source_file": "research/real-run-2026-06-12-ilovecoding-v0.9.md",
-      "source_location": "L78",
-      "id": "research_real_run_2026_06_12_ilovecoding_v0_9_3_evidence_tier_citations_not_failing_tests_as_predicted",
-      "community": 42,
-      "norm_label": "3. evidence tier \u2014 citations, not failing tests (as predicted)"
-    },
-    {
-      "label": "4. Cost",
-      "file_type": "document",
-      "source_file": "research/real-run-2026-06-12-ilovecoding-v0.9.md",
-      "source_location": "L88",
-      "id": "research_real_run_2026_06_12_ilovecoding_v0_9_4_cost",
-      "community": 42,
-      "norm_label": "4. cost"
     },
     {
       "label": "claude-code-headless.md",
@@ -2779,7 +2707,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L1",
       "id": "claude_skills_graphify_skill_md",
-      "community": 20,
+      "community": 22,
       "norm_label": "skill.md"
     },
     {
@@ -2788,7 +2716,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L7",
       "id": "claude_skills_graphify_skill_md_graphify_skill_graphify",
-      "community": 20,
+      "community": 22,
       "norm_label": "/graphify"
     },
     {
@@ -2797,7 +2725,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L11",
       "id": "claude_skills_graphify_skill_md_graphify_skill_usage",
-      "community": 20,
+      "community": 22,
       "norm_label": "usage"
     },
     {
@@ -2806,7 +2734,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L44",
       "id": "claude_skills_graphify_skill_md_graphify_skill_what_graphify_is_for",
-      "community": 20,
+      "community": 22,
       "norm_label": "what graphify is for"
     },
     {
@@ -2986,7 +2914,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L768",
       "id": "graphify_skill_interpreter_guard_for_subcommands",
-      "community": 20,
+      "community": 22,
       "norm_label": "interpreter guard for subcommands"
     },
     {
@@ -2995,7 +2923,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L786",
       "id": "claude_skills_graphify_skill_md_graphify_skill_for_update_incremental_re_extraction",
-      "community": 20,
+      "community": 22,
       "norm_label": "for --update (incremental re-extraction)"
     },
     {
@@ -3004,7 +2932,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L947",
       "id": "claude_skills_graphify_skill_md_graphify_skill_for_cluster_only",
-      "community": 20,
+      "community": 22,
       "norm_label": "for --cluster-only"
     },
     {
@@ -3013,7 +2941,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L959",
       "id": "claude_skills_graphify_skill_md_graphify_skill_for_graphify_query",
-      "community": 20,
+      "community": 22,
       "norm_label": "for /graphify query"
     },
     {
@@ -3022,7 +2950,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L968",
       "id": "graphify_skill_step_0_constrained_query_expansion_required_before_traversal",
-      "community": 20,
+      "community": 22,
       "norm_label": "step 0 \u2014 constrained query expansion (required before traversal)"
     },
     {
@@ -3031,7 +2959,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L1006",
       "id": "graphify_skill_step_1_traversal",
-      "community": 20,
+      "community": 22,
       "norm_label": "step 1 \u2014 traversal"
     },
     {
@@ -3040,7 +2968,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L1027",
       "id": "claude_skills_graphify_skill_md_graphify_skill_for_graphify_path",
-      "community": 20,
+      "community": 22,
       "norm_label": "for /graphify path"
     },
     {
@@ -3049,7 +2977,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L1045",
       "id": "claude_skills_graphify_skill_md_graphify_skill_for_graphify_explain",
-      "community": 20,
+      "community": 22,
       "norm_label": "for /graphify explain"
     },
     {
@@ -3058,7 +2986,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L1063",
       "id": "claude_skills_graphify_skill_md_graphify_skill_for_graphify_add",
-      "community": 20,
+      "community": 22,
       "norm_label": "for /graphify add"
     },
     {
@@ -3067,7 +2995,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L1097",
       "id": "claude_skills_graphify_skill_md_graphify_skill_for_watch",
-      "community": 20,
+      "community": 22,
       "norm_label": "for --watch"
     },
     {
@@ -3076,7 +3004,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L1118",
       "id": "claude_skills_graphify_skill_md_graphify_skill_for_git_commit_hook",
-      "community": 20,
+      "community": 22,
       "norm_label": "for git commit hook"
     },
     {
@@ -3085,7 +3013,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L1134",
       "id": "claude_skills_graphify_skill_md_graphify_skill_for_native_claude_md_integration",
-      "community": 20,
+      "community": 22,
       "norm_label": "for native claude.md integration"
     },
     {
@@ -3094,7 +3022,7 @@
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L1150",
       "id": "claude_skills_graphify_skill_md_graphify_skill_honesty_rules",
-      "community": 20,
+      "community": 22,
       "norm_label": "honesty rules"
     },
     {
@@ -3870,60 +3798,6 @@
       "id": "docs_1_idea_success_criteria",
       "community": 37,
       "norm_label": "success criteria"
-    },
-    {
-      "label": "implement_I_Love_Coding_mvp_0_9.md",
-      "file_type": "document",
-      "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
-      "source_location": "L1",
-      "id": "examples_implement_i_love_coding_mvp_0_9_md",
-      "community": 22,
-      "norm_label": "implement_i_love_coding_mvp_0_9.md"
-    },
-    {
-      "label": "Quaestio \u2014 I Love Coding v0.9: the optional local AI character layer",
-      "file_type": "document",
-      "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
-      "source_location": "L1",
-      "id": "examples_implement_i_love_coding_mvp_0_9_quaestio_i_love_coding_v0_9_the_optional_local_ai_character_layer",
-      "community": 22,
-      "norm_label": "quaestio \u2014 i love coding v0.9: the optional local ai character layer"
-    },
-    {
-      "label": "Context",
-      "file_type": "document",
-      "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
-      "source_location": "L3",
-      "id": "examples_implement_i_love_coding_mvp_0_9_context",
-      "community": 22,
-      "norm_label": "context"
-    },
-    {
-      "label": "The feature under debate (v0.9 MVP)",
-      "file_type": "document",
-      "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
-      "source_location": "L29",
-      "id": "examples_implement_i_love_coding_mvp_0_9_the_feature_under_debate_v0_9_mvp",
-      "community": 22,
-      "norm_label": "the feature under debate (v0.9 mvp)"
-    },
-    {
-      "label": "The central question",
-      "file_type": "document",
-      "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
-      "source_location": "L40",
-      "id": "examples_implement_i_love_coding_mvp_0_9_the_central_question",
-      "community": 22,
-      "norm_label": "the central question"
-    },
-    {
-      "label": "How to argue",
-      "file_type": "document",
-      "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
-      "source_location": "L90",
-      "id": "examples_implement_i_love_coding_mvp_0_9_how_to_argue",
-      "community": 22,
-      "norm_label": "how to argue"
     },
     {
       "label": "task.md",
@@ -5897,9 +5771,9 @@
       "source_file": "test/doctor.test.ts",
       "source_location": "L11",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_doctor_test_ts",
-      "target": "src_adapters_agentresult"
+      "target": "src_adapters_agentresult",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -5908,9 +5782,9 @@
       "source_file": "test/doctor.test.ts",
       "source_location": "L11",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_doctor_test_ts",
-      "target": "src_adapters_participant"
+      "target": "src_adapters_participant",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -5919,9 +5793,9 @@
       "source_file": "test/doctor.test.ts",
       "source_location": "L11",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_doctor_test_ts",
-      "target": "src_adapters_ts"
+      "target": "src_adapters_ts",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -5930,9 +5804,9 @@
       "source_file": "test/doctor.test.ts",
       "source_location": "L10",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_doctor_test_ts",
-      "target": "src_doctor_allhealthy"
+      "target": "src_doctor_allhealthy",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -5941,9 +5815,9 @@
       "source_file": "test/doctor.test.ts",
       "source_location": "L10",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_doctor_test_ts",
-      "target": "src_doctor_formatdiagnoses"
+      "target": "src_doctor_formatdiagnoses",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -5952,9 +5826,9 @@
       "source_file": "test/doctor.test.ts",
       "source_location": "L10",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_doctor_test_ts",
-      "target": "src_doctor_rundoctor"
+      "target": "src_doctor_rundoctor",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -5963,9 +5837,9 @@
       "source_file": "test/doctor.test.ts",
       "source_location": "L10",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_doctor_test_ts",
-      "target": "src_doctor_ts"
+      "target": "src_doctor_ts",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -5973,9 +5847,9 @@
       "source_file": "test/doctor.test.ts",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_doctor_test_ts",
-      "target": "test_doctor_test_stub"
+      "target": "test_doctor_test_stub",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -6507,9 +6381,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_ts",
-      "target": "src_adapters_ts"
+      "target": "src_adapters_ts",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -6551,9 +6425,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_ts",
-      "target": "src_adapters_participant"
+      "target": "src_adapters_participant",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -6639,9 +6513,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L12",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_ts",
-      "target": "src_debate_runisolated"
+      "target": "src_debate_runisolated",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -6650,9 +6524,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L12",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_ts",
-      "target": "src_debate_ts"
+      "target": "src_debate_ts",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6660,9 +6534,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L61",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_ts",
-      "target": "src_doctor_allhealthy"
+      "target": "src_doctor_allhealthy",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6670,9 +6544,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L42",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_ts",
-      "target": "src_doctor_diagnose"
+      "target": "src_doctor_diagnose",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6680,9 +6554,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L26",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_ts",
-      "target": "src_doctor_diagnosis"
+      "target": "src_doctor_diagnosis",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6690,9 +6564,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L37",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_ts",
-      "target": "src_doctor_excerpt"
+      "target": "src_doctor_excerpt",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6700,9 +6574,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L67",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_ts",
-      "target": "src_doctor_formatdiagnoses"
+      "target": "src_doctor_formatdiagnoses",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6710,9 +6584,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L57",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_ts",
-      "target": "src_doctor_rundoctor"
+      "target": "src_doctor_rundoctor",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -6721,9 +6595,9 @@
       "source_file": "src/index.ts",
       "source_location": "L9",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_doctor_ts"
+      "target": "src_doctor_ts",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -6732,9 +6606,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L47",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_diagnose",
-      "target": "src_doctor_excerpt"
+      "target": "src_doctor_excerpt",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -6743,9 +6617,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L45",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_diagnose",
-      "target": "src_debate_runisolated"
+      "target": "src_debate_runisolated",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -6754,9 +6628,9 @@
       "source_file": "src/index.ts",
       "source_location": "L9",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_doctor_rundoctor"
+      "target": "src_doctor_rundoctor",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -6765,9 +6639,9 @@
       "source_file": "src/doctor.ts",
       "source_location": "L73",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_doctor_formatdiagnoses",
-      "target": "src_doctor_allhealthy"
+      "target": "src_doctor_allhealthy",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -6776,9 +6650,9 @@
       "source_file": "src/index.ts",
       "source_location": "L9",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_doctor_allhealthy"
+      "target": "src_doctor_allhealthy",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -6787,9 +6661,9 @@
       "source_file": "src/index.ts",
       "source_location": "L9",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_doctor_formatdiagnoses"
+      "target": "src_doctor_formatdiagnoses",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -7234,26 +7108,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "CHANGELOG.md",
-      "source_location": "L24",
-      "weight": 1.0,
-      "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_0_4_doctor_preflight_m0_canary_half",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CHANGELOG.md",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_0_5_process_group_kill_first_three_vendor_repo_grounded_run",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "README.md",
       "source_location": "L1",
       "weight": 1,
@@ -7407,9 +7261,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L98",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "disputatio_agents_agents_md",
-      "target": "disputatio_agents_private_area"
+      "target": "disputatio_agents_private_area",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -7457,9 +7311,9 @@
       "source_file": "CLAUDE.md",
       "source_location": "L51",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "disputatio_claude_claude_md",
-      "target": "disputatio_claude_architecture_five_files_clean_layers"
+      "target": "disputatio_claude_architecture_five_files_clean_layers",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -7547,9 +7401,9 @@
       "source_file": "CLAUDE.md",
       "source_location": "L143",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "disputatio_claude_claude_md",
-      "target": "disputatio_claude_private_area"
+      "target": "disputatio_claude_private_area",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -7840,56 +7694,6 @@
       "confidence_score": 1,
       "source": "research_readme_research_headless_invocation_output_capture_of_ai_coding_agent_clis",
       "target": "research_readme_why_this_discipline_matters"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "research/real-run-2026-06-12-ilovecoding-v0.9.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "research_real_run_2026_06_12_ilovecoding_v0_9_md",
-      "target": "research_real_run_2026_06_12_ilovecoding_v0_9_real_run_2026_06_12_i_love_coding_v0_9_three_vendor_repo_grounded_debate",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "research/real-run-2026-06-12-ilovecoding-v0.9.md",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "research_real_run_2026_06_12_ilovecoding_v0_9_real_run_2026_06_12_i_love_coding_v0_9_three_vendor_repo_grounded_debate",
-      "target": "research_real_run_2026_06_12_ilovecoding_v0_9_1_the_deadlock_timeout_killed_only_the_direct_child_fixed",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "research/real-run-2026-06-12-ilovecoding-v0.9.md",
-      "source_location": "L37",
-      "weight": 1.0,
-      "source": "research_real_run_2026_06_12_ilovecoding_v0_9_real_run_2026_06_12_i_love_coding_v0_9_three_vendor_repo_grounded_debate",
-      "target": "research_real_run_2026_06_12_ilovecoding_v0_9_2_the_debate_itself_premise_signal_leans_positive_n_1",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "research/real-run-2026-06-12-ilovecoding-v0.9.md",
-      "source_location": "L78",
-      "weight": 1.0,
-      "source": "research_real_run_2026_06_12_ilovecoding_v0_9_real_run_2026_06_12_i_love_coding_v0_9_three_vendor_repo_grounded_debate",
-      "target": "research_real_run_2026_06_12_ilovecoding_v0_9_3_evidence_tier_citations_not_failing_tests_as_predicted",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "research/real-run-2026-06-12-ilovecoding-v0.9.md",
-      "source_location": "L88",
-      "weight": 1.0,
-      "source": "research_real_run_2026_06_12_ilovecoding_v0_9_real_run_2026_06_12_i_love_coding_v0_9_three_vendor_repo_grounded_debate",
-      "target": "research_real_run_2026_06_12_ilovecoding_v0_9_4_cost",
-      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -10054,56 +9858,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "examples_implement_i_love_coding_mvp_0_9_md",
-      "target": "examples_implement_i_love_coding_mvp_0_9_quaestio_i_love_coding_v0_9_the_optional_local_ai_character_layer",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "examples_implement_i_love_coding_mvp_0_9_quaestio_i_love_coding_v0_9_the_optional_local_ai_character_layer",
-      "target": "examples_implement_i_love_coding_mvp_0_9_context",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
-      "source_location": "L90",
-      "weight": 1.0,
-      "source": "examples_implement_i_love_coding_mvp_0_9_quaestio_i_love_coding_v0_9_the_optional_local_ai_character_layer",
-      "target": "examples_implement_i_love_coding_mvp_0_9_how_to_argue",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
-      "source_location": "L40",
-      "weight": 1.0,
-      "source": "examples_implement_i_love_coding_mvp_0_9_quaestio_i_love_coding_v0_9_the_optional_local_ai_character_layer",
-      "target": "examples_implement_i_love_coding_mvp_0_9_the_central_question",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
-      "source_location": "L29",
-      "weight": 1.0,
-      "source": "examples_implement_i_love_coding_mvp_0_9_quaestio_i_love_coding_v0_9_the_optional_local_ai_character_layer",
-      "target": "examples_implement_i_love_coding_mvp_0_9_the_feature_under_debate_v0_9_mvp",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "examples/task.md",
       "source_location": "L1",
       "weight": 1,
@@ -11960,5 +11714,5 @@
       "source_file": "assets/images/Cover.jpg"
     }
   ],
-  "built_at_commit": "5bd2b8343a15d029dadb7bc0bfe709591c245078"
+  "built_at_commit": "8b3ad556afd259e8a3600c075e7d68600d02a466"
 }
