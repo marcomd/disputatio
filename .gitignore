@@ -4,4 +4,6 @@ node_modules/
 *.log
 remember.*
 examples/private*
+research/private_*
 graphify-out/cost.json
+tmp/

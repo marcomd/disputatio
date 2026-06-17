@@ -2,6 +2,25 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.0.5] — Process-group kill + first three-vendor repo-grounded run
+
+- **Process-group kill on timeout** (`src/adapters.ts`) — `runCli` now spawns
+  `detached: true` and, on timeout, signals the child's whole process group
+  (`SIGTERM`, then `SIGKILL` after `KILL_GRACE_MS`). Fixes a real deadlock from the
+  2026-06-12 I Love Coding run: a turn overran its cap, `SIGTERM` hit only the direct
+  child, and a leaked worker held the stdout pipe open — so `close` never fired and the
+  whole debate hung ~45 min at ~0 CPU. Regression test in `test/adapters.test.ts`
+  ("leaked worker holding the pipe") reproduces the hang via a `FAKE_HANG` shim that
+  ignores `SIGTERM` and leaks a pipe-holding grandchild. See
+  `research/real-run-2026-06-12-ilovecoding-v0.9.md`.
+- **First three-vendor repo-grounded debate** —
+  `examples/implement_I_Love_Coding_mvp_0_9.{md,debate.yaml}` (claude + codex + agy at
+  comparable tiers) run against a real game repo; lessons recorded in `research/`.
+- **Confidentiality convention** (`.gitignore`, `CLAUDE.md`) — Disputatio is a public
+  repo run against arbitrary projects, so `research/private_*` is now gitignored
+  (mirroring `examples/private*`) and `CLAUDE.md` records the rule: always scrub
+  research notes for project-confidential material before committing.
+
 ## [0.0.4] — `doctor` preflight (M0, canary half)
 
 The first half of the M0 milestone (`docs/4_PLAN.md`): before a real debate spends

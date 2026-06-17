@@ -1,0 +1,24 @@
+# Disputatio config for the I Love Coding v0.9 debate (blog real-world test).
+#
+# Three cross-vendor agents, comparable tiers (model-strength parity per
+# docs/4_PLAN.md §8 — NOT Sonnet vs Flash): Anthropic + OpenAI + Google-Pro.
+# Repo-grounded: agents read the game repo (read-only) in a throwaway worktree.
+#
+# I Love Coding is the author's PERSONAL project, so `agy` (Gemini) is in scope
+# here — unlike work repositories. Run with:
+#   node src/index.ts examples/implement_I_Love_Coding_mvp_0_9.md \
+#     --config examples/implement_I_Love_Coding_mvp_0_9.debate.yaml
+
+rounds: 2
+timeoutMinutes: 10
+repo: /Users/mark/Lavoro/AI/ILoveCoding
+
+participants:
+  - adapter: claude
+    model: sonnet
+    maxBudgetUsd: 3        # repo-grounded turns approached the old $1 cap; headroom
+  - adapter: codex
+    bin: /opt/homebrew/bin/codex   # a stale asdf shim shadows the real codex here
+    # model omitted = the account's default (GPT-5.x family)
+  - adapter: agy
+    model: Gemini 3.1 Pro (High)   # Pro tier for cross-vendor parity, not Flash

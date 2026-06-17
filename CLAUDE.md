@@ -103,6 +103,13 @@ silently reintroduces bugs that were already caught:
 - **Exit 126/127 from a spawned CLI is a setup failure, not an agent failure** (stale
   asdf shims shadow real binaries on this machine — `codex` needs
   `bin: /opt/homebrew/bin/codex` in debate.yaml). Keep the hint in `spawnFailure`.
+- **Timeouts must kill the process GROUP, not just the direct child.** `runCli` spawns
+  `detached: true` (child becomes its own group leader) and, on timeout, signals `-pid`
+  (`SIGTERM`, then `SIGKILL` after `KILL_GRACE_MS`). A real run (2026-06-12, I Love
+  Coding) hung ~45 min at ~0 CPU because killing only the direct child left an orphaned
+  worker holding the stdout pipe open, so `close` never fired. `detached` also makes the
+  group signal safe (it targets the child's group, never the orchestrator's). Regression
+  test: `test/adapters.test.ts` "leaked worker holding the pipe".
 
 ## Best practices
 
@@ -127,8 +134,7 @@ Follow these three working principles when developing in this repo:
 ## Known v0 limitations (from `docs/4_PLAN.md`)
 
 No scholastic `consolidatio`/`respondeo` protocol yet; reaction rounds are parallel
-snapshots (agents don't see each other's same-round reactions); timeout kills only the
-direct child (no process-tree kill); repo mode shows agents HEAD only (uncommitted
+snapshots (agents don't see each other's same-round reactions); repo mode shows agents HEAD only (uncommitted
 changes invisible, untracked artifacts like `node_modules` absent); a worktree shares
 the repo's object store (CLI sandboxes are the second defense layer); `agy` has no
 spend cap (no flag exists — budget control is claude-only).
@@ -143,6 +149,13 @@ consult it before changing any adapter invocation.
 ## Private area
 
 Don't read remember.txt as it could contain private information.
+
+**Disputatio is a public repository, but it runs against arbitrary (often private)
+projects.** Before committing anything under `research/` — or any transcript/example
+captured from a real run — scrub it for project-confidential material (source snippets,
+internal paths, business logic, credentials, customer data). Never commit confidential
+content from a project Disputatio was pointed at. As a last resort, name the file
+`research/private_*` (gitignored, like `examples/private*`) to keep it local-only.
 
 ## graphify
 

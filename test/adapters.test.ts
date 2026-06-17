@@ -80,6 +80,20 @@ test("agy: timeout kills the run and reports it", async () => {
   assert.equal(!r.ok && r.error, "timeout");
 });
 
+test("REGRESSION — leaked worker holding the pipe + SIGTERM-ignoring CLI still times out fast (process-group kill)", async () => {
+  // Reproduces the deadlock from the 2026-06-12 I Love Coding run: a turn ran past
+  // the cap, the timeout SIGTERM'd only the direct child, but a leaked worker kept
+  // stdout open so `close` never fired and the run hung for ~45 min at ~0 CPU.
+  // The fix (detached spawn + process-GROUP kill) must resolve near the timeout.
+  process.env.FAKE_HANG = "1";
+  const start = Date.now();
+  const r = await agyAdapter("Gemini 3.5 Flash (High)", { timeoutMs: 200 }).run("ping", cwd);
+  const elapsed = Date.now() - start;
+  assert.equal(r.ok, false);
+  assert.equal(!r.ok && r.error, "timeout");
+  assert.ok(elapsed < 4000, `expected a fast group-kill timeout, took ${elapsed}ms (the leaked worker is holding the pipe)`);
+});
+
 // --- codex: JSONL ----------------------------------------------------------------------
 
 test("codex: success JSONL → LAST agent_message wins", async () => {

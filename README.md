@@ -86,7 +86,9 @@ worthless) — the partial transcript and raw captures are kept.
   evidence-typing yet.
 - Reaction rounds are parallel snapshots (agents react to proposals, not to each
   other's same-round reactions).
-- Timeout kills the direct child only (process-tree kill is a later hardening).
+- Timeout kills the whole **process group** (`SIGTERM`, then `SIGKILL` after a short
+  grace), so a slow turn can't wedge the run by leaking a worker that holds the output
+  pipe open (lesson from the 2026-06-12 repo-grounded run).
 - Evidence mode shows agents **HEAD only** (uncommitted changes are invisible) and
   untracked build artifacts (`node_modules`, …) are absent from the worktree, so
   some test suites won't run there.

@@ -1,6 +1,15 @@
 #!/bin/sh
 # Fake agent CLI for tests: behavior driven by FAKE_* env vars.
 [ -n "$FAKE_SLEEP" ] && sleep "$FAKE_SLEEP"
+# FAKE_HANG: reproduce the real deadlock — leak a grandchild that keeps the stdout
+# pipe open, and ignore SIGTERM, so only a process-GROUP kill can end the run.
+# Mirrors the leaked-worker hang from the 2026-06-12 I Love Coding run.
+if [ -n "$FAKE_HANG" ]; then
+  sleep 8 &      # grandchild inherits stdout → holds the pipe open after we'd "die"
+  trap '' TERM   # misbehaving CLI ignores SIGTERM to the direct child
+  sleep 8        # outlive the per-test bound unless the whole group is killed
+  exit 0
+fi
 [ -n "$FAKE_STDOUT_FILE" ] && cat "$FAKE_STDOUT_FILE"
 [ -n "$FAKE_STDERR" ] && echo "$FAKE_STDERR" >&2
 exit "${FAKE_EXIT:-0}"

@@ -11,22 +11,52 @@ export const DEFAULT_TIMEOUT_MS = 10 * 60 * 1000;
 
 export type CliCapture = { code: number | null; stdout: string; stderr: string; timedOut: boolean };
 
+// After SIGTERM-ing a timed-out group, wait this long for a graceful exit, then
+// SIGKILL the whole group. A CLI that traps/ignores SIGTERM cannot outlive this.
+export const KILL_GRACE_MS = 2_000;
+
 // Spawn a CLI in `cwd`. stdin is IGNORED (= </dev/null): the canary showed Codex
 // hangs waiting for stdin EOF otherwise. stdout/stderr captured separately.
+//
+// `detached: true` makes the child its OWN process-group leader (pgid === pid) so
+// a timeout can kill the WHOLE tree, not just the direct child. This is a
+// correctness fix, not hygiene: in the 2026-06-12 I Love Coding run a turn ran
+// past the cap, SIGTERM hit only the direct child, and a leaked worker kept the
+// stdout pipe open — so `close` never fired and the whole debate hung ~45 min at
+// ~0 CPU. Group-kill closes the pipe, `close` fires, the turn resolves as timeout,
+// and the round proceeds. (Negative pid in process.kill = signal the group.)
 function runCli(cmd: string, args: string[], cwd: string, timeoutMs: number): Promise<CliCapture> {
   return new Promise((resolve) => {
-    const child = spawn(cmd, args, { cwd, stdio: ["ignore", "pipe", "pipe"] });
+    const child = spawn(cmd, args, { cwd, stdio: ["ignore", "pipe", "pipe"], detached: true });
     let stdout = "";
     let stderr = "";
     let timedOut = false;
+    let hardTimer: ReturnType<typeof setTimeout> | undefined;
+
+    // Signal the child's whole process group. ESRCH (group already gone) is benign.
+    // We target the group (-pid), never node's own group, because `detached` put
+    // the child in its own group — so this can't kill the orchestrator.
+    const killGroup = (signal: NodeJS.Signals) => {
+      try { if (child.pid) process.kill(-child.pid, signal); }
+      catch { /* already dead */ }
+    };
+
     const timer = setTimeout(() => {
       timedOut = true;
-      child.kill("SIGTERM"); // v0: kills the child; process-tree kill is a later hardening (see docs/3_ADAPTERS.md)
+      killGroup("SIGTERM");
+      hardTimer = setTimeout(() => killGroup("SIGKILL"), KILL_GRACE_MS); // escalate if ignored
     }, timeoutMs);
+
+    const finish = (cap: CliCapture) => {
+      clearTimeout(timer);
+      if (hardTimer) clearTimeout(hardTimer);
+      resolve(cap);
+    };
+
     child.stdout.on("data", (d) => { stdout += d.toString(); });
     child.stderr.on("data", (d) => { stderr += d.toString(); });
-    child.on("error", (e) => { clearTimeout(timer); resolve({ code: null, stdout, stderr: String(e), timedOut }); });
-    child.on("close", (code) => { clearTimeout(timer); resolve({ code, stdout, stderr, timedOut }); });
+    child.on("error", (e) => { finish({ code: null, stdout, stderr: String(e), timedOut }); });
+    child.on("close", (code) => { finish({ code, stdout, stderr, timedOut }); });
   });
 }
 
