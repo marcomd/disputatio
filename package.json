@@ -1,14 +1,14 @@
 {
   "name": "disputatio",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Structured debate between real AI coding-agent CLIs (Kaizen MVP v0)",
   "type": "module",
   "license": "Apache-2.0",
   "bin": {
-    "disputatio": "src/index.ts"
+    "disputatio": "dist/index.js"
   },
   "files": [
-    "src",
+    "dist",
     "examples/debate.yaml",
     "examples/task.md",
     "README.md",
@@ -18,9 +18,14 @@
   ],
   "scripts": {
     "debate": "node src/index.ts",
+    "build": "esbuild src/index.ts --bundle --platform=node --format=esm --target=node24 --outfile=dist/index.js",
+    "prepack": "npm run build",
     "test": "node --test \"test/*.test.ts\""
   },
   "engines": {
     "node": ">=24"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.1"
   }
 }

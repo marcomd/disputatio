@@ -36,10 +36,13 @@ Disputatio is built around.
 
 ### Two ways to run it
 
-- **From source** — `git clone`, then `node src/index.ts …`. For hacking on Disputatio.
-- **Installed binary** — `npm install -g disputatio`, then `disputatio …` from anywhere
-  (Node ≥24 runs the TypeScript directly, so there's no build step). The two are
-  interchangeable; examples below use `node src/index.ts`, but `disputatio` works the same.
+- **From source** — `git clone`, then `node src/index.ts …`. Node ≥24 runs the TypeScript
+  directly — **no build step for development**. For hacking on Disputatio.
+- **Installed binary** — `npm install -g disputatio`, then `disputatio …` from anywhere.
+  The published package ships a small bundled JS build (Node refuses to type-strip `.ts`
+  under `node_modules`, so an npm package must ship JS); the bundle is built automatically
+  at publish time. Same behavior as from-source — examples below use `node src/index.ts`,
+  but `disputatio` works identically.
 
 After installing (and logging into each CLI), run **`disputatio --init`** once: it canaries
 the lineup, resolves each CLI's real binary (handling shadowed/stale installs), and writes a

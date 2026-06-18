@@ -1,7 +1,7 @@
 {
   "/Users/mark/Lavoro/AI/Disputatio/package.json": {
-    "mtime": 1781772084.4020445,
-    "ast_hash": "301df023d1a7008f5daa71ed5e7aa89b",
+    "mtime": 1781774793.5038247,
+    "ast_hash": "d2ef64cfe88879f300d09e19ae686ac1",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/.claude/settings.json": {
@@ -30,23 +30,23 @@
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/CHANGELOG.md": {
-    "mtime": 1781772211.405773,
-    "ast_hash": "b9eec4240af691ac29636f4266c3efa2",
+    "mtime": 1781774939.5036347,
+    "ast_hash": "d51093b28da18d3b1da9eebf0efc9a13",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/README.md": {
-    "mtime": 1781772117.386398,
-    "ast_hash": "a9ec9c89e25467ec85a01d272507c84e",
+    "mtime": 1781774905.9507015,
+    "ast_hash": "9445eb8d393d30e7a8ab812fb9113337",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/AGENTS.md": {
-    "mtime": 1781772159.92748,
-    "ast_hash": "e55fe84ba60eb6898fadbdba1a73c8b0",
+    "mtime": 1781774928.6547244,
+    "ast_hash": "c5abd6b5df97f27b69fa7ad57cd56884",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/CLAUDE.md": {
-    "mtime": 1781772190.405467,
-    "ast_hash": "b020afa47820bcbaba167deb4a5188df",
+    "mtime": 1781774919.0195441,
+    "ast_hash": "40f84675cf5baa4e890fe5aebe4299f3",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/research/cursor-and-aider-headless.md": {
@@ -232,6 +232,11 @@
   "/Users/mark/Lavoro/AI/Disputatio/src/install.ts": {
     "mtime": 1781771713.8551261,
     "ast_hash": "23e3f46f38bf3294973d65bc6b6d16f6",
+    "semantic_hash": ""
+  },
+  "/Users/mark/Lavoro/AI/Disputatio/test/build.test.ts": {
+    "mtime": 1781774874.8468592,
+    "ast_hash": "8eeea77699b2d092a9a01b43321037bf",
     "semantic_hash": ""
   }
 }

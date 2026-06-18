@@ -2,6 +2,24 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.2.1] — fix: the published binary couldn't run (ship bundled JS)
+
+`0.2.0` was published with `bin` pointing at `src/index.ts`, but **Node refuses to
+type-strip TypeScript under `node_modules`** (`ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING`),
+so `npm install -g disputatio@0.2.0` produced a `disputatio` that crashed on launch. (The
+0.2.0 verification used `npm link`, whose symlink realpath is the repo — *outside*
+`node_modules` — so it never reproduced the failure. A real `npm install -g` copies files
+*into* `node_modules`.) `0.2.0` is deprecated; use ≥ 0.2.1.
+
+- **Publish-time bundle** (`package.json`, `esbuild` devDependency) — `npm run build`
+  bundles `src/index.ts` → `dist/index.js`, run automatically via the `prepack` hook on
+  `npm pack`/`npm publish`. `bin` now points at the JS bundle. Development stays buildless
+  (`node src/index.ts`, `npm test`); runtime dependencies remain **zero** (esbuild is
+  dev-only). esbuild preserves the source's line-1 shebang — no `--banner` (a second `#!`
+  line is a syntax error).
+- **Regression guard** (`test/build.test.ts`) — asserts the built bin is JS with exactly
+  one line-1 shebang and runs `--help` end to end. Skips on a zero-dep clone (no esbuild).
+
 ## [0.2.0] — portable config + installable `disputatio` binary
 
 Disputatio is now usable two ways off one codebase — from source (`node src/index.ts`)

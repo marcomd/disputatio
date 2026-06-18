@@ -182,10 +182,28 @@
       "norm_label": "debate"
     },
     {
-      "label": "test",
+      "label": "build",
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L21",
+      "id": "disputatio_package_scripts_build",
+      "community": 7,
+      "norm_label": "build"
+    },
+    {
+      "label": "prepack",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L22",
+      "id": "disputatio_package_scripts_prepack",
+      "community": 7,
+      "norm_label": "prepack"
+    },
+    {
+      "label": "test",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L23",
       "id": "disputatio_package_scripts_test",
       "community": 7,
       "norm_label": "test"
@@ -194,7 +212,7 @@
       "label": "engines",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L23",
+      "source_location": "L25",
       "id": "disputatio_package_engines",
       "community": 7,
       "norm_label": "engines"
@@ -203,10 +221,28 @@
       "label": "node",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L24",
+      "source_location": "L26",
       "id": "disputatio_package_engines_node",
       "community": 7,
       "norm_label": "node"
+    },
+    {
+      "label": "devDependencies",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L28",
+      "id": "disputatio_package_devdependencies",
+      "community": 7,
+      "norm_label": "devdependencies"
+    },
+    {
+      "label": "esbuild",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L29",
+      "id": "disputatio_package_devdependencies_esbuild",
+      "community": 7,
+      "norm_label": "esbuild"
     },
     {
       "label": "install.test.ts",
@@ -279,6 +315,33 @@
       "id": "test_adapters_test_cwd",
       "community": 1,
       "norm_label": "cwd"
+    },
+    {
+      "label": "build.test.ts",
+      "file_type": "code",
+      "source_file": "test/build.test.ts",
+      "source_location": "L1",
+      "id": "test_build_test_ts",
+      "community": 43,
+      "norm_label": "build.test.ts"
+    },
+    {
+      "label": "execFileAsync",
+      "file_type": "code",
+      "source_file": "test/build.test.ts",
+      "source_location": "L18",
+      "id": "test_build_test_execfileasync",
+      "community": 43,
+      "norm_label": "execfileasync"
+    },
+    {
+      "label": "root",
+      "file_type": "code",
+      "source_file": "test/build.test.ts",
+      "source_location": "L19",
+      "id": "test_build_test_root",
+      "community": 43,
+      "norm_label": "root"
     },
     {
       "label": "config-resolution.test.ts",
@@ -1186,7 +1249,7 @@
       "source_file": "src/index.ts",
       "source_location": "L1",
       "id": "src_index_ts",
-      "community": 1,
+      "community": 5,
       "norm_label": "index.ts"
     },
     {
@@ -1195,7 +1258,7 @@
       "source_file": "src/index.ts",
       "source_location": "L16",
       "id": "src_index_execfileasync",
-      "community": 1,
+      "community": 5,
       "norm_label": "execfileasync"
     },
     {
@@ -1213,7 +1276,7 @@
       "source_file": "src/index.ts",
       "source_location": "L36",
       "id": "src_index_args",
-      "community": 1,
+      "community": 5,
       "norm_label": "args"
     },
     {
@@ -1222,7 +1285,7 @@
       "source_file": "src/index.ts",
       "source_location": "L43",
       "id": "src_index_positionals",
-      "community": 1,
+      "community": 5,
       "norm_label": "positionals"
     },
     {
@@ -1231,7 +1294,7 @@
       "source_file": "src/index.ts",
       "source_location": "L62",
       "id": "src_index_default_specs",
-      "community": 1,
+      "community": 5,
       "norm_label": "default_specs"
     },
     {
@@ -1240,7 +1303,7 @@
       "source_file": "src/index.ts",
       "source_location": "L63",
       "id": "src_index_default_judge",
-      "community": 1,
+      "community": 5,
       "norm_label": "default_judge"
     },
     {
@@ -1258,7 +1321,7 @@
       "source_file": "src/index.ts",
       "source_location": "L144",
       "id": "src_index_participants",
-      "community": 1,
+      "community": 5,
       "norm_label": "participants"
     },
     {
@@ -1267,7 +1330,7 @@
       "source_file": "src/index.ts",
       "source_location": "L146",
       "id": "src_index_vendors",
-      "community": 1,
+      "community": 5,
       "norm_label": "vendors"
     },
     {
@@ -1424,10 +1487,19 @@
       "norm_label": "changelog"
     },
     {
-      "label": "[0.2.0] \u2014 portable config + installable `disputatio` binary",
+      "label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled JS)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
       "source_location": "L5",
+      "id": "disputatio_changelog_0_2_1_fix_the_published_binary_couldn_t_run_ship_bundled_js",
+      "community": 35,
+      "norm_label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled js)"
+    },
+    {
+      "label": "[0.2.0] \u2014 portable config + installable `disputatio` binary",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L23",
       "id": "disputatio_changelog_0_2_0_portable_config_installable_disputatio_binary",
       "community": 35,
       "norm_label": "[0.2.0] \u2014 portable config + installable `disputatio` binary"
@@ -1436,7 +1508,7 @@
       "label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L33",
+      "source_location": "L51",
       "id": "disputatio_changelog_0_1_0_respondeo_the_judge_stage_first_scholastic_protocol_step",
       "community": 35,
       "norm_label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)"
@@ -1445,7 +1517,7 @@
       "label": "[0.0.6] \u2014 Per-participant reasoning `effort` in `debate.yaml`",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L75",
+      "source_location": "L93",
       "id": "disputatio_changelog_0_0_6_per_participant_reasoning_effort_in_debate_yaml",
       "community": 35,
       "norm_label": "[0.0.6] \u2014 per-participant reasoning `effort` in `debate.yaml`"
@@ -1454,7 +1526,7 @@
       "label": "[0.0.5] \u2014 Process-group kill + first three-vendor repo-grounded run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L95",
+      "source_location": "L113",
       "id": "disputatio_changelog_0_0_5_process_group_kill_first_three_vendor_repo_grounded_run",
       "community": 35,
       "norm_label": "[0.0.5] \u2014 process-group kill + first three-vendor repo-grounded run"
@@ -1463,7 +1535,7 @@
       "label": "[0.0.4] \u2014 `doctor` preflight (M0, canary half)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L114",
+      "source_location": "L132",
       "id": "disputatio_changelog_0_0_4_doctor_preflight_m0_canary_half",
       "community": 35,
       "norm_label": "[0.0.4] \u2014 `doctor` preflight (m0, canary half)"
@@ -1472,7 +1544,7 @@
       "label": "[0.0.3] \u2014 Hardening after the first real-repo run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L144",
+      "source_location": "L162",
       "id": "disputatio_changelog_0_0_3_hardening_after_the_first_real_repo_run",
       "community": 35,
       "norm_label": "[0.0.3] \u2014 hardening after the first real-repo run"
@@ -1481,7 +1553,7 @@
       "label": "[0.0.2] \u2014 Agent tooling & knowledge graph",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L177",
+      "source_location": "L195",
       "id": "disputatio_changelog_0_0_2_agent_tooling_knowledge_graph",
       "community": 35,
       "norm_label": "[0.0.2] \u2014 agent tooling & knowledge graph"
@@ -1490,7 +1562,7 @@
       "label": "[0.0.1] \u2014 Kaizen MVP v0",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L192",
+      "source_location": "L210",
       "id": "disputatio_changelog_0_0_1_kaizen_mvp_v0",
       "community": 35,
       "norm_label": "[0.0.1] \u2014 kaizen mvp v0"
@@ -1553,7 +1625,7 @@
       "label": "Usage",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L52",
+      "source_location": "L55",
       "id": "disputatio_readme_usage",
       "community": 30,
       "norm_label": "usage"
@@ -1562,7 +1634,7 @@
       "label": "How it works (v0)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L91",
+      "source_location": "L94",
       "id": "disputatio_readme_how_it_works_v0",
       "community": 30,
       "norm_label": "how it works (v0)"
@@ -1571,7 +1643,7 @@
       "label": "Known v0 limitations (next steps)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L104",
+      "source_location": "L107",
       "id": "disputatio_readme_known_v0_limitations_next_steps",
       "community": 30,
       "norm_label": "known v0 limitations (next steps)"
@@ -1580,7 +1652,7 @@
       "label": "Design documents",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L117",
+      "source_location": "L120",
       "id": "disputatio_readme_design_documents",
       "community": 30,
       "norm_label": "design documents"
@@ -1589,7 +1661,7 @@
       "label": "License",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L127",
+      "source_location": "L130",
       "id": "disputatio_readme_license",
       "community": 30,
       "norm_label": "license"
@@ -1634,7 +1706,7 @@
       "label": "Architecture",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L53",
+      "source_location": "L58",
       "id": "disputatio_agents_architecture",
       "community": 28,
       "norm_label": "architecture"
@@ -1643,7 +1715,7 @@
       "label": "Non-Negotiable Invariants",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L77",
+      "source_location": "L82",
       "id": "disputatio_agents_non_negotiable_invariants",
       "community": 28,
       "norm_label": "non-negotiable invariants"
@@ -1652,7 +1724,7 @@
       "label": "Development Style",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L101",
+      "source_location": "L106",
       "id": "disputatio_agents_development_style",
       "community": 28,
       "norm_label": "development style"
@@ -1661,7 +1733,7 @@
       "label": "Verification Guidance",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L114",
+      "source_location": "L119",
       "id": "disputatio_agents_verification_guidance",
       "community": 28,
       "norm_label": "verification guidance"
@@ -1670,7 +1742,7 @@
       "label": "Git And Workspace Hygiene",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L129",
+      "source_location": "L134",
       "id": "disputatio_agents_git_and_workspace_hygiene",
       "community": 28,
       "norm_label": "git and workspace hygiene"
@@ -1679,7 +1751,7 @@
       "label": "Private area",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L137",
+      "source_location": "L142",
       "id": "disputatio_agents_private_area",
       "community": 28,
       "norm_label": "private area"
@@ -1688,7 +1760,7 @@
       "label": "graphify",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L141",
+      "source_location": "L146",
       "id": "disputatio_agents_graphify",
       "community": 28,
       "norm_label": "graphify"
@@ -1733,7 +1805,7 @@
       "label": "Architecture (six files, clean layers)",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L55",
+      "source_location": "L66",
       "id": "disputatio_claude_architecture_six_files_clean_layers",
       "community": 29,
       "norm_label": "architecture (six files, clean layers)"
@@ -1742,7 +1814,7 @@
       "label": "Non-obvious invariants \u2014 do not break these",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L90",
+      "source_location": "L101",
       "id": "disputatio_claude_non_obvious_invariants_do_not_break_these",
       "community": 29,
       "norm_label": "non-obvious invariants \u2014 do not break these"
@@ -1751,7 +1823,7 @@
       "label": "Best practices",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L135",
+      "source_location": "L146",
       "id": "disputatio_claude_best_practices",
       "community": 29,
       "norm_label": "best practices"
@@ -1760,7 +1832,7 @@
       "label": "Known v0 limitations (from `docs/4_PLAN.md`)",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L155",
+      "source_location": "L166",
       "id": "disputatio_claude_known_v0_limitations_from_docs_4_plan_md",
       "community": 29,
       "norm_label": "known v0 limitations (from `docs/4_plan.md`)"
@@ -1769,7 +1841,7 @@
       "label": "Design docs",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L163",
+      "source_location": "L174",
       "id": "disputatio_claude_design_docs",
       "community": 29,
       "norm_label": "design docs"
@@ -1778,7 +1850,7 @@
       "label": "Private area",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L170",
+      "source_location": "L181",
       "id": "disputatio_claude_private_area",
       "community": 29,
       "norm_label": "private area"
@@ -1787,7 +1859,7 @@
       "label": "graphify",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L181",
+      "source_location": "L192",
       "id": "disputatio_claude_graphify",
       "community": 29,
       "norm_label": "graphify"
@@ -5960,6 +6032,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "disputatio_package_devdependencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
       "source_location": "L10",
       "weight": 1,
       "confidence_score": 1,
@@ -6040,11 +6122,31 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "disputatio_package_scripts",
+      "target": "disputatio_package_scripts_build",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
       "source_location": "L7",
       "weight": 1,
       "confidence_score": 1,
       "source": "disputatio_package_scripts",
       "target": "disputatio_package_scripts_debate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "disputatio_package_scripts",
+      "target": "disputatio_package_scripts_prepack",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6065,6 +6167,16 @@
       "confidence_score": 1,
       "source": "disputatio_package_engines",
       "target": "disputatio_package_engines_node"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "disputatio_package_devdependencies",
+      "target": "disputatio_package_devdependencies_esbuild",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -6246,6 +6358,26 @@
       "confidence_score": 1,
       "source": "test_adapters_test_ts",
       "target": "test_adapters_test_here"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/build.test.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "test_build_test_ts",
+      "target": "test_build_test_execfileasync",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/build.test.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "test_build_test_ts",
+      "target": "test_build_test_root",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -8305,6 +8437,16 @@
       "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
       "target": "disputatio_changelog_0_2_0_portable_config_installable_disputatio_binary"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "disputatio_changelog_changelog",
+      "target": "disputatio_changelog_0_2_1_fix_the_published_binary_couldn_t_run_ship_bundled_js",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13035,5 +13177,5 @@
       "source_file": "assets/images/Cover.jpg"
     }
   ],
-  "built_at_commit": "595a5628f61a5747531ba06067cb748950a800bb"
+  "built_at_commit": "0374333c81e3be7b18d816799f1b5bac3c58c888"
 }

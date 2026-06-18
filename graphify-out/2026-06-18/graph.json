@@ -1247,7 +1247,7 @@
       "label": "buildParticipant()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L73",
+      "source_location": "L65",
       "id": "src_index_buildparticipant",
       "community": 1,
       "norm_label": "buildparticipant()"
@@ -1256,7 +1256,7 @@
       "label": "participants",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L141",
+      "source_location": "L144",
       "id": "src_index_participants",
       "community": 1,
       "norm_label": "participants"
@@ -1265,7 +1265,7 @@
       "label": "vendors",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L143",
+      "source_location": "L146",
       "id": "src_index_vendors",
       "community": 1,
       "norm_label": "vendors"
@@ -5942,9 +5942,9 @@
       "source_file": "package.json",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_json",
-      "target": "disputatio_package_bin",
-      "confidence_score": 1.0
+      "target": "disputatio_package_bin"
     },
     {
       "relation": "contains",
@@ -5972,9 +5972,9 @@
       "source_file": "package.json",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_json",
-      "target": "disputatio_package_files",
-      "confidence_score": 1.0
+      "target": "disputatio_package_files"
     },
     {
       "relation": "contains",
@@ -6032,9 +6032,9 @@
       "source_file": "package.json",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_package_bin",
-      "target": "disputatio_package_bin_disputatio",
-      "confidence_score": 1.0
+      "target": "disputatio_package_bin_disputatio"
     },
     {
       "relation": "contains",
@@ -6073,9 +6073,9 @@
       "source_file": "test/install.test.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_install_test_ts",
-      "target": "src_adapters_participant",
-      "confidence_score": 1.0
+      "target": "src_adapters_participant"
     },
     {
       "relation": "imports_from",
@@ -6084,9 +6084,9 @@
       "source_file": "test/install.test.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_install_test_ts",
-      "target": "src_adapters_ts",
-      "confidence_score": 1.0
+      "target": "src_adapters_ts"
     },
     {
       "relation": "imports",
@@ -6095,9 +6095,9 @@
       "source_file": "test/install.test.ts",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_install_test_ts",
-      "target": "src_config_participantspec",
-      "confidence_score": 1.0
+      "target": "src_config_participantspec"
     },
     {
       "relation": "imports_from",
@@ -6106,9 +6106,9 @@
       "source_file": "test/install.test.ts",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_install_test_ts",
-      "target": "src_config_ts",
-      "confidence_score": 1.0
+      "target": "src_config_ts"
     },
     {
       "relation": "imports",
@@ -6117,9 +6117,9 @@
       "source_file": "test/install.test.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_install_test_ts",
-      "target": "src_install_resolvebinary",
-      "confidence_score": 1.0
+      "target": "src_install_resolvebinary"
     },
     {
       "relation": "imports",
@@ -6128,9 +6128,9 @@
       "source_file": "test/install.test.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_install_test_ts",
-      "target": "src_install_runinit",
-      "confidence_score": 1.0
+      "target": "src_install_runinit"
     },
     {
       "relation": "imports_from",
@@ -6139,9 +6139,9 @@
       "source_file": "test/install.test.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_install_test_ts",
-      "target": "src_install_ts",
-      "confidence_score": 1.0
+      "target": "src_install_ts"
     },
     {
       "relation": "contains",
@@ -6149,9 +6149,9 @@
       "source_file": "test/install.test.ts",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_install_test_ts",
-      "target": "test_install_test_judge",
-      "confidence_score": 1.0
+      "target": "test_install_test_judge"
     },
     {
       "relation": "contains",
@@ -6159,9 +6159,9 @@
       "source_file": "test/install.test.ts",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_install_test_ts",
-      "target": "test_install_test_stubbuild",
-      "confidence_score": 1.0
+      "target": "test_install_test_stubbuild"
     },
     {
       "relation": "contains",
@@ -6169,9 +6169,9 @@
       "source_file": "test/install.test.ts",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_install_test_ts",
-      "target": "test_install_test_tmpcfg",
-      "confidence_score": 1.0
+      "target": "test_install_test_tmpcfg"
     },
     {
       "relation": "imports",
@@ -6254,9 +6254,9 @@
       "source_file": "test/config-resolution.test.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_config_resolution_test_ts",
-      "target": "src_config_parsedebateconfig",
-      "confidence_score": 1.0
+      "target": "src_config_parsedebateconfig"
     },
     {
       "relation": "imports_from",
@@ -6265,9 +6265,9 @@
       "source_file": "test/config-resolution.test.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_config_resolution_test_ts",
-      "target": "src_config_ts",
-      "confidence_score": 1.0
+      "target": "src_config_ts"
     },
     {
       "relation": "imports",
@@ -6276,9 +6276,9 @@
       "source_file": "test/config-resolution.test.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_config_resolution_test_ts",
-      "target": "src_install_resolveconfigtext",
-      "confidence_score": 1.0
+      "target": "src_install_resolveconfigtext"
     },
     {
       "relation": "imports_from",
@@ -6287,9 +6287,9 @@
       "source_file": "test/config-resolution.test.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_config_resolution_test_ts",
-      "target": "src_install_ts",
-      "confidence_score": 1.0
+      "target": "src_install_ts"
     },
     {
       "relation": "imports",
@@ -6298,9 +6298,9 @@
       "source_file": "test/config-resolution.test.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_config_resolution_test_ts",
-      "target": "src_install_userconfigpath",
-      "confidence_score": 1.0
+      "target": "src_install_userconfigpath"
     },
     {
       "relation": "imports",
@@ -6502,9 +6502,9 @@
       "source_file": "test/config.test.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_config_test_ts",
-      "target": "src_config_serializedebateconfig",
-      "confidence_score": 1.0
+      "target": "src_config_serializedebateconfig"
     },
     {
       "relation": "imports_from",
@@ -7047,9 +7047,9 @@
       "source_file": "src/install.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_adapters_ts",
-      "confidence_score": 1.0
+      "target": "src_adapters_ts"
     },
     {
       "relation": "imports",
@@ -7102,9 +7102,9 @@
       "source_file": "src/install.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_adapters_participant",
-      "confidence_score": 1.0
+      "target": "src_adapters_participant"
     },
     {
       "relation": "calls",
@@ -7272,9 +7272,9 @@
       "source_file": "src/install.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_doctor_ts",
-      "confidence_score": 1.0
+      "target": "src_doctor_ts"
     },
     {
       "relation": "calls",
@@ -7349,9 +7349,9 @@
       "source_file": "src/index.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_install_ts",
-      "confidence_score": 1.0
+      "target": "src_install_ts"
     },
     {
       "relation": "imports",
@@ -7360,9 +7360,9 @@
       "source_file": "src/install.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_config_debateconfig",
-      "confidence_score": 1.0
+      "target": "src_config_debateconfig"
     },
     {
       "relation": "imports",
@@ -7371,9 +7371,9 @@
       "source_file": "src/install.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_config_parsedebateconfig",
-      "confidence_score": 1.0
+      "target": "src_config_parsedebateconfig"
     },
     {
       "relation": "imports",
@@ -7382,9 +7382,9 @@
       "source_file": "src/install.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_config_participantspec",
-      "confidence_score": 1.0
+      "target": "src_config_participantspec"
     },
     {
       "relation": "imports",
@@ -7393,9 +7393,9 @@
       "source_file": "src/install.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_config_serializedebateconfig",
-      "confidence_score": 1.0
+      "target": "src_config_serializedebateconfig"
     },
     {
       "relation": "re_exports",
@@ -7404,9 +7404,9 @@
       "source_file": "src/install.ts",
       "source_location": "L178",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_config_ts",
-      "confidence_score": 1.0
+      "target": "src_config_ts"
     },
     {
       "relation": "imports",
@@ -7415,9 +7415,9 @@
       "source_file": "src/install.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_debate_runisolated",
-      "confidence_score": 1.0
+      "target": "src_debate_runisolated"
     },
     {
       "relation": "imports_from",
@@ -7426,9 +7426,9 @@
       "source_file": "src/install.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_debate_ts",
-      "confidence_score": 1.0
+      "target": "src_debate_ts"
     },
     {
       "relation": "contains",
@@ -7436,9 +7436,9 @@
       "source_file": "src/install.ts",
       "source_location": "L101",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_bin_overridable",
-      "confidence_score": 1.0
+      "target": "src_install_bin_overridable"
     },
     {
       "relation": "contains",
@@ -7446,9 +7446,9 @@
       "source_file": "src/install.ts",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_binresolution",
-      "confidence_score": 1.0
+      "target": "src_install_binresolution"
     },
     {
       "relation": "contains",
@@ -7456,9 +7456,9 @@
       "source_file": "src/install.ts",
       "source_location": "L111",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_defaultcanary",
-      "confidence_score": 1.0
+      "target": "src_install_defaultcanary"
     },
     {
       "relation": "contains",
@@ -7466,9 +7466,9 @@
       "source_file": "src/install.ts",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_execfileasync",
-      "confidence_score": 1.0
+      "target": "src_install_execfileasync"
     },
     {
       "relation": "contains",
@@ -7476,9 +7476,9 @@
       "source_file": "src/install.ts",
       "source_location": "L84",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_findalternatives",
-      "confidence_score": 1.0
+      "target": "src_install_findalternatives"
     },
     {
       "relation": "contains",
@@ -7486,9 +7486,9 @@
       "source_file": "src/install.ts",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_initdeps",
-      "confidence_score": 1.0
+      "target": "src_install_initdeps"
     },
     {
       "relation": "contains",
@@ -7496,9 +7496,9 @@
       "source_file": "src/install.ts",
       "source_location": "L113",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_initresult",
-      "confidence_score": 1.0
+      "target": "src_install_initresult"
     },
     {
       "relation": "contains",
@@ -7506,9 +7506,9 @@
       "source_file": "src/install.ts",
       "source_location": "L83",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_known_bin_dirs",
-      "confidence_score": 1.0
+      "target": "src_install_known_bin_dirs"
     },
     {
       "relation": "contains",
@@ -7516,9 +7516,9 @@
       "source_file": "src/install.ts",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_resolvebinary",
-      "confidence_score": 1.0
+      "target": "src_install_resolvebinary"
     },
     {
       "relation": "contains",
@@ -7526,9 +7526,9 @@
       "source_file": "src/install.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_resolveconfigtext",
-      "confidence_score": 1.0
+      "target": "src_install_resolveconfigtext"
     },
     {
       "relation": "contains",
@@ -7536,9 +7536,9 @@
       "source_file": "src/install.ts",
       "source_location": "L119",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_runinit",
-      "confidence_score": 1.0
+      "target": "src_install_runinit"
     },
     {
       "relation": "contains",
@@ -7546,9 +7546,9 @@
       "source_file": "src/install.ts",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_userconfigpath",
-      "confidence_score": 1.0
+      "target": "src_install_userconfigpath"
     },
     {
       "relation": "calls",
@@ -7557,9 +7557,9 @@
       "source_file": "src/install.ts",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_findalternatives",
-      "target": "src_install_execfileasync",
-      "confidence_score": 1.0
+      "target": "src_install_execfileasync"
     },
     {
       "relation": "imports",
@@ -7568,9 +7568,9 @@
       "source_file": "src/index.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_install_userconfigpath",
-      "confidence_score": 1.0
+      "target": "src_install_userconfigpath"
     },
     {
       "relation": "calls",
@@ -7579,9 +7579,9 @@
       "source_file": "src/index.ts",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_usage",
-      "target": "src_install_userconfigpath",
-      "confidence_score": 1.0
+      "target": "src_install_userconfigpath"
     },
     {
       "relation": "calls",
@@ -7590,9 +7590,9 @@
       "source_file": "src/install.ts",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_resolveconfigtext",
-      "target": "src_install_userconfigpath",
-      "confidence_score": 1.0
+      "target": "src_install_userconfigpath"
     },
     {
       "relation": "imports",
@@ -7601,9 +7601,9 @@
       "source_file": "src/index.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_install_resolveconfigtext",
-      "confidence_score": 1.0
+      "target": "src_install_resolveconfigtext"
     },
     {
       "relation": "calls",
@@ -7612,9 +7612,9 @@
       "source_file": "src/install.ts",
       "source_location": "L138",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_runinit",
-      "target": "src_install_resolvebinary",
-      "confidence_score": 1.0
+      "target": "src_install_resolvebinary"
     },
     {
       "relation": "calls",
@@ -7623,9 +7623,9 @@
       "source_file": "src/install.ts",
       "source_location": "L111",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_defaultcanary",
-      "target": "src_debate_runisolated",
-      "confidence_score": 1.0
+      "target": "src_debate_runisolated"
     },
     {
       "relation": "imports",
@@ -7634,9 +7634,9 @@
       "source_file": "src/index.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_install_runinit",
-      "confidence_score": 1.0
+      "target": "src_install_runinit"
     },
     {
       "relation": "calls",
@@ -7695,9 +7695,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L116",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_debate_ts",
-      "target": "src_debate_parserespondeostatus",
-      "confidence_score": 1.0
+      "target": "src_debate_parserespondeostatus"
     },
     {
       "relation": "contains",
@@ -7745,9 +7745,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_debate_ts",
-      "target": "src_debate_respondeoprompt",
-      "confidence_score": 1.0
+      "target": "src_debate_respondeoprompt"
     },
     {
       "relation": "contains",
@@ -7755,9 +7755,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_debate_ts",
-      "target": "src_debate_respondeostatus",
-      "confidence_score": 1.0
+      "target": "src_debate_respondeostatus"
     },
     {
       "relation": "contains",
@@ -7839,9 +7839,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L176",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_debate_rundebate",
-      "target": "src_debate_runisolated",
-      "confidence_score": 1.0
+      "target": "src_debate_runisolated"
     },
     {
       "relation": "calls",
@@ -7850,9 +7850,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L176",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_debate_rundebate",
-      "target": "src_debate_respondeoprompt",
-      "confidence_score": 1.0
+      "target": "src_debate_respondeoprompt"
     },
     {
       "relation": "calls",
@@ -7861,9 +7861,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L179",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_debate_rundebate",
-      "target": "src_debate_parserespondeostatus",
-      "confidence_score": 1.0
+      "target": "src_debate_parserespondeostatus"
     },
     {
       "relation": "imports",
@@ -7883,9 +7883,9 @@
       "source_file": "src/index.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_config_debateconfig",
-      "confidence_score": 1.0
+      "target": "src_config_debateconfig"
     },
     {
       "relation": "imports",
@@ -7946,9 +7946,9 @@
       "source_file": "src/index.ts",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_index_default_judge",
-      "confidence_score": 1.0
+      "target": "src_index_default_judge"
     },
     {
       "relation": "contains",
@@ -7956,9 +7956,9 @@
       "source_file": "src/index.ts",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_index_default_specs",
-      "confidence_score": 1.0
+      "target": "src_index_default_specs"
     },
     {
       "relation": "contains",
@@ -8046,9 +8046,9 @@
       "source_file": "src/config.ts",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_config_ts",
-      "target": "src_config_emitscalar",
-      "confidence_score": 1.0
+      "target": "src_config_emitscalar"
     },
     {
       "relation": "contains",
@@ -8056,9 +8056,9 @@
       "source_file": "src/config.ts",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_config_ts",
-      "target": "src_config_emitspec",
-      "confidence_score": 1.0
+      "target": "src_config_emitspec"
     },
     {
       "relation": "contains",
@@ -8106,9 +8106,9 @@
       "source_file": "src/config.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_config_ts",
-      "target": "src_config_participant_order",
-      "confidence_score": 1.0
+      "target": "src_config_participant_order"
     },
     {
       "relation": "contains",
@@ -8136,9 +8136,9 @@
       "source_file": "src/config.ts",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_config_ts",
-      "target": "src_config_serializedebateconfig",
-      "confidence_score": 1.0
+      "target": "src_config_serializedebateconfig"
     },
     {
       "relation": "contains",
@@ -8157,9 +8157,9 @@
       "source_file": "src/config.ts",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_config_emitspec",
-      "target": "src_config_emitscalar",
-      "confidence_score": 1.0
+      "target": "src_config_emitscalar"
     },
     {
       "relation": "calls",
@@ -8168,9 +8168,9 @@
       "source_file": "src/config.ts",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_config_serializedebateconfig",
-      "target": "src_config_emitscalar",
-      "confidence_score": 1.0
+      "target": "src_config_emitscalar"
     },
     {
       "relation": "calls",
@@ -8179,9 +8179,9 @@
       "source_file": "src/config.ts",
       "source_location": "L69",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_config_serializedebateconfig",
-      "target": "src_config_emitspec",
-      "confidence_score": 1.0
+      "target": "src_config_emitspec"
     },
     {
       "relation": "calls",
@@ -8282,9 +8282,9 @@
       "source_file": "CHANGELOG.md",
       "source_location": "L75",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_0_6_per_participant_reasoning_effort_in_debate_yaml",
-      "confidence_score": 1.0
+      "target": "disputatio_changelog_0_0_6_per_participant_reasoning_effort_in_debate_yaml"
     },
     {
       "relation": "contains",
@@ -8292,9 +8292,9 @@
       "source_file": "CHANGELOG.md",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_1_0_respondeo_the_judge_stage_first_scholastic_protocol_step",
-      "confidence_score": 1.0
+      "target": "disputatio_changelog_0_1_0_respondeo_the_judge_stage_first_scholastic_protocol_step"
     },
     {
       "relation": "contains",
@@ -8302,9 +8302,9 @@
       "source_file": "CHANGELOG.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_2_0_portable_config_installable_disputatio_binary",
-      "confidence_score": 1.0
+      "target": "disputatio_changelog_0_2_0_portable_config_installable_disputatio_binary"
     },
     {
       "relation": "contains",
@@ -8392,9 +8392,9 @@
       "source_file": "README.md",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_readme_how_to_run",
-      "target": "disputatio_readme_two_ways_to_run_it",
-      "confidence_score": 1.0
+      "target": "disputatio_readme_two_ways_to_run_it"
     },
     {
       "relation": "contains",
@@ -8542,9 +8542,9 @@
       "source_file": "CLAUDE.md",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_claude_claude_md",
-      "target": "disputatio_claude_architecture_six_files_clean_layers",
-      "confidence_score": 1.0
+      "target": "disputatio_claude_architecture_six_files_clean_layers"
     },
     {
       "relation": "contains",

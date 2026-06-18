@@ -15,10 +15,15 @@ avoid speculative rewrites.
 ## Runtime And Commands
 
 - Use Node 24 or newer. `.tool-versions` pins `nodejs 24.16.0`.
-- TypeScript is executed directly by Node. There is no build step, transpiler, or
-  `tsc` workflow.
-- Can also be installed as a binary: `npm install -g disputatio` → `disputatio …`
-  (Node ≥24 runs the `.ts` via the `bin` shebang — no build). Same code as from-source.
+- Development is buildless: TypeScript is executed directly by Node (`node src/index.ts`,
+  `npm test`). No transpiler or `tsc` workflow in the daily loop.
+- Publishing bundles to JS: `npm run build` (esbuild → `dist/index.js`) runs automatically
+  via the `prepack` hook. Required because Node won't type-strip `.ts` under `node_modules`,
+  so the installed `bin` is the bundled `dist/index.js`, not the source. esbuild is a
+  devDependency; there are still zero runtime dependencies.
+- Installed as a binary: `npm install -g disputatio` → `disputatio …`. Verify the binary
+  with `npm pack` + `npm install -g ./<tgz>` (NOT `npm link`, which can't reproduce the
+  node_modules copy).
 - Main usage:
 
 ```bash

@@ -38,9 +38,20 @@ node src/index.ts path/to/task.md 1 /path/to/repo --config examples/debate.yaml
 npm test
 ```
 
-- Runs on **Node ≥ 24**, which executes TypeScript natively — **no build step, no
-  `tsc`, no transpile**. Edit `.ts` and run it directly. (`.tool-versions` pins
-  `nodejs 24.16.0`; this repo uses asdf — prefix bash with `useAll;` to get node on PATH.)
+- **Development is buildless.** Node ≥ 24 executes TypeScript natively — edit `.ts` and
+  run it directly (`node src/index.ts`); `npm test` runs the `.ts` tests as-is. No `tsc`,
+  no transpile in the daily loop. (`.tool-versions` pins `nodejs 24.16.0`; this repo uses
+  asdf — prefix bash with `useAll;` to get node on PATH.)
+- **Publishing bundles to JS** (`npm run build` → `esbuild` → `dist/index.js`, run
+  automatically via the `prepack` hook on `npm pack`/`npm publish`). This is NOT optional:
+  Node refuses to type-strip `.ts` under `node_modules`
+  (`ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING`), so an `npm install -g` of a `.ts` bin
+  crashes — the published `bin` MUST be the bundled `dist/index.js`. esbuild preserves the
+  source shebang on line 1; do **not** also pass `--banner:js` (two `#!` lines → the line-2
+  one is a syntax error; regression-guarded in `test/build.test.ts`). `esbuild` is a
+  devDependency only — Disputatio still has **zero runtime dependencies**. `npm link`
+  does NOT reproduce the node_modules copy (symlink realpath is the repo), so verify the
+  binary with `npm pack` + `npm install -g ./<tgz>`, never `npm link` alone.
 - Tests: `node:test`, zero deps, in `test/` (fixtures captured from real runs + fake
   CLI shims in `test/fakes/`). Run `npm test` after changing `src/`. Real debate runs
   remain the integration test.
