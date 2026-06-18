@@ -63,21 +63,25 @@ disputatio --init
 disputatio --doctor
 disputatio --doctor --config examples/debate.yaml   # check a specific lineup
 
-# one proposal round + one reaction round (pure reasoning, isolated temp dirs)
-disputatio examples/task.md
+# one proposal round + one reaction round (pure reasoning, isolated temp dirs).
+# the quaestio is given inline — quote it so the shell passes it as one argument
+disputatio "Review changes in this branch and find issues."
+
+# for a long quaestio, read it from a markdown file instead
+disputatio --file examples/task.md
 
 # more reaction rounds
-disputatio examples/task.md 2
+disputatio "Review changes in this branch and find issues." --rounds 2
 
 # point the agents at a real repo so they can gather READ-ONLY evidence
 # (this is where the executable-evidence value actually lives);
 # agents work in a throwaway git worktree of HEAD, never your real checkout
-disputatio path/to/task.md 1 /path/to/your/repo
+disputatio "Review changes in this branch and find issues." --repo /path/to/your/repo
 
 # choose the lineup/models/budgets/effort explicitly (see examples/debate.yaml).
 # per-participant `effort` doses token spend — claude: low|medium|high|xhigh|max;
 # codex: minimal|low|medium|high; agy: encode it in the model name (no effort key).
-disputatio path/to/task.md 1 /path/to/your/repo --config examples/debate.yaml
+disputatio --file path/to/task.md --rounds 1 --repo /path/to/your/repo --config examples/debate.yaml
 ```
 
 Output: a transcript at `.debate/debate-<timestamp>/debate.md` (its path is printed
@@ -94,12 +98,12 @@ commands as above, replacing `disputatio` with `node src/index.ts`:
 
 ```bash
 node src/index.ts --doctor
-node src/index.ts examples/task.md
-node src/index.ts path/to/task.md 1 /path/to/your/repo --config examples/debate.yaml
+node src/index.ts "Review changes in this branch and find issues."
+node src/index.ts --file path/to/task.md --rounds 1 --repo /path/to/your/repo --config examples/debate.yaml
 ```
 
-For local development, `npm run debate -- examples/task.md` is equivalent to
-`node src/index.ts examples/task.md`. Run the fixture-based test suite with `npm test`;
+For local development, `npm run debate -- "<quaestio>"` is equivalent to
+`node src/index.ts "<quaestio>"`. Run the fixture-based test suite with `npm test`;
 it does not call real agent CLIs.
 
 ## How it works (v0)

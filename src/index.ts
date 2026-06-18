@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // CLI entry (Kaizen v0). Two run modes off ONE codebase:
-//   - from source:      node src/index.ts <task-file.md> [rounds] [repo-path] [--config debate.yaml]
-//   - installed binary: disputatio <task-file.md> ...   (npm install -g disputatio)
+//   - from source:      node src/index.ts "<quaestio>" [--rounds N] [--repo path] [--config debate.yaml]
+//   - installed binary: disputatio "<quaestio>" ...   (npm install -g disputatio)
+// The quaestio is given inline by default; --file <path> reads it from a markdown file.
+// rounds/repo are named flags (--rounds/--repo), so the quaestio is the only positional.
 // The shebang lets npm's `bin` symlink exec this directly: Node ≥24 type-strips the .ts.
 
 import { mkdir, writeFile, readFile } from "node:fs/promises";
@@ -12,17 +14,20 @@ import { parseDebateConfig, type ParticipantSpec, type DebateConfig } from "./co
 import { runDebate } from "./debate.ts";
 import { runDoctor, allHealthy, formatDiagnoses, CANARY_TIMEOUT_MS } from "./doctor.ts";
 import { resolveConfigText, userConfigPath, runInit } from "./install.ts";
+import { resolveQuaestioInput } from "./quaestio.ts";
 
 const execFileAsync = promisify(execFile);
 
 function usage(exitCode: number): never {
-  console.error("usage: disputatio <task-file.md> [rounds] [repo-path] [--config debate.yaml]");
+  console.error('usage: disputatio "<quaestio>" [--rounds N] [--repo path] [--config debate.yaml]');
+  console.error("       disputatio --file <task-file.md> [--rounds N] [--repo path] [--config debate.yaml]");
   console.error("       disputatio --doctor [--config debate.yaml]");
   console.error("       disputatio --init [--config debate.yaml] [--force]");
-  console.error("  task-file  markdown file describing the task/quaestio");
-  console.error("  rounds     number of reaction rounds after proposals (default 1)");
-  console.error("  repo-path  optional: agents gather read-only evidence in a throwaway");
-  console.error("             git worktree of this repo (git repos only; HEAD is what they see)");
+  console.error("  quaestio   the question/task to debate, given inline as a string (quote it)");
+  console.error("  --file,-f  read the quaestio from a markdown file instead (for long descriptions)");
+  console.error("  --rounds   number of reaction rounds after proposals (default 1)");
+  console.error("  --repo     optional: agents gather read-only evidence in a throwaway git");
+  console.error("             worktree of this repo (git repos only; HEAD is what they see)");
   console.error("  --config   debate.yaml selecting participants/models/budgets + an optional judge");
   console.error("             (see examples/debate.yaml — a TEMPLATE, never auto-loaded). When omitted,");
   console.error(`             reads ${userConfigPath()} if present, else the built-in lineup: claude + codex, no judge`);
@@ -37,6 +42,9 @@ const args = process.argv.slice(2);
 if (args.length === 0 || args[0] === "-h" || args[0] === "--help") usage(args.length === 0 ? 1 : 0);
 
 let configPath: string | undefined;
+let filePath: string | undefined;
+let roundsArg: string | undefined;
+let repoArg: string | undefined;
 let doctorMode = false;
 let initMode = false;
 let force = false;
@@ -45,6 +53,15 @@ for (let i = 0; i < args.length; i++) {
   if (args[i] === "--config") {
     configPath = args[++i];
     if (!configPath) usage(1);
+  } else if (args[i] === "--file" || args[i] === "-f") {
+    filePath = args[++i];
+    if (!filePath) usage(1);
+  } else if (args[i] === "--rounds") {
+    roundsArg = args[++i];
+    if (roundsArg === undefined) usage(1);
+  } else if (args[i] === "--repo") {
+    repoArg = args[++i];
+    if (!repoArg) usage(1);
   } else if (args[i] === "--doctor") {
     doctorMode = true;
   } else if (args[i] === "--init") {
@@ -112,10 +129,20 @@ if (doctorMode) {
   process.exit(allHealthy(diagnoses) ? 0 : 1);
 }
 
-const [taskFile, roundsArg, repoArg] = positionals;
-if (!taskFile) usage(1);
-
-const task = await readFile(taskFile, "utf8");
+// Quaestio: inline by default (the sole positional), or read from --file <path>.
+const input = resolveQuaestioInput(filePath, positionals);
+if (!input.ok) {
+  console.error(`[disputatio] ${input.error}`);
+  usage(1);
+}
+let task: string;
+if (input.source === "file") {
+  task = await readFile(input.path, "utf8");
+  console.error(`[disputatio] quaestio: ${input.path}`);
+} else {
+  task = input.text;
+  console.error(`[disputatio] quaestio: inline (${input.text.length} chars)`);
+}
 
 const rounds = roundsArg !== undefined ? Number(roundsArg) : cfg.rounds ?? 1;
 if (!Number.isInteger(rounds) || rounds < 0) {

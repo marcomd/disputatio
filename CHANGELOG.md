@@ -2,6 +2,31 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.3.0] — inline quaestio by default; `--rounds`/`--repo` flags
+
+The quaestio no longer has to live in a file: you can ask on the fly. This is a
+deliberate, backward-incompatible CLI change (acceptable pre-1.0): the file path is no
+longer the first positional.
+
+- **Inline quaestio is the default** (`src/index.ts`, `src/quaestio.ts` new) — the sole
+  positional IS the question (`disputatio "Review changes in this branch and find issues."`);
+  `--file <path>` (alias `-f`) reads it from a markdown file instead, for long
+  descriptions. stderr logs the source (`quaestio: inline (N chars)` or `quaestio: <path>`).
+- **`--rounds`/`--repo` are named flags** — rounds and repo path moved off the positionals
+  (where they used to shift depending on `--file`) to explicit `--rounds N` / `--repo path`,
+  so the quaestio is the only positional and there's no positional juggling. Both still fall
+  back to `debate.yaml` (`rounds`/`repo`) then the built-in defaults.
+- **`src/quaestio.ts`** (new, pure — no fs) — resolves the quaestio source and rejects the
+  ambiguous cases with clear errors: no quaestio given, both inline and `--file`, or extra
+  unquoted positionals (`did you forget to quote the quaestio?`). Extracted as a testable
+  seam since `index.ts` runs entirely at module top level. `index.ts` does the actual
+  `readFile`.
+- **Tests** — `test/quaestio.test.ts` covers inline default, `--file` source, and the
+  no-quaestio / conflict / extra-positional rejections. Suite now 62 tests, no real agent
+  calls.
+- **Docs** — `README.md`, `docs/npm-package.md`, and `CLAUDE.md` (Commands + Architecture,
+  now seven files) switched to the inline + `--rounds`/`--repo` form.
+
 ## [0.2.2] — fix: The npm doc now has a short version that links to the one on github
 
 ## [0.2.1] — fix: the published binary couldn't run (ship bundled JS)

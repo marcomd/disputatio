@@ -19,8 +19,9 @@ Authenticate the participant CLIs first, then run:
 ```bash
 disputatio --init
 disputatio --doctor
-disputatio path/to/task.md
-disputatio path/to/task.md 1 /path/to/repo
+disputatio "Review changes in this branch and find issues."
+disputatio "Review changes in this branch and find issues." --rounds 1 --repo /path/to/repo
+disputatio --file path/to/task.md     # long quaestio from a file instead
 ```
 
 `--init` writes `~/.config/disputatio/config.yaml`. `--doctor` canaries the

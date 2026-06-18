@@ -21,18 +21,21 @@ node src/index.ts --init [--config examples/debate.yaml] [--force]
 # preflight: canary every participant CLI (runnable + authenticated). Exit 0/1.
 node src/index.ts --doctor [--config examples/debate.yaml]
 
-# proposals + 1 reaction round (pure reasoning, isolated temp dirs)
-node src/index.ts examples/task.md
+# proposals + 1 reaction round (pure reasoning, isolated temp dirs).
+# the quaestio is the sole positional, given INLINE by default (quote it);
+# --file reads it from disk instead. rounds/repo are named flags.
+node src/index.ts "Review changes in this branch and find issues."
+node src/index.ts --file examples/task.md   # long quaestio from a markdown file
 
 # N reaction rounds
-node src/index.ts examples/task.md 2
+node src/index.ts "Review changes in this branch and find issues." --rounds 2
 
 # point agents at a real repo for READ-ONLY evidence gathering (the actual moat);
 # agents run in a throwaway git worktree of HEAD, never the real checkout
-node src/index.ts path/to/task.md 1 /path/to/repo
+node src/index.ts "Review changes in this branch and find issues." --repo /path/to/repo
 
 # explicit lineup/models/budgets (see examples/debate.yaml)
-node src/index.ts path/to/task.md 1 /path/to/repo --config examples/debate.yaml
+node src/index.ts --file path/to/task.md --rounds 1 --repo /path/to/repo --config examples/debate.yaml
 
 # test suite (fixture-based fake CLIs — no real agent calls, fast)
 npm test
@@ -63,14 +66,23 @@ npm test
   scope. Default lineup: `claude` + `codex`; optional adapters belong in explicit
   per-run config after checking account and repository policy.
 
-## Architecture (six files, clean layers)
+## Architecture (seven files, clean layers)
 
 - **`src/index.ts`** — CLI entry (carries the `#!/usr/bin/env node` shebang so npm's
   `bin` symlink runs it directly; Node ≥24 type-strips the `.ts`). Parses args, resolves
+  the quaestio (inline by default, or `--file <path>` — via `quaestio.ts`), resolves
   config (via `install.ts`), builds the participant lineup (default `claude`+`codex`),
   validates the repo is git, runs the cross-vendor sanity check, writes transcript + raw
   captures, exits 1 on abort. `--doctor` (preflight) and `--init` (setup) branch before
-  any task-file logic and exit 0/1.
+  any quaestio logic and exit 0/1.
+- **`src/quaestio.ts`** — quaestio input resolution. Pure (no fs): given the `--file`
+  path (if any) and the positionals, returns a discriminated result for where the quaestio
+  comes from — `{source:"inline"}` (the sole positional IS the question, the default),
+  `{source:"file"}` (`--file <path>`), or `{ok:false, error}` for the bad cases (no
+  quaestio, both sources, or extra unquoted positionals). rounds/repo are named flags
+  (`--rounds`/`--repo`), NOT positionals, so there is no positional juggling. index.ts
+  does the actual `readFile`. Extracted as a seam so resolution is unit-testable
+  (`test/quaestio.test.ts`) without executing index.ts's top-level body.
 - **`src/install.ts`** — config resolution + the `--init` setup phase. Resolution
   precedence: `--config <path>` → `~/.config/disputatio/config.yaml` → built-in lineup.
   The shipped `examples/debate.yaml` is a TEMPLATE, **never auto-loaded** (that coupling

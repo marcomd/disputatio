@@ -1,7 +1,7 @@
 {
   "/Users/mark/Lavoro/AI/Disputatio/package.json": {
-    "mtime": 1781783019.8154576,
-    "ast_hash": "b7ac893d24a76f6f49b5eede37091d50",
+    "mtime": 1781783421.5802236,
+    "ast_hash": "402ec31797ae789c4e95806d8f7a74b6",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/.claude/settings.json": {
@@ -25,18 +25,18 @@
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/src/index.ts": {
-    "mtime": 1781772454.9874816,
-    "ast_hash": "19d7d3d7afc9907304c466891c21ad3e",
+    "mtime": 1781786082.637826,
+    "ast_hash": "a746422efb27002a6fe70c78944df240",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/CHANGELOG.md": {
-    "mtime": 1781774939.5036347,
-    "ast_hash": "d51093b28da18d3b1da9eebf0efc9a13",
+    "mtime": 1781783478.5065143,
+    "ast_hash": "bbbfe63b858c402e6663cdb418433647",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/README.md": {
-    "mtime": 1781783190.4532511,
-    "ast_hash": "c8eee8b07bd9888a68a580a078f8bf04",
+    "mtime": 1781786049.0959978,
+    "ast_hash": "3e5fdb8f392ce9adbdd3a64bcec5848d",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/AGENTS.md": {
@@ -45,8 +45,8 @@
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/CLAUDE.md": {
-    "mtime": 1781774919.0195441,
-    "ast_hash": "40f84675cf5baa4e890fe5aebe4299f3",
+    "mtime": 1781786072.1488662,
+    "ast_hash": "1142291393929faa5f1e6210e09b8ed8",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/research/cursor-and-aider-headless.md": {
@@ -250,8 +250,18 @@
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/docs/npm-package.md": {
-    "mtime": 1781783182.3076189,
-    "ast_hash": "efb33e59e39b246e697963baff078204",
+    "mtime": 1781786054.192582,
+    "ast_hash": "77b30cfc478f4d542e66ba64a31b51d8",
+    "semantic_hash": ""
+  },
+  "/Users/mark/Lavoro/AI/Disputatio/test/quaestio.test.ts": {
+    "mtime": 1781785965.9381506,
+    "ast_hash": "9127c51117cbf09128ea73c9ef403820",
+    "semantic_hash": ""
+  },
+  "/Users/mark/Lavoro/AI/Disputatio/src/quaestio.ts": {
+    "mtime": 1781785973.3382137,
+    "ast_hash": "de698f3bca38646fcddb1f5002bd2eee",
     "semantic_hash": ""
   }
 }

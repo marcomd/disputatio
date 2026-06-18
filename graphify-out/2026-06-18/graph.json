@@ -137,10 +137,64 @@
       "norm_label": "license"
     },
     {
-      "label": "bin",
+      "label": "repository",
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L7",
+      "id": "disputatio_package_repository",
+      "community": 7,
+      "norm_label": "repository"
+    },
+    {
+      "label": "type",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L8",
+      "id": "disputatio_package_repository_type",
+      "community": 7,
+      "norm_label": "type"
+    },
+    {
+      "label": "url",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L9",
+      "id": "disputatio_package_repository_url",
+      "community": 7,
+      "norm_label": "url"
+    },
+    {
+      "label": "homepage",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L11",
+      "id": "disputatio_package_homepage",
+      "community": 7,
+      "norm_label": "homepage"
+    },
+    {
+      "label": "bugs",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L12",
+      "id": "disputatio_package_bugs",
+      "community": 7,
+      "norm_label": "bugs"
+    },
+    {
+      "label": "url",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L13",
+      "id": "disputatio_package_bugs_url",
+      "community": 7,
+      "norm_label": "url"
+    },
+    {
+      "label": "bin",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L15",
       "id": "disputatio_package_bin",
       "community": 7,
       "norm_label": "bin"
@@ -149,7 +203,7 @@
       "label": "disputatio",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L8",
+      "source_location": "L16",
       "id": "disputatio_package_bin_disputatio",
       "community": 7,
       "norm_label": "disputatio"
@@ -158,7 +212,7 @@
       "label": "files",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L10",
+      "source_location": "L18",
       "id": "disputatio_package_files",
       "community": 7,
       "norm_label": "files"
@@ -167,7 +221,7 @@
       "label": "scripts",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L19",
+      "source_location": "L27",
       "id": "disputatio_package_scripts",
       "community": 7,
       "norm_label": "scripts"
@@ -176,7 +230,7 @@
       "label": "debate",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L20",
+      "source_location": "L28",
       "id": "disputatio_package_scripts_debate",
       "community": 7,
       "norm_label": "debate"
@@ -185,7 +239,7 @@
       "label": "build",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L21",
+      "source_location": "L29",
       "id": "disputatio_package_scripts_build",
       "community": 7,
       "norm_label": "build"
@@ -194,16 +248,34 @@
       "label": "prepack",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L22",
+      "source_location": "L30",
       "id": "disputatio_package_scripts_prepack",
       "community": 7,
       "norm_label": "prepack"
     },
     {
+      "label": "postpack",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L31",
+      "id": "disputatio_package_scripts_postpack",
+      "community": 7,
+      "norm_label": "postpack"
+    },
+    {
+      "label": "restore-readme",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L32",
+      "id": "disputatio_package_scripts_restore_readme",
+      "community": 7,
+      "norm_label": "restore-readme"
+    },
+    {
       "label": "test",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L23",
+      "source_location": "L33",
       "id": "disputatio_package_scripts_test",
       "community": 7,
       "norm_label": "test"
@@ -212,7 +284,7 @@
       "label": "engines",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L35",
       "id": "disputatio_package_engines",
       "community": 7,
       "norm_label": "engines"
@@ -221,7 +293,7 @@
       "label": "node",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L36",
       "id": "disputatio_package_engines_node",
       "community": 7,
       "norm_label": "node"
@@ -230,7 +302,7 @@
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L38",
       "id": "disputatio_package_devdependencies",
       "community": 7,
       "norm_label": "devdependencies"
@@ -239,7 +311,7 @@
       "label": "esbuild",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L39",
       "id": "disputatio_package_devdependencies_esbuild",
       "community": 7,
       "norm_label": "esbuild"
@@ -250,7 +322,7 @@
       "source_file": "test/install.test.ts",
       "source_location": "L1",
       "id": "test_install_test_ts",
-      "community": 5,
+      "community": 45,
       "norm_label": "install.test.ts"
     },
     {
@@ -259,7 +331,7 @@
       "source_file": "test/install.test.ts",
       "source_location": "L42",
       "id": "test_install_test_stubbuild",
-      "community": 5,
+      "community": 45,
       "norm_label": "stubbuild()"
     },
     {
@@ -268,7 +340,7 @@
       "source_file": "test/install.test.ts",
       "source_location": "L51",
       "id": "test_install_test_judge",
-      "community": 5,
+      "community": 45,
       "norm_label": "judge"
     },
     {
@@ -277,7 +349,7 @@
       "source_file": "test/install.test.ts",
       "source_location": "L52",
       "id": "test_install_test_tmpcfg",
-      "community": 5,
+      "community": 45,
       "norm_label": "tmpcfg()"
     },
     {
@@ -286,7 +358,7 @@
       "source_file": "test/adapters.test.ts",
       "source_location": "L1",
       "id": "test_adapters_test_ts",
-      "community": 1,
+      "community": 46,
       "norm_label": "adapters.test.ts"
     },
     {
@@ -295,7 +367,7 @@
       "source_file": "test/adapters.test.ts",
       "source_location": "L13",
       "id": "test_adapters_test_here",
-      "community": 1,
+      "community": 46,
       "norm_label": "here"
     },
     {
@@ -304,7 +376,7 @@
       "source_file": "test/adapters.test.ts",
       "source_location": "L14",
       "id": "test_adapters_test_fixtures",
-      "community": 1,
+      "community": 46,
       "norm_label": "fixtures"
     },
     {
@@ -313,7 +385,7 @@
       "source_file": "test/adapters.test.ts",
       "source_location": "L17",
       "id": "test_adapters_test_cwd",
-      "community": 1,
+      "community": 46,
       "norm_label": "cwd"
     },
     {
@@ -349,7 +421,7 @@
       "source_file": "test/config-resolution.test.ts",
       "source_location": "L1",
       "id": "test_config_resolution_test_ts",
-      "community": 5,
+      "community": 44,
       "norm_label": "config-resolution.test.ts"
     },
     {
@@ -398,12 +470,21 @@
       "norm_label": "fail()"
     },
     {
+      "label": "quaestio.test.ts",
+      "file_type": "code",
+      "source_file": "test/quaestio.test.ts",
+      "source_location": "L1",
+      "id": "test_quaestio_test_ts",
+      "community": 44,
+      "norm_label": "quaestio.test.ts"
+    },
+    {
       "label": "doctor.test.ts",
       "file_type": "code",
       "source_file": "test/doctor.test.ts",
       "source_location": "L1",
       "id": "test_doctor_test_ts",
-      "community": 1,
+      "community": 47,
       "norm_label": "doctor.test.ts"
     },
     {
@@ -412,7 +493,7 @@
       "source_file": "test/doctor.test.ts",
       "source_location": "L13",
       "id": "test_doctor_test_stub",
-      "community": 1,
+      "community": 47,
       "norm_label": "stub()"
     },
     {
@@ -812,12 +893,102 @@
       "norm_label": "pretooluse"
     },
     {
+      "label": "use-npm-readme.mjs",
+      "file_type": "code",
+      "source_file": "scripts/use-npm-readme.mjs",
+      "source_location": "L1",
+      "id": "scripts_use_npm_readme_mjs",
+      "community": 50,
+      "norm_label": "use-npm-readme.mjs"
+    },
+    {
+      "label": "root",
+      "file_type": "code",
+      "source_file": "scripts/use-npm-readme.mjs",
+      "source_location": "L4",
+      "id": "scripts_use_npm_readme_root",
+      "community": 50,
+      "norm_label": "root"
+    },
+    {
+      "label": "repoReadme",
+      "file_type": "code",
+      "source_file": "scripts/use-npm-readme.mjs",
+      "source_location": "L5",
+      "id": "scripts_use_npm_readme_reporeadme",
+      "community": 50,
+      "norm_label": "reporeadme"
+    },
+    {
+      "label": "npmReadme",
+      "file_type": "code",
+      "source_file": "scripts/use-npm-readme.mjs",
+      "source_location": "L6",
+      "id": "scripts_use_npm_readme_npmreadme",
+      "community": 50,
+      "norm_label": "npmreadme"
+    },
+    {
+      "label": "backupReadme",
+      "file_type": "code",
+      "source_file": "scripts/use-npm-readme.mjs",
+      "source_location": "L7",
+      "id": "scripts_use_npm_readme_backupreadme",
+      "community": 50,
+      "norm_label": "backupreadme"
+    },
+    {
+      "label": "exists()",
+      "file_type": "code",
+      "source_file": "scripts/use-npm-readme.mjs",
+      "source_location": "L9",
+      "id": "scripts_use_npm_readme_exists",
+      "community": 50,
+      "norm_label": "exists()"
+    },
+    {
+      "label": "restore-repo-readme.mjs",
+      "file_type": "code",
+      "source_file": "scripts/restore-repo-readme.mjs",
+      "source_location": "L1",
+      "id": "scripts_restore_repo_readme_mjs",
+      "community": 51,
+      "norm_label": "restore-repo-readme.mjs"
+    },
+    {
+      "label": "root",
+      "file_type": "code",
+      "source_file": "scripts/restore-repo-readme.mjs",
+      "source_location": "L4",
+      "id": "scripts_restore_repo_readme_root",
+      "community": 51,
+      "norm_label": "root"
+    },
+    {
+      "label": "repoReadme",
+      "file_type": "code",
+      "source_file": "scripts/restore-repo-readme.mjs",
+      "source_location": "L5",
+      "id": "scripts_restore_repo_readme_reporeadme",
+      "community": 51,
+      "norm_label": "reporeadme"
+    },
+    {
+      "label": "backupReadme",
+      "file_type": "code",
+      "source_file": "scripts/restore-repo-readme.mjs",
+      "source_location": "L6",
+      "id": "scripts_restore_repo_readme_backupreadme",
+      "community": 51,
+      "norm_label": "backupreadme"
+    },
+    {
       "label": "adapters.ts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
       "source_location": "L1",
       "id": "src_adapters_ts",
-      "community": 1,
+      "community": 46,
       "norm_label": "adapters.ts"
     },
     {
@@ -826,7 +997,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L12",
       "id": "src_adapters_clicapture",
-      "community": 1,
+      "community": 46,
       "norm_label": "clicapture"
     },
     {
@@ -835,7 +1006,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L28",
       "id": "src_adapters_runcli",
-      "community": 1,
+      "community": 46,
       "norm_label": "runcli()"
     },
     {
@@ -853,7 +1024,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L67",
       "id": "src_adapters_participant",
-      "community": 1,
+      "community": 47,
       "norm_label": "participant"
     },
     {
@@ -862,7 +1033,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L76",
       "id": "src_adapters_spawnfailure",
-      "community": 1,
+      "community": 46,
       "norm_label": "spawnfailure()"
     },
     {
@@ -871,7 +1042,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L84",
       "id": "src_adapters_claudeopts",
-      "community": 1,
+      "community": 46,
       "norm_label": "claudeopts"
     },
     {
@@ -880,7 +1051,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L86",
       "id": "src_adapters_claudeadapter",
-      "community": 1,
+      "community": 46,
       "norm_label": "claudeadapter()"
     },
     {
@@ -889,7 +1060,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L136",
       "id": "src_adapters_agyopts",
-      "community": 1,
+      "community": 46,
       "norm_label": "agyopts"
     },
     {
@@ -898,7 +1069,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L138",
       "id": "src_adapters_agyadapter",
-      "community": 1,
+      "community": 46,
       "norm_label": "agyadapter()"
     },
     {
@@ -907,7 +1078,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L165",
       "id": "src_adapters_codexopts",
-      "community": 1,
+      "community": 46,
       "norm_label": "codexopts"
     },
     {
@@ -916,7 +1087,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L167",
       "id": "src_adapters_codexadapter",
-      "community": 1,
+      "community": 46,
       "norm_label": "codexadapter()"
     },
     {
@@ -925,7 +1096,7 @@
       "source_file": "src/doctor.ts",
       "source_location": "L1",
       "id": "src_doctor_ts",
-      "community": 1,
+      "community": 47,
       "norm_label": "doctor.ts"
     },
     {
@@ -934,7 +1105,7 @@
       "source_file": "src/doctor.ts",
       "source_location": "L26",
       "id": "src_doctor_diagnosis",
-      "community": 1,
+      "community": 47,
       "norm_label": "diagnosis"
     },
     {
@@ -943,7 +1114,7 @@
       "source_file": "src/doctor.ts",
       "source_location": "L37",
       "id": "src_doctor_excerpt",
-      "community": 1,
+      "community": 47,
       "norm_label": "excerpt()"
     },
     {
@@ -952,7 +1123,7 @@
       "source_file": "src/doctor.ts",
       "source_location": "L42",
       "id": "src_doctor_diagnose",
-      "community": 1,
+      "community": 47,
       "norm_label": "diagnose()"
     },
     {
@@ -961,7 +1132,7 @@
       "source_file": "src/doctor.ts",
       "source_location": "L57",
       "id": "src_doctor_rundoctor",
-      "community": 1,
+      "community": 47,
       "norm_label": "rundoctor()"
     },
     {
@@ -970,7 +1141,7 @@
       "source_file": "src/doctor.ts",
       "source_location": "L61",
       "id": "src_doctor_allhealthy",
-      "community": 1,
+      "community": 47,
       "norm_label": "allhealthy()"
     },
     {
@@ -979,7 +1150,7 @@
       "source_file": "src/doctor.ts",
       "source_location": "L67",
       "id": "src_doctor_formatdiagnoses",
-      "community": 1,
+      "community": 47,
       "norm_label": "formatdiagnoses()"
     },
     {
@@ -988,7 +1159,7 @@
       "source_file": "src/install.ts",
       "source_location": "L1",
       "id": "src_install_ts",
-      "community": 5,
+      "community": 45,
       "norm_label": "install.ts"
     },
     {
@@ -997,7 +1168,7 @@
       "source_file": "src/install.ts",
       "source_location": "L24",
       "id": "src_install_execfileasync",
-      "community": 5,
+      "community": 45,
       "norm_label": "execfileasync"
     },
     {
@@ -1006,7 +1177,7 @@
       "source_file": "src/install.ts",
       "source_location": "L28",
       "id": "src_install_userconfigpath",
-      "community": 5,
+      "community": 44,
       "norm_label": "userconfigpath()"
     },
     {
@@ -1015,7 +1186,7 @@
       "source_file": "src/install.ts",
       "source_location": "L39",
       "id": "src_install_resolveconfigtext",
-      "community": 5,
+      "community": 44,
       "norm_label": "resolveconfigtext()"
     },
     {
@@ -1024,7 +1195,7 @@
       "source_file": "src/install.ts",
       "source_location": "L55",
       "id": "src_install_binresolution",
-      "community": 5,
+      "community": 45,
       "norm_label": "binresolution"
     },
     {
@@ -1033,7 +1204,7 @@
       "source_file": "src/install.ts",
       "source_location": "L64",
       "id": "src_install_resolvebinary",
-      "community": 5,
+      "community": 45,
       "norm_label": "resolvebinary()"
     },
     {
@@ -1042,7 +1213,7 @@
       "source_file": "src/install.ts",
       "source_location": "L83",
       "id": "src_install_known_bin_dirs",
-      "community": 5,
+      "community": 45,
       "norm_label": "known_bin_dirs"
     },
     {
@@ -1051,7 +1222,7 @@
       "source_file": "src/install.ts",
       "source_location": "L84",
       "id": "src_install_findalternatives",
-      "community": 5,
+      "community": 45,
       "norm_label": "findalternatives()"
     },
     {
@@ -1060,7 +1231,7 @@
       "source_file": "src/install.ts",
       "source_location": "L101",
       "id": "src_install_bin_overridable",
-      "community": 5,
+      "community": 45,
       "norm_label": "bin_overridable"
     },
     {
@@ -1069,7 +1240,7 @@
       "source_file": "src/install.ts",
       "source_location": "L103",
       "id": "src_install_initdeps",
-      "community": 5,
+      "community": 45,
       "norm_label": "initdeps"
     },
     {
@@ -1087,7 +1258,7 @@
       "source_file": "src/install.ts",
       "source_location": "L113",
       "id": "src_install_initresult",
-      "community": 5,
+      "community": 45,
       "norm_label": "initresult"
     },
     {
@@ -1096,7 +1267,7 @@
       "source_file": "src/install.ts",
       "source_location": "L119",
       "id": "src_install_runinit",
-      "community": 5,
+      "community": 45,
       "norm_label": "runinit()"
     },
     {
@@ -1244,93 +1415,129 @@
       "norm_label": "rundebate()"
     },
     {
+      "label": "quaestio.ts",
+      "file_type": "code",
+      "source_file": "src/quaestio.ts",
+      "source_location": "L1",
+      "id": "src_quaestio_ts",
+      "community": 44,
+      "norm_label": "quaestio.ts"
+    },
+    {
+      "label": "QuaestioInput",
+      "file_type": "code",
+      "source_file": "src/quaestio.ts",
+      "source_location": "L7",
+      "id": "src_quaestio_quaestioinput",
+      "community": 44,
+      "norm_label": "quaestioinput"
+    },
+    {
+      "label": "resolveQuaestioInput()",
+      "file_type": "code",
+      "source_file": "src/quaestio.ts",
+      "source_location": "L11",
+      "id": "src_quaestio_resolvequaestioinput",
+      "community": 44,
+      "norm_label": "resolvequaestioinput()"
+    },
+    {
       "label": "index.ts",
       "file_type": "code",
       "source_file": "src/index.ts",
       "source_location": "L1",
       "id": "src_index_ts",
-      "community": 5,
+      "community": 44,
       "norm_label": "index.ts"
     },
     {
       "label": "execFileAsync",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L16",
+      "source_location": "L18",
       "id": "src_index_execfileasync",
-      "community": 5,
+      "community": 44,
       "norm_label": "execfileasync"
     },
     {
       "label": "usage()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L18",
+      "source_location": "L20",
       "id": "src_index_usage",
-      "community": 5,
+      "community": 44,
       "norm_label": "usage()"
     },
     {
       "label": "args",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L36",
+      "source_location": "L40",
       "id": "src_index_args",
-      "community": 5,
+      "community": 44,
       "norm_label": "args"
     },
     {
       "label": "positionals",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L43",
+      "source_location": "L48",
       "id": "src_index_positionals",
-      "community": 5,
+      "community": 44,
       "norm_label": "positionals"
     },
     {
       "label": "DEFAULT_SPECS",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L62",
+      "source_location": "L70",
       "id": "src_index_default_specs",
-      "community": 5,
+      "community": 44,
       "norm_label": "default_specs"
     },
     {
       "label": "DEFAULT_JUDGE",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L63",
+      "source_location": "L71",
       "id": "src_index_default_judge",
-      "community": 5,
+      "community": 44,
       "norm_label": "default_judge"
     },
     {
       "label": "buildParticipant()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L65",
+      "source_location": "L73",
       "id": "src_index_buildparticipant",
-      "community": 1,
+      "community": 46,
       "norm_label": "buildparticipant()"
+    },
+    {
+      "label": "input",
+      "file_type": "code",
+      "source_file": "src/index.ts",
+      "source_location": "L124",
+      "id": "src_index_input",
+      "community": 44,
+      "norm_label": "input"
     },
     {
       "label": "participants",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L144",
+      "source_location": "L160",
       "id": "src_index_participants",
-      "community": 5,
+      "community": 44,
       "norm_label": "participants"
     },
     {
       "label": "vendors",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L146",
+      "source_location": "L162",
       "id": "src_index_vendors",
-      "community": 5,
+      "community": 44,
       "norm_label": "vendors"
     },
     {
@@ -1357,7 +1564,7 @@
       "source_file": "src/config.ts",
       "source_location": "L11",
       "id": "src_config_participantspec",
-      "community": 5,
+      "community": 45,
       "norm_label": "participantspec"
     },
     {
@@ -1487,10 +1694,19 @@
       "norm_label": "changelog"
     },
     {
-      "label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled JS)",
+      "label": "[0.2.2] \u2014 fix: The npm doc now has a short version that links to the one on github",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
       "source_location": "L5",
+      "id": "disputatio_changelog_0_2_2_fix_the_npm_doc_now_has_a_short_version_that_links_to_the_one_on_github",
+      "community": 35,
+      "norm_label": "[0.2.2] \u2014 fix: the npm doc now has a short version that links to the one on github"
+    },
+    {
+      "label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled JS)",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L7",
       "id": "disputatio_changelog_0_2_1_fix_the_published_binary_couldn_t_run_ship_bundled_js",
       "community": 35,
       "norm_label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled js)"
@@ -1499,7 +1715,7 @@
       "label": "[0.2.0] \u2014 portable config + installable `disputatio` binary",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L23",
+      "source_location": "L25",
       "id": "disputatio_changelog_0_2_0_portable_config_installable_disputatio_binary",
       "community": 35,
       "norm_label": "[0.2.0] \u2014 portable config + installable `disputatio` binary"
@@ -1508,7 +1724,7 @@
       "label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L51",
+      "source_location": "L53",
       "id": "disputatio_changelog_0_1_0_respondeo_the_judge_stage_first_scholastic_protocol_step",
       "community": 35,
       "norm_label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)"
@@ -1517,7 +1733,7 @@
       "label": "[0.0.6] \u2014 Per-participant reasoning `effort` in `debate.yaml`",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L93",
+      "source_location": "L95",
       "id": "disputatio_changelog_0_0_6_per_participant_reasoning_effort_in_debate_yaml",
       "community": 35,
       "norm_label": "[0.0.6] \u2014 per-participant reasoning `effort` in `debate.yaml`"
@@ -1526,7 +1742,7 @@
       "label": "[0.0.5] \u2014 Process-group kill + first three-vendor repo-grounded run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L113",
+      "source_location": "L115",
       "id": "disputatio_changelog_0_0_5_process_group_kill_first_three_vendor_repo_grounded_run",
       "community": 35,
       "norm_label": "[0.0.5] \u2014 process-group kill + first three-vendor repo-grounded run"
@@ -1535,7 +1751,7 @@
       "label": "[0.0.4] \u2014 `doctor` preflight (M0, canary half)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L132",
+      "source_location": "L134",
       "id": "disputatio_changelog_0_0_4_doctor_preflight_m0_canary_half",
       "community": 35,
       "norm_label": "[0.0.4] \u2014 `doctor` preflight (m0, canary half)"
@@ -1544,7 +1760,7 @@
       "label": "[0.0.3] \u2014 Hardening after the first real-repo run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L162",
+      "source_location": "L164",
       "id": "disputatio_changelog_0_0_3_hardening_after_the_first_real_repo_run",
       "community": 35,
       "norm_label": "[0.0.3] \u2014 hardening after the first real-repo run"
@@ -1553,7 +1769,7 @@
       "label": "[0.0.2] \u2014 Agent tooling & knowledge graph",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L195",
+      "source_location": "L197",
       "id": "disputatio_changelog_0_0_2_agent_tooling_knowledge_graph",
       "community": 35,
       "norm_label": "[0.0.2] \u2014 agent tooling & knowledge graph"
@@ -1562,7 +1778,7 @@
       "label": "[0.0.1] \u2014 Kaizen MVP v0",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L210",
+      "source_location": "L212",
       "id": "disputatio_changelog_0_0_1_kaizen_mvp_v0",
       "community": 35,
       "norm_label": "[0.0.1] \u2014 kaizen mvp v0"
@@ -1613,28 +1829,37 @@
       "norm_label": "prerequisites"
     },
     {
-      "label": "Two ways to run it",
+      "label": "Install and use",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L37",
-      "id": "disputatio_readme_two_ways_to_run_it",
+      "id": "disputatio_readme_install_and_use",
       "community": 30,
-      "norm_label": "two ways to run it"
+      "norm_label": "install and use"
     },
     {
       "label": "Usage",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L55",
+      "source_location": "L53",
       "id": "disputatio_readme_usage",
       "community": 30,
       "norm_label": "usage"
     },
     {
+      "label": "Run from source",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L93",
+      "id": "disputatio_readme_run_from_source",
+      "community": 30,
+      "norm_label": "run from source"
+    },
+    {
       "label": "How it works (v0)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L94",
+      "source_location": "L109",
       "id": "disputatio_readme_how_it_works_v0",
       "community": 30,
       "norm_label": "how it works (v0)"
@@ -1643,7 +1868,7 @@
       "label": "Known v0 limitations (next steps)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L107",
+      "source_location": "L122",
       "id": "disputatio_readme_known_v0_limitations_next_steps",
       "community": 30,
       "norm_label": "known v0 limitations (next steps)"
@@ -1652,7 +1877,7 @@
       "label": "Design documents",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L120",
+      "source_location": "L135",
       "id": "disputatio_readme_design_documents",
       "community": 30,
       "norm_label": "design documents"
@@ -1661,7 +1886,7 @@
       "label": "License",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L130",
+      "source_location": "L145",
       "id": "disputatio_readme_license",
       "community": 30,
       "norm_label": "license"
@@ -1802,19 +2027,19 @@
       "norm_label": "commands"
     },
     {
-      "label": "Architecture (six files, clean layers)",
+      "label": "Architecture (seven files, clean layers)",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L66",
-      "id": "disputatio_claude_architecture_six_files_clean_layers",
+      "source_location": "L68",
+      "id": "disputatio_claude_architecture_seven_files_clean_layers",
       "community": 29,
-      "norm_label": "architecture (six files, clean layers)"
+      "norm_label": "architecture (seven files, clean layers)"
     },
     {
       "label": "Non-obvious invariants \u2014 do not break these",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L101",
+      "source_location": "L110",
       "id": "disputatio_claude_non_obvious_invariants_do_not_break_these",
       "community": 29,
       "norm_label": "non-obvious invariants \u2014 do not break these"
@@ -1823,7 +2048,7 @@
       "label": "Best practices",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L146",
+      "source_location": "L155",
       "id": "disputatio_claude_best_practices",
       "community": 29,
       "norm_label": "best practices"
@@ -1832,7 +2057,7 @@
       "label": "Known v0 limitations (from `docs/4_PLAN.md`)",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L166",
+      "source_location": "L175",
       "id": "disputatio_claude_known_v0_limitations_from_docs_4_plan_md",
       "community": 29,
       "norm_label": "known v0 limitations (from `docs/4_plan.md`)"
@@ -1841,7 +2066,7 @@
       "label": "Design docs",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L174",
+      "source_location": "L183",
       "id": "disputatio_claude_design_docs",
       "community": 29,
       "norm_label": "design docs"
@@ -1850,7 +2075,7 @@
       "label": "Private area",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L181",
+      "source_location": "L190",
       "id": "disputatio_claude_private_area",
       "community": 29,
       "norm_label": "private area"
@@ -1859,7 +2084,7 @@
       "label": "graphify",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L192",
+      "source_location": "L201",
       "id": "disputatio_claude_graphify",
       "community": 29,
       "norm_label": "graphify"
@@ -4250,6 +4475,60 @@
       "norm_label": "success criteria"
     },
     {
+      "label": "npm-package.md",
+      "file_type": "document",
+      "source_file": "docs/npm-package.md",
+      "source_location": "L1",
+      "id": "docs_npm_package_md",
+      "community": 49,
+      "norm_label": "npm-package.md"
+    },
+    {
+      "label": "Disputatio",
+      "file_type": "document",
+      "source_file": "docs/npm-package.md",
+      "source_location": "L1",
+      "id": "docs_npm_package_disputatio",
+      "community": 49,
+      "norm_label": "disputatio"
+    },
+    {
+      "label": "Install",
+      "file_type": "document",
+      "source_file": "docs/npm-package.md",
+      "source_location": "L9",
+      "id": "docs_npm_package_install",
+      "community": 49,
+      "norm_label": "install"
+    },
+    {
+      "label": "Quick start",
+      "file_type": "document",
+      "source_file": "docs/npm-package.md",
+      "source_location": "L15",
+      "id": "docs_npm_package_quick_start",
+      "community": 49,
+      "norm_label": "quick start"
+    },
+    {
+      "label": "Documentation",
+      "file_type": "document",
+      "source_file": "docs/npm-package.md",
+      "source_location": "L33",
+      "id": "docs_npm_package_documentation",
+      "community": 49,
+      "norm_label": "documentation"
+    },
+    {
+      "label": "Status",
+      "file_type": "document",
+      "source_file": "docs/npm-package.md",
+      "source_location": "L40",
+      "id": "docs_npm_package_status",
+      "community": 49,
+      "norm_label": "status"
+    },
+    {
       "label": "implement_I_Love_Coding_mvp_0_9.md",
       "file_type": "document",
       "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
@@ -4320,6 +4599,24 @@
       "id": "examples_task_task",
       "community": 36,
       "norm_label": "task"
+    },
+    {
+      "label": "Architecture (six files, clean layers)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L66",
+      "community": 29,
+      "norm_label": "architecture (six files, clean layers)",
+      "id": "disputatio_claude_architecture_six_files_clean_layers"
+    },
+    {
+      "label": "Two ways to run it",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L37",
+      "community": 30,
+      "norm_label": "two ways to run it",
+      "id": "disputatio_readme_two_ways_to_run_it"
     },
     {
       "label": "Architecture (five files, clean layers)",
@@ -6022,6 +6319,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_json",
+      "target": "disputatio_package_bugs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
       "source_location": "L4",
       "weight": 1,
       "confidence_score": 1,
@@ -6034,9 +6341,9 @@
       "source_file": "package.json",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_json",
-      "target": "disputatio_package_devdependencies",
-      "confidence_score": 1.0
+      "target": "disputatio_package_devdependencies"
     },
     {
       "relation": "contains",
@@ -6062,6 +6369,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_json",
+      "target": "disputatio_package_homepage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
       "source_location": "L6",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -6077,6 +6394,16 @@
       "confidence_score": 1,
       "source": "package_json",
       "target": "disputatio_package_name"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_json",
+      "target": "disputatio_package_repository"
     },
     {
       "relation": "contains",
@@ -6115,6 +6442,36 @@
       "source_location": "L8",
       "weight": 1.0,
       "confidence_score": 1.0,
+      "source": "disputatio_package_repository",
+      "target": "disputatio_package_repository_type"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "disputatio_package_repository",
+      "target": "disputatio_package_repository_url"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "disputatio_package_bugs",
+      "target": "disputatio_package_bugs_url"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_package_bin",
       "target": "disputatio_package_bin_disputatio"
     },
@@ -6124,9 +6481,9 @@
       "source_file": "package.json",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_package_scripts",
-      "target": "disputatio_package_scripts_build",
-      "confidence_score": 1.0
+      "target": "disputatio_package_scripts_build"
     },
     {
       "relation": "contains",
@@ -6142,11 +6499,31 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "disputatio_package_scripts",
+      "target": "disputatio_package_scripts_postpack"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_package_scripts",
-      "target": "disputatio_package_scripts_prepack",
-      "confidence_score": 1.0
+      "target": "disputatio_package_scripts_prepack"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "disputatio_package_scripts",
+      "target": "disputatio_package_scripts_restore_readme"
     },
     {
       "relation": "contains",
@@ -6174,9 +6551,9 @@
       "source_file": "package.json",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_package_devdependencies",
-      "target": "disputatio_package_devdependencies_esbuild",
-      "confidence_score": 1.0
+      "target": "disputatio_package_devdependencies_esbuild"
     },
     {
       "relation": "imports",
@@ -6365,9 +6742,9 @@
       "source_file": "test/build.test.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_build_test_ts",
-      "target": "test_build_test_execfileasync",
-      "confidence_score": 1.0
+      "target": "test_build_test_execfileasync"
     },
     {
       "relation": "contains",
@@ -6375,9 +6752,9 @@
       "source_file": "test/build.test.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_build_test_ts",
-      "target": "test_build_test_root",
-      "confidence_score": 1.0
+      "target": "test_build_test_root"
     },
     {
       "relation": "imports",
@@ -6528,6 +6905,28 @@
       "confidence_score": 1,
       "source": "test_debate_test_ts",
       "target": "test_debate_test_ok"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "test/quaestio.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "test_quaestio_test_ts",
+      "target": "src_quaestio_resolvequaestioinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "test/quaestio.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "test_quaestio_test_ts",
+      "target": "src_quaestio_ts",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -7028,6 +7427,86 @@
       "confidence_score": 1,
       "source": "codex_hooks_hooks",
       "target": "codex_hooks_hooks_pretooluse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/use-npm-readme.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_use_npm_readme_mjs",
+      "target": "scripts_use_npm_readme_backupreadme"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/use-npm-readme.mjs",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_use_npm_readme_mjs",
+      "target": "scripts_use_npm_readme_exists"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/use-npm-readme.mjs",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_use_npm_readme_mjs",
+      "target": "scripts_use_npm_readme_npmreadme"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/use-npm-readme.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_use_npm_readme_mjs",
+      "target": "scripts_use_npm_readme_reporeadme"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/use-npm-readme.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_use_npm_readme_mjs",
+      "target": "scripts_use_npm_readme_root"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/restore-repo-readme.mjs",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_restore_repo_readme_mjs",
+      "target": "scripts_restore_repo_readme_backupreadme"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/restore-repo-readme.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_restore_repo_readme_mjs",
+      "target": "scripts_restore_repo_readme_reporeadme"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/restore-repo-readme.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_restore_repo_readme_mjs",
+      "target": "scripts_restore_repo_readme_root"
     },
     {
       "relation": "contains",
@@ -8009,6 +8488,48 @@
       "target": "src_debate_rundebate"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_index_ts",
+      "target": "src_quaestio_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/quaestio.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_quaestio_ts",
+      "target": "src_quaestio_quaestioinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/quaestio.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_quaestio_ts",
+      "target": "src_quaestio_resolvequaestioinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_index_ts",
+      "target": "src_quaestio_resolvequaestioinput",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -8101,6 +8622,16 @@
       "confidence_score": 1,
       "source": "src_index_ts",
       "target": "src_index_execfileasync"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L124",
+      "weight": 1.0,
+      "source": "src_index_ts",
+      "target": "src_index_input",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8444,8 +8975,18 @@
       "source_file": "CHANGELOG.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_2_1_fix_the_published_binary_couldn_t_run_ship_bundled_js",
+      "target": "disputatio_changelog_0_2_1_fix_the_published_binary_couldn_t_run_ship_bundled_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "disputatio_changelog_changelog",
+      "target": "disputatio_changelog_0_2_2_fix_the_npm_doc_now_has_a_short_version_that_links_to_the_one_on_github",
       "confidence_score": 1.0
     },
     {
@@ -8522,11 +9063,31 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "disputatio_readme_how_to_run",
+      "target": "disputatio_readme_install_and_use"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
       "source_location": "L28",
       "weight": 1,
       "confidence_score": 1,
       "source": "disputatio_readme_how_to_run",
       "target": "disputatio_readme_prerequisites"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L89",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "disputatio_readme_how_to_run",
+      "target": "disputatio_readme_run_from_source"
     },
     {
       "relation": "contains",
@@ -8677,6 +9238,16 @@
       "confidence_score": 1,
       "source": "disputatio_claude_claude_md",
       "target": "disputatio_claude_architecture_four_files_clean_layers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "disputatio_claude_claude_md",
+      "target": "disputatio_claude_architecture_seven_files_clean_layers",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11271,6 +11842,56 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/npm-package.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_npm_package_md",
+      "target": "docs_npm_package_disputatio"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/npm-package.md",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_npm_package_disputatio",
+      "target": "docs_npm_package_documentation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/npm-package.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_npm_package_disputatio",
+      "target": "docs_npm_package_install"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/npm-package.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_npm_package_disputatio",
+      "target": "docs_npm_package_quick_start"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/npm-package.md",
+      "source_location": "L39",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_npm_package_disputatio",
+      "target": "docs_npm_package_status"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -13177,5 +13798,5 @@
       "source_file": "assets/images/Cover.jpg"
     }
   ],
-  "built_at_commit": "0374333c81e3be7b18d816799f1b5bac3c58c888"
+  "built_at_commit": "e74d63ffbd3027318c4758223a40f61f619c8047"
 }
