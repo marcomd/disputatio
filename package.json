@@ -1,9 +1,17 @@
 {
   "name": "disputatio",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Structured debate between real AI coding-agent CLIs (Kaizen MVP v0)",
   "type": "module",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcomd/disputatio.git"
+  },
+  "homepage": "https://github.com/marcomd/disputatio#readme",
+  "bugs": {
+    "url": "https://github.com/marcomd/disputatio/issues"
+  },
   "bin": {
     "disputatio": "dist/index.js"
   },
@@ -19,7 +27,9 @@
   "scripts": {
     "debate": "node src/index.ts",
     "build": "esbuild src/index.ts --bundle --platform=node --format=esm --target=node24 --outfile=dist/index.js",
-    "prepack": "npm run build",
+    "prepack": "npm run build && node scripts/use-npm-readme.mjs",
+    "postpack": "node scripts/restore-repo-readme.mjs",
+    "restore-readme": "node scripts/restore-repo-readme.mjs",
     "test": "node --test \"test/*.test.ts\""
   },
   "engines": {

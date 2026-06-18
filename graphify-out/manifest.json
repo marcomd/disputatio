@@ -1,7 +1,7 @@
 {
   "/Users/mark/Lavoro/AI/Disputatio/package.json": {
-    "mtime": 1781774793.5038247,
-    "ast_hash": "d2ef64cfe88879f300d09e19ae686ac1",
+    "mtime": 1781783019.8154576,
+    "ast_hash": "b7ac893d24a76f6f49b5eede37091d50",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/.claude/settings.json": {
@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/README.md": {
-    "mtime": 1781774905.9507015,
-    "ast_hash": "9445eb8d393d30e7a8ab812fb9113337",
+    "mtime": 1781783190.4532511,
+    "ast_hash": "c8eee8b07bd9888a68a580a078f8bf04",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/AGENTS.md": {
@@ -237,6 +237,21 @@
   "/Users/mark/Lavoro/AI/Disputatio/test/build.test.ts": {
     "mtime": 1781774874.8468592,
     "ast_hash": "8eeea77699b2d092a9a01b43321037bf",
+    "semantic_hash": ""
+  },
+  "/Users/mark/Lavoro/AI/Disputatio/scripts/use-npm-readme.mjs": {
+    "mtime": 1781783182.4406657,
+    "ast_hash": "2052bd55103fa812a4987f6cfc362a4a",
+    "semantic_hash": ""
+  },
+  "/Users/mark/Lavoro/AI/Disputatio/scripts/restore-repo-readme.mjs": {
+    "mtime": 1781783019.6775382,
+    "ast_hash": "a7841f21e8faa0360a5bead9f540b435",
+    "semantic_hash": ""
+  },
+  "/Users/mark/Lavoro/AI/Disputatio/docs/npm-package.md": {
+    "mtime": 1781783182.3076189,
+    "ast_hash": "efb33e59e39b246e697963baff078204",
     "semantic_hash": ""
   }
 }

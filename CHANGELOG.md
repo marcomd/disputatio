@@ -2,6 +2,8 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.2.2] — fix: The npm doc now has a short version that links to the one on github
+
 ## [0.2.1] — fix: the published binary couldn't run (ship bundled JS)
 
 `0.2.0` was published with `bin` pointing at `src/index.ts`, but **Node refuses to
