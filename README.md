@@ -27,22 +27,20 @@ Disputatio is built around.
 
 ### Prerequisites
 
-- **Node ≥ 24** (runs TypeScript natively — no build step).
+- **Node ≥ 24**.
 - [`claude`](https://code.claude.com) and [`codex`](https://developers.openai.com/codex)
   (default lineup) installed and **already authenticated** (authentication is out of
   scope — log in to each CLI first). [`agy`](https://antigravity.google) is optional,
   via `--config`. **Account hygiene matters:** only point a CLI at repositories its
   credentials and policy are allowed to access.
 
-### Two ways to run it
+### Install and use
 
-- **From source** — `git clone`, then `node src/index.ts …`. Node ≥24 runs the TypeScript
-  directly — **no build step for development**. For hacking on Disputatio.
-- **Installed binary** — `npm install -g disputatio`, then `disputatio …` from anywhere.
-  The published package ships a small bundled JS build (Node refuses to type-strip `.ts`
-  under `node_modules`, so an npm package must ship JS); the bundle is built automatically
-  at publish time. Same behavior as from-source — examples below use `node src/index.ts`,
-  but `disputatio` works identically.
+Install the published CLI, then run `disputatio` from any repository:
+
+```bash
+npm install -g disputatio
+```
 
 After installing (and logging into each CLI), run **`disputatio --init`** once: it canaries
 the lineup, resolves each CLI's real binary (handling shadowed/stale installs), and writes a
@@ -62,27 +60,24 @@ disputatio --init
 # preflight: canary every participant CLI (runnable + authenticated) before
 # spending tokens on a real debate. Exit 0 = all healthy, exit 1 = something's off.
 # Run this first, especially on a new machine.
-node src/index.ts --doctor
-node src/index.ts --doctor --config examples/debate.yaml   # check a specific lineup
+disputatio --doctor
+disputatio --doctor --config examples/debate.yaml   # check a specific lineup
 
 # one proposal round + one reaction round (pure reasoning, isolated temp dirs)
-node src/index.ts examples/task.md
+disputatio examples/task.md
 
 # more reaction rounds
-node src/index.ts examples/task.md 2
+disputatio examples/task.md 2
 
 # point the agents at a real repo so they can gather READ-ONLY evidence
 # (this is where the executable-evidence value actually lives);
 # agents work in a throwaway git worktree of HEAD, never your real checkout
-node src/index.ts path/to/task.md 1 /path/to/your/repo
+disputatio path/to/task.md 1 /path/to/your/repo
 
 # choose the lineup/models/budgets/effort explicitly (see examples/debate.yaml).
 # per-participant `effort` doses token spend — claude: low|medium|high|xhigh|max;
 # codex: minimal|low|medium|high; agy: encode it in the model name (no effort key).
-node src/index.ts path/to/task.md 1 /path/to/your/repo --config examples/debate.yaml
-
-# run the test suite (fixture-based, no real agent calls)
-npm test
+disputatio path/to/task.md 1 /path/to/your/repo --config examples/debate.yaml
 ```
 
 Output: a transcript at `.debate/debate-<timestamp>/debate.md` (its path is printed
@@ -90,6 +85,22 @@ to stdout; progress goes to stderr), plus per-turn raw CLI captures under
 `.debate/debate-<timestamp>/raw/` for diagnosing failures. If fewer than two
 proposals succeed the debate **aborts with exit 1** (a one-voice "debate" is
 worthless) — the partial transcript and raw captures are kept.
+
+### Run from source
+
+If you are working from a clone of this repository, Node 24 can execute the TypeScript
+entry point directly, so there is no build step for local development. Use the same
+commands as above, replacing `disputatio` with `node src/index.ts`:
+
+```bash
+node src/index.ts --doctor
+node src/index.ts examples/task.md
+node src/index.ts path/to/task.md 1 /path/to/your/repo --config examples/debate.yaml
+```
+
+For local development, `npm run debate -- examples/task.md` is equivalent to
+`node src/index.ts examples/task.md`. Run the fixture-based test suite with `npm test`;
+it does not call real agent CLIs.
 
 ## How it works (v0)
 
