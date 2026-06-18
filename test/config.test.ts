@@ -5,11 +5,11 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { parseDebateConfig } from "../src/config.ts";
+import { parseDebateConfig, serializeDebateConfig } from "../src/config.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 
-test("parses the shipped example config", async () => {
+test("parses the shipped example config (a portable template — no host-specific bin)", async () => {
   const text = await readFile(join(here, "..", "examples", "debate.yaml"), "utf8");
   const cfg = parseDebateConfig(text);
   assert.equal(cfg.rounds, 1);
@@ -18,11 +18,47 @@ test("parses the shipped example config", async () => {
   assert.equal(cfg.participants?.length, 2);
   assert.deepEqual(cfg.participants?.[0], { adapter: "claude", model: "sonnet", maxBudgetUsd: 2 });
   assert.equal(cfg.participants?.[1].adapter, "codex");
-  assert.equal(cfg.participants?.[1].bin, "/opt/homebrew/bin/codex");
+  // P2 fix: the template stays portable — the host-specific bin is commented out so
+  // copying it never assumes /opt/homebrew. `--init` pins a real bin per machine.
+  assert.equal(cfg.participants?.[1].bin, undefined);
   // The judge (respondeo) is Opus — distinct model from the Sonnet debater, so no
   // exact-display correlated-error match (decision #5).
   assert.equal(cfg.judge?.adapter, "claude");
   assert.equal(cfg.judge?.model, "opus");
+});
+
+test("serializeDebateConfig round-trips through parseDebateConfig", () => {
+  const cfg = {
+    rounds: 2,
+    timeoutMinutes: 10,
+    participants: [
+      { adapter: "claude" as const, model: "sonnet", maxBudgetUsd: 2 },
+      { adapter: "codex" as const, bin: "/opt/homebrew/bin/codex", effort: "medium" },
+      { adapter: "agy" as const, model: "Gemini 3.5 Flash (High)" },
+    ],
+    judge: { adapter: "claude" as const, model: "opus", effort: "high", maxBudgetUsd: 2 },
+  };
+  assert.deepEqual(parseDebateConfig(serializeDebateConfig(cfg)), cfg);
+});
+
+test("serializeDebateConfig quotes edge-whitespace values, leaves spaces/parens bare", () => {
+  const cfg = {
+    participants: [
+      { adapter: "codex" as const, model: " spaced " },               // quoted to preserve edges
+      { adapter: "claude" as const, model: "Gemini 3.5 Flash (High)" }, // stays bare
+    ],
+  };
+  const text = serializeDebateConfig(cfg);
+  assert.match(text, /model: " spaced "/);
+  assert.match(text, /model: Gemini 3\.5 Flash \(High\)/);
+  assert.deepEqual(parseDebateConfig(text), cfg);
+});
+
+test("serializeDebateConfig refuses an unrepresentable comment marker rather than corrupting", () => {
+  assert.throws(
+    () => serializeDebateConfig({ participants: [{ adapter: "codex", model: "weird #name" }, { adapter: "claude" }] }),
+    /comment marker/,
+  );
 });
 
 test("parses a judge: block (respondeo)", () => {

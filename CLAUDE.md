@@ -14,6 +14,10 @@ validated**.
 ## Commands
 
 ```bash
+# one-time setup: detect each CLI's real binary, write ~/.config/disputatio/config.yaml
+# (with an opus judge seeded). Run after authenticating each CLI. --force overwrites.
+node src/index.ts --init [--config examples/debate.yaml] [--force]
+
 # preflight: canary every participant CLI (runnable + authenticated). Exit 0/1.
 node src/index.ts --doctor [--config examples/debate.yaml]
 
@@ -48,20 +52,29 @@ npm test
   scope. Default lineup: `claude` + `codex`; optional adapters belong in explicit
   per-run config after checking account and repository policy.
 
-## Architecture (five files, clean layers)
+## Architecture (six files, clean layers)
 
-- **`src/index.ts`** — CLI entry. Parses args + `--config`, builds the participant
-  lineup (default `claude`+`codex`), validates the repo is git, runs the cross-vendor
-  sanity check, writes transcript + raw captures, exits 1 on abort. `--doctor` branches
-  to the preflight (before any task-file logic) and exits 0/1 on lineup health.
+- **`src/index.ts`** — CLI entry (carries the `#!/usr/bin/env node` shebang so npm's
+  `bin` symlink runs it directly; Node ≥24 type-strips the `.ts`). Parses args, resolves
+  config (via `install.ts`), builds the participant lineup (default `claude`+`codex`),
+  validates the repo is git, runs the cross-vendor sanity check, writes transcript + raw
+  captures, exits 1 on abort. `--doctor` (preflight) and `--init` (setup) branch before
+  any task-file logic and exit 0/1.
+- **`src/install.ts`** — config resolution + the `--init` setup phase. Resolution
+  precedence: `--config <path>` → `~/.config/disputatio/config.yaml` → built-in lineup.
+  The shipped `examples/debate.yaml` is a TEMPLATE, **never auto-loaded** (that coupling
+  was the P2 portability footgun: its host-specific `bin:` broke other machines). `--init`
+  canaries the lineup, resolves each CLI's real binary (pinning a `bin:` **only when** the
+  PATH one fails — the stale-shim case), seeds an opus judge, and writes the user config.
 - **`src/doctor.ts`** — M0 preflight. Canaries each participant (a trivial "pong" run
   through the same adapter classifiers) to confirm it's runnable + authenticated
   *before* a debate spends tokens. Success = `r.ok` (never text-match). Failed
   diagnoses carry the raw error so the codex stale-shim footgun stays diagnosable.
-- **`src/config.ts`** — `debate.yaml` parsing (deliberately minimal YAML subset, no
-  deps, strict line-numbered errors). Do not grow it into a YAML parser — switch to a
-  library when real YAML is needed. Per-participant keys: `adapter`, `model`, `bin`,
-  `maxBudgetUsd` (claude only), `effort`. `effort` is a **free-form string** passed
+- **`src/config.ts`** — `debate.yaml` parsing + the matching `serializeDebateConfig`
+  (its inverse, used by `--init`; keep them in lock-step). Deliberately minimal YAML
+  subset, no deps, strict line-numbered errors. Do not grow it into a YAML parser —
+  switch to a library when real YAML is needed. Per-participant keys: `adapter`, `model`,
+  `bin`, `maxBudgetUsd` (claude only), `effort`. `effort` is a **free-form string** passed
   through to the CLI — the parser does NOT validate it (the CLI does; bad values
   surface in the raw capture / `--doctor`), so the parser stays version-agnostic.
 - **`src/adapters.ts`** — transport layer. One job: spawn a CLI, capture output,

@@ -34,9 +34,28 @@ Disputatio is built around.
   via `--config`. **Account hygiene matters:** only point a CLI at repositories its
   credentials and policy are allowed to access.
 
+### Two ways to run it
+
+- **From source** — `git clone`, then `node src/index.ts …`. For hacking on Disputatio.
+- **Installed binary** — `npm install -g disputatio`, then `disputatio …` from anywhere
+  (Node ≥24 runs the TypeScript directly, so there's no build step). The two are
+  interchangeable; examples below use `node src/index.ts`, but `disputatio` works the same.
+
+After installing (and logging into each CLI), run **`disputatio --init`** once: it canaries
+the lineup, resolves each CLI's real binary (handling shadowed/stale installs), and writes a
+machine-tuned config to `~/.config/disputatio/config.yaml`. That file — not the shipped
+`examples/debate.yaml` (a copy-me **template**) — is what a no-`--config` run reads.
+
+**Config precedence (no `--config` given):** `~/.config/disputatio/config.yaml` if present,
+else the built-in lineup (`claude` + `codex`, no judge). An explicit `--config <path>` always wins.
+
 ### Usage
 
 ```bash
+# one-time setup after authenticating each CLI: detect binaries + write the user config
+# (with an opus judge seeded). --force overwrites an existing config (otherwise it's backed up).
+disputatio --init
+
 # preflight: canary every participant CLI (runnable + authenticated) before
 # spending tokens on a real debate. Exit 0 = all healthy, exit 1 = something's off.
 # Run this first, especially on a new machine.

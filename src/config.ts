@@ -29,6 +29,52 @@ export type DebateConfig = {
   judge?: ParticipantSpec; // the respondeo agent: renders the consolidatio (opt-in)
 };
 
+// The inverse of parseDebateConfig: emit the same minimal YAML subset this module
+// parses, so a generated config round-trips back through parseDebateConfig unchanged.
+// Used by `disputatio --init` to write ~/.config/disputatio/config.yaml. Keep it in
+// lock-step with the parser — if one grows a key, so must the other (round-trip test).
+const PARTICIPANT_ORDER: (keyof ParticipantSpec)[] = ["adapter", "model", "bin", "maxBudgetUsd", "effort"];
+
+// Quote a scalar only when leaving it bare would change how the parser reads it — namely
+// edge whitespace or an empty value (both eaten by the parser otherwise). Plain values
+// like model names with spaces/parens ("Gemini 3.5 Flash (High)") stay unquoted; the
+// parser reads the whole rest-of-line. A value with a `(^|\s)#` is UNREPRESENTABLE — the
+// parser strips trailing comments before handling quotes, so quoting can't save it; we
+// refuse it loudly rather than write config that silently round-trips to something else.
+function emitScalar(v: string | number): string {
+  if (typeof v === "number") return String(v);
+  if (/(^|\s)#/.test(v)) throw new Error(`config value cannot contain a "#" comment marker: ${JSON.stringify(v)}`);
+  return v === "" || v !== v.trim() ? JSON.stringify(v) : v;
+}
+
+function emitSpec(spec: ParticipantSpec, indent: string, firstPrefix: string): string {
+  const lines: string[] = [];
+  let prefix = firstPrefix;
+  for (const key of PARTICIPANT_ORDER) {
+    const val = spec[key];
+    if (val === undefined) continue;
+    lines.push(`${prefix}${key}: ${emitScalar(val)}`);
+    prefix = indent; // only the first key carries the "- " list marker
+  }
+  return lines.join("\n");
+}
+
+export function serializeDebateConfig(cfg: DebateConfig): string {
+  const out: string[] = [];
+  if (cfg.rounds !== undefined) out.push(`rounds: ${cfg.rounds}`);
+  if (cfg.timeoutMinutes !== undefined) out.push(`timeoutMinutes: ${cfg.timeoutMinutes}`);
+  if (cfg.repo !== undefined) out.push(`repo: ${emitScalar(cfg.repo)}`);
+  if (cfg.participants) {
+    out.push("participants:");
+    for (const p of cfg.participants) out.push(emitSpec(p, "    ", "  - "));
+  }
+  if (cfg.judge) {
+    out.push("judge:");
+    out.push(emitSpec(cfg.judge, "  ", "  "));
+  }
+  return out.join("\n") + "\n";
+}
+
 const ADAPTERS = new Set<string>(["claude", "agy", "codex"]);
 const TOP_KEYS = new Set<string>(["rounds", "repo", "timeoutMinutes", "participants", "judge"]);
 const PARTICIPANT_KEYS = new Set<string>(["adapter", "model", "bin", "maxBudgetUsd", "effort"]);

@@ -2,6 +2,34 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.2.0] — portable config + installable `disputatio` binary
+
+Disputatio is now usable two ways off one codebase — from source (`node src/index.ts`)
+and as an installed binary (`npm install -g disputatio`) — and the default config path is
+portable across machines.
+
+- **Portability fix (P2)** — a no-`--config` run no longer auto-loads `examples/debate.yaml`.
+  That coupling (added in 0.1.0) shipped a host-specific `bin: /opt/homebrew/bin/codex`,
+  so no-config runs and `--doctor` failed on any other machine. The example is now a
+  copy-me **template** (host-specific `bin:` commented out), never auto-loaded.
+- **Config resolution** (`src/install.ts`, `src/index.ts`) — precedence is now
+  `--config <path>` → `~/.config/disputatio/config.yaml` (XDG-aware, read identically in
+  both run modes) → built-in lineup (`claude` + `codex`, **no judge** — bare runs stay
+  lean). An explicit `--config` still hard-fails if the file is missing.
+- **Installable binary** (`package.json`, `src/index.ts`) — `bin: disputatio` + a
+  `#!/usr/bin/env node` shebang make `npm install -g disputatio` work with **no build
+  step** (Node ≥24 type-strips the `.ts`). A `files` allowlist publishes only `src`, the
+  portable template, the generic example task, and docs — **never** the gitignored
+  `examples/private_*` or real-run-derived examples.
+- **`--init` setup phase** (`src/install.ts`) — probes the lineup, resolves each CLI's
+  real binary via the same canary `--doctor` uses (pinning a `bin:` **only when** the PATH
+  binary fails — the codex stale-shim case), seeds an opus judge, and writes
+  `~/.config/disputatio/config.yaml` (backing up any existing one unless `--force`). Run it
+  after authenticating each CLI; it spends one cheap canary turn per participant.
+- **`serializeDebateConfig`** (`src/config.ts`) — the inverse of `parseDebateConfig`, used
+  by `--init` to emit the minimal YAML subset; round-trip tested. Refuses values it cannot
+  represent (a `#` comment marker) rather than silently corrupting them.
+
 ## [0.1.0] — `respondeo`: the judge stage (first scholastic-protocol step)
 
 The top missing piece of the v0 MVP (`docs/4_PLAN.md`: "no respondeo protocol yet").

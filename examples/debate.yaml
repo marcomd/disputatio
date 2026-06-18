@@ -1,4 +1,6 @@
-# Disputatio debate config.
+# Disputatio debate config — a TEMPLATE. This file is NOT auto-loaded; copy it (or point
+# `--config` at it), or just run `disputatio --init` to generate a machine-tuned config at
+# ~/.config/disputatio/config.yaml. Keep it portable: no host-specific paths uncommented.
 # Minimal YAML subset: flat "key: value" pairs + one participants list. No nesting.
 
 rounds: 1
@@ -13,7 +15,9 @@ participants:
     # effort: high                 # reasoning effort, to dose token spend.
     #                              # claude values: low | medium | high | xhigh | max
   - adapter: codex
-    bin: /opt/homebrew/bin/codex   # a stale asdf shim shadows the brew codex on this machine
+    # bin: /opt/homebrew/bin/codex # OPTIONAL host-specific override: uncomment only if a
+    #                              # stale shim shadows the real codex on your machine.
+    #                              # `disputatio --init` detects and pins this automatically.
     # model: gpt-5.5               # omit = the account's default model
     # effort: medium               # codex values: minimal | low | medium | high
     #                              # (note: codex's value set differs from claude's)

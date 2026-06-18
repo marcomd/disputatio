@@ -17,9 +17,12 @@ avoid speculative rewrites.
 - Use Node 24 or newer. `.tool-versions` pins `nodejs 24.16.0`.
 - TypeScript is executed directly by Node. There is no build step, transpiler, or
   `tsc` workflow.
+- Can also be installed as a binary: `npm install -g disputatio` → `disputatio …`
+  (Node ≥24 runs the `.ts` via the `bin` shebang — no build). Same code as from-source.
 - Main usage:
 
 ```bash
+node src/index.ts --init                                   # detect binaries, write ~/.config/disputatio/config.yaml
 node src/index.ts --doctor
 node src/index.ts --doctor --config examples/debate.yaml
 node src/index.ts examples/task.md
@@ -32,8 +35,14 @@ node src/index.ts path/to/task.md 1 /path/to/repo --config examples/debate.yaml
   through the package script.
 - `npm test` runs the Node fixture tests in `test/` with fake CLI shims; use it after
   changing `src/`.
+- `--init` canaries the lineup, resolves each CLI's real binary (pinning a `bin:` only
+  when the PATH one fails), seeds an opus judge, and writes the user config. Run it after
+  authenticating each CLI — it spends a cheap canary turn per participant.
 - `--doctor` preflights every configured participant with a cheap canary before a
   debate spends tokens. It prints the human report to stderr and exits 0/1.
+- Config precedence when `--config` is omitted: `~/.config/disputatio/config.yaml` if
+  present, else the built-in lineup (`claude` + `codex`, no judge). `examples/debate.yaml`
+  is a copy-me TEMPLATE — never auto-loaded (that coupling was a portability footgun).
 - Debate output is written under `.debate/debate-<timestamp>/debate.md`; raw per-turn
   CLI captures are written under `.debate/debate-<timestamp>/raw/`.
 - Stdout must remain the artifact path only; progress and diagnostic logging belongs
@@ -43,8 +52,12 @@ node src/index.ts path/to/task.md 1 /path/to/repo --config examples/debate.yaml
 
 ## Architecture
 
-- `src/index.ts`: CLI entry point, argument parsing, `--config`, participant lineup,
-  cross-vendor sanity check, `--doctor` branch, transcript and raw-capture writing.
+- `src/index.ts`: CLI entry point (with `bin` shebang), argument parsing, `--config`,
+  participant lineup, cross-vendor sanity check, `--doctor`/`--init` branches, transcript
+  and raw-capture writing.
+- `src/install.ts`: config resolution (`--config` → `~/.config/disputatio/config.yaml` →
+  built-in lineup) and the `--init` setup phase (probe lineup, resolve real binaries,
+  write the user config). The anti-corruption boundary between run modes and disk layout.
 - `src/doctor.ts`: M0 preflight. Runs a trivial canary through the same participant
   adapters/classifiers used by real debate turns, then exits 0/1 based on lineup
   health.
@@ -52,8 +65,8 @@ node src/index.ts path/to/task.md 1 /path/to/repo --config examples/debate.yaml
   prompt construction. Abort when fewer than two proposals succeed.
 - `src/adapters.ts`: transport layer for spawning native agent CLIs and normalizing
   results into `Participant` / `AgentResult`.
-- `src/config.ts`: minimal `debate.yaml` parsing for explicit lineups, models, budgets,
-  and binary overrides.
+- `src/config.ts`: minimal `debate.yaml` parsing (and the matching `serializeDebateConfig`
+  used by `--init`) for explicit lineups, models, budgets, and binary overrides.
 - `test/`: Node `node:test` fixture tests and fake CLI shims. These should stay fast
   and not require real agent calls.
 - `research/`: headless CLI research, canary results, and verified notes. Read these

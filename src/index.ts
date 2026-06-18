@@ -1,28 +1,35 @@
-// CLI entry (Kaizen v0). Run with: node src/index.ts <task-file.md> [rounds] [repo-path] [--config debate.yaml]
+#!/usr/bin/env node
+// CLI entry (Kaizen v0). Two run modes off ONE codebase:
+//   - from source:      node src/index.ts <task-file.md> [rounds] [repo-path] [--config debate.yaml]
+//   - installed binary: disputatio <task-file.md> ...   (npm install -g disputatio)
+// The shebang lets npm's `bin` symlink exec this directly: Node ≥24 type-strips the .ts.
 
 import { mkdir, writeFile, readFile } from "node:fs/promises";
-import { join } from "node:path";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { claudeAdapter, agyAdapter, codexAdapter, type Participant } from "./adapters.ts";
-import { parseDebateConfig, type ParticipantSpec } from "./config.ts";
+import { parseDebateConfig, type ParticipantSpec, type DebateConfig } from "./config.ts";
 import { runDebate } from "./debate.ts";
 import { runDoctor, allHealthy, formatDiagnoses, CANARY_TIMEOUT_MS } from "./doctor.ts";
+import { resolveConfigText, userConfigPath, runInit } from "./install.ts";
 
 const execFileAsync = promisify(execFile);
 
 function usage(exitCode: number): never {
   console.error("usage: disputatio <task-file.md> [rounds] [repo-path] [--config debate.yaml]");
   console.error("       disputatio --doctor [--config debate.yaml]");
+  console.error("       disputatio --init [--config debate.yaml] [--force]");
   console.error("  task-file  markdown file describing the task/quaestio");
   console.error("  rounds     number of reaction rounds after proposals (default 1)");
   console.error("  repo-path  optional: agents gather read-only evidence in a throwaway");
   console.error("             git worktree of this repo (git repos only; HEAD is what they see)");
   console.error("  --config   debate.yaml selecting participants/models/budgets + an optional judge");
-  console.error("             (see examples/debate.yaml). Defaults to examples/debate.yaml; if that is");
-  console.error("             absent, falls back to the built-in lineup: claude + codex, no judge");
+  console.error("             (see examples/debate.yaml — a TEMPLATE, never auto-loaded). When omitted,");
+  console.error(`             reads ${userConfigPath()} if present, else the built-in lineup: claude + codex, no judge`);
   console.error("  --doctor   preflight: canary every participant CLI (runnable + authenticated),");
   console.error("             report status, exit 0 if all healthy. Run this before a real debate.");
+  console.error("  --init     probe the lineup, resolve each CLI's real binary, and write the user");
+  console.error(`             config to ${userConfigPath()}. Run after authenticating each CLI. --force overwrites.`);
   process.exit(exitCode);
 }
 
@@ -31,6 +38,8 @@ if (args.length === 0 || args[0] === "-h" || args[0] === "--help") usage(args.le
 
 let configPath: string | undefined;
 let doctorMode = false;
+let initMode = false;
+let force = false;
 const positionals: string[] = [];
 for (let i = 0; i < args.length; i++) {
   if (args[i] === "--config") {
@@ -38,27 +47,20 @@ for (let i = 0; i < args.length; i++) {
     if (!configPath) usage(1);
   } else if (args[i] === "--doctor") {
     doctorMode = true;
+  } else if (args[i] === "--init") {
+    initMode = true;
+  } else if (args[i] === "--force") {
+    force = true;
   } else {
     positionals.push(args[i]);
   }
 }
 
-// Default to the shipped example when --config is omitted. This also fixes a real
-// footgun: a no-config run used to silently ignore the example's model/effort. An
-// explicit --config that doesn't exist still hard-fails; only the DEFAULT path falls
-// back to the built-in lineup (cfg = {}) when the example is absent.
-const defaultConfigPath = join(import.meta.dirname, "..", "examples", "debate.yaml");
-let cfg = {} as ReturnType<typeof parseDebateConfig>;
-try {
-  cfg = parseDebateConfig(await readFile(configPath ?? defaultConfigPath, "utf8"));
-} catch (e) {
-  if (configPath || (e as NodeJS.ErrnoException).code !== "ENOENT") throw e;
-  // default example missing → keep the built-in lineup
-}
-
-// Cross-vendor by design: claude→Anthropic, codex→OpenAI, agy→Google. Diversity is
-// the point. Default lineup is claude+codex; optional adapters go through --config.
-const specs: ParticipantSpec[] = cfg.participants ?? [{ adapter: "claude" }, { adapter: "codex" }];
+// Cross-vendor by design: claude→Anthropic, codex→OpenAI, agy→Google. Diversity is the
+// point. The built-in default lineup is claude+codex (no judge — bare runs stay lean);
+// the respondeo judge is reserved for configured runs (e.g. what `--init` writes).
+const DEFAULT_SPECS: ParticipantSpec[] = [{ adapter: "claude" }, { adapter: "codex" }];
+const DEFAULT_JUDGE: ParticipantSpec = { adapter: "claude", model: "opus", effort: "high", maxBudgetUsd: 2 };
 
 function buildParticipant(s: ParticipantSpec, timeoutMs: number): Participant {
   switch (s.adapter) {
@@ -71,11 +73,37 @@ function buildParticipant(s: ParticipantSpec, timeoutMs: number): Participant {
   }
 }
 
+// --init: probe the lineup, resolve each CLI's real binary, write the user config.
+// Branch BEFORE resolving the runtime config: init REGENERATES the user config, so its
+// basis is an explicit --config or the built-in defaults — it must NEVER read (and choke
+// on) the existing ~/.config/disputatio/config.yaml. Parsing its own basis here is what
+// lets `disputatio --init --force` recover from a user config the user broke by hand.
+// With --config the judge carries through; with no config the default opus judge is
+// seeded (so a set-up install gets the full scholastic protocol).
+if (initMode) {
+  const basis: DebateConfig = configPath ? parseDebateConfig(await readFile(configPath, "utf8")) : {};
+  const initSpecs = basis.participants ?? DEFAULT_SPECS;
+  const initJudge = configPath ? basis.judge : DEFAULT_JUDGE;
+  console.error(`[disputatio] init — probing: ${initSpecs.map((s) => s.adapter).join(", ")}`);
+  const res = await runInit(initSpecs, initJudge, userConfigPath(), { force, deps: { buildParticipant } });
+  console.error(res.report);
+  process.exit(res.exitCode);
+}
+
+// Config resolution (see install.ts): --config → ~/.config/disputatio/config.yaml →
+// built-in lineup. The shipped examples/debate.yaml is a TEMPLATE, never auto-loaded —
+// that coupling was the P2 footgun (its host-specific bin: broke other machines).
+const { text: cfgText, source: cfgSource } = await resolveConfigText(configPath);
+const cfg: DebateConfig = cfgText !== null ? parseDebateConfig(cfgText) : {};
+
+const specs: ParticipantSpec[] = cfg.participants ?? DEFAULT_SPECS;
+
 // --doctor: preflight only — needs the lineup (+ optional --config), nothing else.
 // Branch BEFORE the task-file/rounds/repo logic so `--doctor` never gets mistaken
 // for a task file. Short canary timeout: a hung preflight is a broken preflight.
 // The judge is an agent that must be runnable + authenticated like any other — canary it too.
 if (doctorMode) {
+  console.error(`[disputatio] config: ${cfgSource}`);
   const participants = specs.map((s) => buildParticipant(s, CANARY_TIMEOUT_MS));
   if (cfg.judge) participants.push(buildParticipant(cfg.judge, CANARY_TIMEOUT_MS));
   console.error(`[disputatio] doctor — canary: ${participants.map((p) => p.id).join(", ")}`);
@@ -112,6 +140,7 @@ if (repoPath) {
   }
 }
 
+console.error(`[disputatio] config: ${cfgSource}`);
 const participants = specs.map((s) => buildParticipant(s, timeoutMs));
 
 const vendors = new Set(participants.map((p) => p.vendor));

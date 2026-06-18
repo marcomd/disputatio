@@ -1,9 +1,21 @@
 {
   "name": "disputatio",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Structured debate between real AI coding-agent CLIs (Kaizen MVP v0)",
   "type": "module",
   "license": "Apache-2.0",
+  "bin": {
+    "disputatio": "src/index.ts"
+  },
+  "files": [
+    "src",
+    "examples/debate.yaml",
+    "examples/task.md",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "AGENTS.md"
+  ],
   "scripts": {
     "debate": "node src/index.ts",
     "test": "node --test \"test/*.test.ts\""
