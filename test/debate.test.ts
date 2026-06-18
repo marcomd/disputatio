@@ -59,6 +59,53 @@ test("reaction context is clean: proposals included, cost footnotes excluded", a
   assert.equal(out.turns.length, 4);                  // 2 proposals + 2 reactions
 });
 
+test("respondeo: the judge runs after reactions and reads proposals + reactions", async () => {
+  let judgePrompt = "";
+  const a = fake("a", "v1", async () => ok("proposal A says X"));
+  const b = fake("b", "v2", async () => ok("proposal B says Y"));
+  const j = fake("opus", "v3", async (prompt) => {
+    judgePrompt = prompt;
+    return ok("STATUS: RESOLVED\n\nThe verdict.");
+  });
+  const out = await runDebate("task", [a, b], 1, undefined, j);
+  assert.equal(out.aborted, undefined);
+  // judge saw both proposals and the round-1 reactions
+  assert.match(judgePrompt, /proposal A says X/);
+  assert.match(judgePrompt, /Round 1 reaction/);
+  assert.doesNotMatch(judgePrompt, /cost:/); // clean context, like reactions
+  // recorded as a Respondeo turn in both turns[] and the transcript
+  assert.equal(out.turns.at(-1)?.title, "Respondeo — opus");
+  assert.match(out.transcript, /## Respondeo — opus/);
+  assert.equal(out.respondeo?.status, "RESOLVED");
+});
+
+test("respondeo: no judge turn when the judge arg is absent", async () => {
+  const a = fake("a", "v1", async () => ok("proposal A"));
+  const b = fake("b", "v2", async () => ok("proposal B"));
+  const out = await runDebate("task", [a, b], 1); // no judge
+  assert.equal(out.respondeo, undefined);
+  assert.equal(out.turns.length, 4); // 2 proposals + 2 reactions, no respondeo
+  assert.doesNotMatch(out.transcript, /Respondeo/);
+});
+
+test("respondeo: STATUS: NEEDS_INPUT surfaces on the outcome", async () => {
+  const a = fake("a", "v1", async () => ok("proposal A"));
+  const b = fake("b", "v2", async () => ok("proposal B"));
+  const j = fake("opus", "v3", async () => ok("STATUS: NEEDS_INPUT\n\n## Quaestiones (for the human)\n- ?"));
+  const out = await runDebate("task", [a, b], 0, undefined, j);
+  assert.equal(out.respondeo?.status, "NEEDS_INPUT");
+});
+
+test("respondeo: a failing judge is non-fatal", async () => {
+  const a = fake("a", "v1", async () => ok("proposal A"));
+  const b = fake("b", "v2", async () => ok("proposal B"));
+  const j = fake("opus", "v3", async () => fail("budget"));
+  const out = await runDebate("task", [a, b], 0, undefined, j);
+  assert.equal(out.aborted, undefined);          // debate still succeeded
+  assert.equal(out.respondeo?.status, "FAILED");
+  assert.match(out.transcript, /Respondeo — opus/); // failure still recorded
+});
+
 test("worktree isolation: agents run in a throwaway worktree, never the real checkout", async () => {
   // a real git repo with one committed file
   const repo = await mkdtemp(join(tmpdir(), "disputatio-test-repo-"));

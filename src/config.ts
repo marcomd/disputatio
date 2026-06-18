@@ -26,10 +26,11 @@ export type DebateConfig = {
   repo?: string;
   timeoutMinutes?: number;
   participants?: ParticipantSpec[];
+  judge?: ParticipantSpec; // the respondeo agent: renders the consolidatio (opt-in)
 };
 
 const ADAPTERS = new Set<string>(["claude", "agy", "codex"]);
-const TOP_KEYS = new Set<string>(["rounds", "repo", "timeoutMinutes", "participants"]);
+const TOP_KEYS = new Set<string>(["rounds", "repo", "timeoutMinutes", "participants", "judge"]);
 const PARTICIPANT_KEYS = new Set<string>(["adapter", "model", "bin", "maxBudgetUsd", "effort"]);
 const NUMERIC_KEYS = new Set<string>(["rounds", "timeoutMinutes", "maxBudgetUsd"]);
 
@@ -53,6 +54,13 @@ function scalar(raw: string, key: string, lineNo: number): string | number {
 export function parseDebateConfig(text: string): DebateConfig {
   const cfg: DebateConfig = {};
   let participants: Record<string, string | number>[] | null = null;
+  // The judge is a single spec (not a list). The `in*` flags track which block's
+  // continuation lines we are currently reading; any new top-level key closes both
+  // (so the accumulators are NOT discarded — a later `judge:` must not drop the
+  // already-parsed participants, nor a later top key the judge).
+  let judge: Record<string, string | number> | null = null;
+  let inParticipants = false;
+  let inJudge = false;
 
   const lines = text.split("\n");
   for (let i = 0; i < lines.length; i++) {
@@ -67,24 +75,34 @@ export function parseDebateConfig(text: string): DebateConfig {
     if (top) {
       const [, key, rest] = top;
       if (!TOP_KEYS.has(key)) fail(lineNo, `unknown key "${key}" (known: ${[...TOP_KEYS].join(", ")})`);
+      // A new top-level key always ends the current block (but keeps its accumulator).
+      inParticipants = key === "participants";
+      inJudge = key === "judge";
       if (key === "participants") {
         if (rest.trim() !== "") fail(lineNo, `"participants" must be a list (put items on the following lines)`);
         participants = [];
+      } else if (key === "judge") {
+        if (rest.trim() !== "") fail(lineNo, `"judge" must be a block (put its keys on the following indented lines)`);
+        judge = {};
       } else {
         (cfg as Record<string, unknown>)[key] = scalar(rest, key, lineNo);
-        participants = null; // a new top-level key ends the participants block
       }
-    } else if (item && participants) {
+    } else if (item && inParticipants && participants) {
       const [, key, rest] = item;
       if (!PARTICIPANT_KEYS.has(key)) fail(lineNo, `unknown participant key "${key}" (known: ${[...PARTICIPANT_KEYS].join(", ")})`);
       participants.push({ [key]: scalar(rest, key, lineNo) });
-    } else if (cont && participants) {
+    } else if (cont && inParticipants && participants) {
       const [, key, rest] = cont;
       if (!PARTICIPANT_KEYS.has(key)) fail(lineNo, `unknown participant key "${key}" (known: ${[...PARTICIPANT_KEYS].join(", ")})`);
       const current = participants[participants.length - 1];
       if (!current) fail(lineNo, `participant field before any "- " list item`);
       if (key in current) fail(lineNo, `duplicate participant key "${key}"`);
       current[key] = scalar(rest, key, lineNo);
+    } else if (cont && inJudge && judge) {
+      const [, key, rest] = cont;
+      if (!PARTICIPANT_KEYS.has(key)) fail(lineNo, `unknown participant key "${key}" (known: ${[...PARTICIPANT_KEYS].join(", ")})`);
+      if (key in judge) fail(lineNo, `duplicate judge key "${key}"`);
+      judge[key] = scalar(rest, key, lineNo);
     } else {
       fail(lineNo, `cannot parse "${lines[i].trim()}" (this parser supports only flat "key: value" and a participants list)`);
     }
@@ -100,6 +118,12 @@ export function parseDebateConfig(text: string): DebateConfig {
       throw new Error(`debate config: a debate needs at least 2 participants (got ${participants.length})`);
     }
     cfg.participants = participants as ParticipantSpec[];
+  }
+  if (judge) {
+    if (typeof judge.adapter !== "string" || !ADAPTERS.has(judge.adapter)) {
+      throw new Error(`debate config: the judge needs "adapter: claude | agy | codex" (got ${JSON.stringify(judge)})`);
+    }
+    cfg.judge = judge as ParticipantSpec;
   }
   if (cfg.rounds !== undefined && (!Number.isInteger(cfg.rounds) || cfg.rounds < 0)) {
     throw new Error(`debate config: "rounds" must be a non-negative integer`);

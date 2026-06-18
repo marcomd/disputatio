@@ -15,10 +15,16 @@ function log(msg: string) { console.error(`[disputatio] ${msg}`); }
 
 export type Turn = { title: string; participant: string; result: AgentResult };
 
+export type RespondeoStatus = "RESOLVED" | "NEEDS_INPUT" | "FAILED";
+
 export type DebateOutcome = {
   transcript: string;       // the full markdown artifact (incl. cost footnotes, failure details)
   turns: Turn[];            // per-turn results, raw CLI captures attached (diagnostics)
   aborted?: string;         // set when the debate could not proceed (e.g. <2 proposals)
+  respondeo?: {             // the judge's consolidatio (only when a judge ran)
+    status: RespondeoStatus;
+    text: string;           // the verdict body — written verbatim to respondeo.md
+  };
 };
 
 // Transcript view (for the .md artifact): keeps cost + failure detail.
@@ -85,11 +91,39 @@ const reactPrompt = (ctx: string, me: string) =>
   `MISSING? State any objection you can back with EXECUTABLE EVIDENCE (run a test, check a file/API in your ` +
   `working directory). Do not repeat what has already been said. Respond in English, concise.`;
 
+// Respondeo: the judge renders the consolidatio over the transcript ALONE (no repo
+// access, even in repo mode). It must ASK rather than guess — if a contested point
+// cannot be resolved from the transcript, it emits questions for the human instead of
+// fabricating a ruling. The mandatory first STATUS line is the machine signal index.ts
+// parses to surface NEEDS_INPUT.
+const respondeoPrompt = (ctx: string) =>
+  `You are the JUDGE (respondeo) closing a structured debate. The full transcript:\n\n${ctx}\n\n` +
+  `Render the consolidatio — the resolution. You reason over THIS TRANSCRIPT ALONE; you have no repository ` +
+  `access. Rules:\n` +
+  `1. Your FIRST line must be exactly one of: "STATUS: RESOLVED" or "STATUS: NEEDS_INPUT" (nothing else on it).\n` +
+  `2. Then record the SETTLED AGREEMENTS (what every participant converged on).\n` +
+  `3. Then rule on each CONTESTED point, weighing the arguments — prefer positions backed by executable ` +
+  `evidence over rhetoric.\n` +
+  `4. If — and only if — one or more contested points genuinely CANNOT be resolved from the transcript ` +
+  `without human input, use STATUS: NEEDS_INPUT, still record the settled agreements, then add a final ` +
+  `"## Quaestiones (for the human)" list of the specific questions, and issue NO ruling on those points. ` +
+  `Do not invent a verdict you cannot defend from the transcript.\n` +
+  `Respond in English, concise, in Markdown.`;
+
+// Only an explicit STATUS: NEEDS_INPUT on the first non-empty line triggers the human
+// path; anything else from a successful turn (RESOLVED or a missing/garbled marker)
+// is a verdict. A failed turn is classified FAILED by the caller.
+function parseRespondeoStatus(text: string): "RESOLVED" | "NEEDS_INPUT" {
+  const first = text.split("\n").map((l) => l.trim()).find((l) => l !== "") ?? "";
+  return /^STATUS:\s*NEEDS_INPUT\b/i.test(first) ? "NEEDS_INPUT" : "RESOLVED";
+}
+
 export async function runDebate(
   task: string,
   participants: Participant[],
   rounds: number,
   repoPath?: string,
+  judge?: Participant,
 ): Promise<DebateOutcome> {
   const header = `# Disputatio debate\n\n## Task\n\n${task}\n`;
   const fileParts: string[] = [header];
@@ -134,5 +168,17 @@ export async function runDebate(
     for (const { p, r } of reactions) record(`Round ${round} reaction — ${p.display}`, p, r);
   }
 
-  return { transcript: fileParts.join("\n"), turns };
+  // Respondeo — opt-in judge turn (transcript-only: no repoPath, even in repo mode).
+  // A failed judge is non-fatal: it's recorded, but the debate itself still succeeded.
+  let respondeo: DebateOutcome["respondeo"];
+  if (judge) {
+    log(`Respondeo — ${judge.display} renders the consolidatio`);
+    const r = await runIsolated(judge, respondeoPrompt(ctxParts.join("\n")));
+    record(`Respondeo — ${judge.display}`, judge, r);
+    respondeo = r.ok
+      ? { status: parseRespondeoStatus(r.text), text: r.text }
+      : { status: "FAILED", text: `Respondeo turn failed: ${r.error}` };
+  }
+
+  return { transcript: fileParts.join("\n"), turns, respondeo };
 }

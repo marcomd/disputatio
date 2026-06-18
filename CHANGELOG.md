@@ -2,6 +2,48 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.1.0] — `respondeo`: the judge stage (first scholastic-protocol step)
+
+The top missing piece of the v0 MVP (`docs/4_PLAN.md`: "no respondeo protocol yet").
+After the reaction rounds, one configurable agent reads the full transcript and renders
+the *consolidatio* — the resolution the human previously had to write by hand.
+
+- **Opt-in `judge:` block** (`src/config.ts`, `examples/debate.yaml`) — a new top-level
+  `judge:` section in `debate.yaml`, same keys as a participant (`adapter`, `model`,
+  `effort`, `bin`, `maxBudgetUsd`). Present → the debate ends with a respondeo turn;
+  absent → it ends at the reaction rounds exactly as before. The parser gained
+  non-destructive `inParticipants`/`inJudge` block-state flags, fixing a latent bug
+  where any top-level key after `participants:` discarded the lineup accumulator.
+- **Transcript-only judge** (`src/debate.ts`) — the respondeo turn reasons over the
+  `debate.md` snapshot **alone** (no repo/worktree access, even in repo mode), in an
+  isolated temp dir like any other turn. Recorded as a `Respondeo — <display>` turn in
+  both the transcript and the per-turn raw captures.
+- **Ask, don't guess** — the judge must open its output with exactly one status line,
+  `STATUS: RESOLVED` or `STATUS: NEEDS_INPUT`. When a contested point genuinely cannot
+  be settled from the transcript, it emits `STATUS: NEEDS_INPUT`, records the settled
+  agreements, then a `## Quaestiones (for the human)` list — and issues no ruling on the
+  unresolved points instead of fabricating one. `index.ts` parses that line and surfaces
+  NEEDS_INPUT on stderr (exit stays 0 — asking is not an abort). A failed judge turn is
+  non-fatal: recorded, status `FAILED`, debate still succeeds.
+- **`respondeo.md` artifact** (`src/index.ts`) — written alongside `debate.md`. stdout
+  stays the `debate.md` path (agent-native contract); the `respondeo.md` path and any
+  NEEDS_INPUT warning go to stderr. `--doctor` now canaries the judge alongside the
+  debaters.
+- **Correlated-error guard for the judge** — a loud `⚠️` only when the judge's built
+  `Participant.display` (adapter+model) exactly matches a debater's (an agent grading its
+  own argument); a milder one-line **note** when it merely shares a vendor. The shipped
+  lineup — Opus judging the Sonnet+Codex debaters — produces the soft note, no `⚠️`.
+- **Default config = `examples/debate.yaml`** (`src/index.ts`) — when `--config` is
+  omitted, the example now loads by default (module-relative), falling back to the
+  built-in `claude+codex` lineup only if the file is absent. Fixes a real footgun: a
+  no-config run used to silently ignore the example's configured `model`/`effort`. Note:
+  no-config runs now also spend tokens on the example's Opus respondeo turn.
+- **Tests** — +9 (`test/config.test.ts`: judge-block parsing, unknown-key line numbers,
+  absence, the shipped example's judge, block-closing; `test/debate.test.ts`: judge runs
+  after reactions over a clean context, recorded in turns + transcript, absent when no
+  judge arg, NEEDS_INPUT surfaced, failing judge non-fatal). Suite now 42 tests, no real
+  agent calls. `--doctor` end-to-end confirmed the three-CLI lineup (incl. Opus) healthy.
+
 ## [0.0.6] — Per-participant reasoning `effort` in `debate.yaml`
 
 - **Per-participant `effort`** (`src/config.ts`, `src/adapters.ts`, `src/index.ts`) — a

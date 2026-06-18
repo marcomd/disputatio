@@ -1,6 +1,7 @@
 // CLI entry (Kaizen v0). Run with: node src/index.ts <task-file.md> [rounds] [repo-path] [--config debate.yaml]
 
 import { mkdir, writeFile, readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { claudeAdapter, agyAdapter, codexAdapter, type Participant } from "./adapters.ts";
@@ -17,8 +18,9 @@ function usage(exitCode: number): never {
   console.error("  rounds     number of reaction rounds after proposals (default 1)");
   console.error("  repo-path  optional: agents gather read-only evidence in a throwaway");
   console.error("             git worktree of this repo (git repos only; HEAD is what they see)");
-  console.error("  --config   debate.yaml selecting participants/models/budgets (see examples/debate.yaml)");
-  console.error("             default lineup without config: claude + codex");
+  console.error("  --config   debate.yaml selecting participants/models/budgets + an optional judge");
+  console.error("             (see examples/debate.yaml). Defaults to examples/debate.yaml; if that is");
+  console.error("             absent, falls back to the built-in lineup: claude + codex, no judge");
   console.error("  --doctor   preflight: canary every participant CLI (runnable + authenticated),");
   console.error("             report status, exit 0 if all healthy. Run this before a real debate.");
   process.exit(exitCode);
@@ -41,7 +43,18 @@ for (let i = 0; i < args.length; i++) {
   }
 }
 
-const cfg = configPath ? parseDebateConfig(await readFile(configPath, "utf8")) : {};
+// Default to the shipped example when --config is omitted. This also fixes a real
+// footgun: a no-config run used to silently ignore the example's model/effort. An
+// explicit --config that doesn't exist still hard-fails; only the DEFAULT path falls
+// back to the built-in lineup (cfg = {}) when the example is absent.
+const defaultConfigPath = join(import.meta.dirname, "..", "examples", "debate.yaml");
+let cfg = {} as ReturnType<typeof parseDebateConfig>;
+try {
+  cfg = parseDebateConfig(await readFile(configPath ?? defaultConfigPath, "utf8"));
+} catch (e) {
+  if (configPath || (e as NodeJS.ErrnoException).code !== "ENOENT") throw e;
+  // default example missing → keep the built-in lineup
+}
 
 // Cross-vendor by design: claude→Anthropic, codex→OpenAI, agy→Google. Diversity is
 // the point. Default lineup is claude+codex; optional adapters go through --config.
@@ -61,8 +74,10 @@ function buildParticipant(s: ParticipantSpec, timeoutMs: number): Participant {
 // --doctor: preflight only — needs the lineup (+ optional --config), nothing else.
 // Branch BEFORE the task-file/rounds/repo logic so `--doctor` never gets mistaken
 // for a task file. Short canary timeout: a hung preflight is a broken preflight.
+// The judge is an agent that must be runnable + authenticated like any other — canary it too.
 if (doctorMode) {
   const participants = specs.map((s) => buildParticipant(s, CANARY_TIMEOUT_MS));
+  if (cfg.judge) participants.push(buildParticipant(cfg.judge, CANARY_TIMEOUT_MS));
   console.error(`[disputatio] doctor — canary: ${participants.map((p) => p.id).join(", ")}`);
   const diagnoses = await runDoctor(participants);
   console.error(formatDiagnoses(diagnoses));
@@ -104,7 +119,20 @@ if (vendors.size < participants.length) {
   console.error("[disputatio] ⚠️ participants are not all cross-vendor — correlated-error risk (docs/2_CONCEPT.md §2)");
 }
 
-const outcome = await runDebate(task, participants, rounds, repoPath);
+const judge = cfg.judge ? buildParticipant(cfg.judge, timeoutMs) : undefined;
+
+// Correlated-error guard for the judge. display encodes adapter+model, so an exact
+// match means a debater is grading its OWN argument (same vendor AND model) — the loud
+// ⚠️. A shared vendor (different model) is a milder shared-training-lineage risk — a note.
+if (judge) {
+  if (participants.some((p) => p.display === judge.display)) {
+    console.error(`[disputatio] ⚠️ judge ${judge.display} is identical to a debater — it would grade its own argument (correlated-error risk; docs/2_CONCEPT.md §2)`);
+  } else if (participants.some((p) => p.vendor === judge.vendor)) {
+    console.error(`[disputatio] note: judge ${judge.display} shares a vendor with a debater — mild shared-training-lineage risk`);
+  }
+}
+
+const outcome = await runDebate(task, participants, rounds, repoPath, judge);
 
 const id = `debate-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 const dir = `.debate/${id}`;
@@ -125,6 +153,16 @@ if (outcome.aborted) {
   console.error(`[disputatio] partial transcript + raw captures kept for diagnosis`);
   console.log(`${dir}/debate.md`); // still expose the artifact path for inspection
   process.exit(1);
+}
+
+// Respondeo (consolidatio) artifact, alongside debate.md. NEEDS_INPUT is not an abort:
+// the judge did its job by asking instead of guessing — surface it on stderr, exit 0.
+if (outcome.respondeo) {
+  await writeFile(`${dir}/respondeo.md`, outcome.respondeo.text, "utf8");
+  console.error(`[disputatio] respondeo (${outcome.respondeo.status}): ${dir}/respondeo.md`);
+  if (outcome.respondeo.status === "NEEDS_INPUT") {
+    console.error(`[disputatio] ⚠️ respondeo needs human input — see ${dir}/respondeo.md`);
+  }
 }
 
 console.error(`[disputatio] done`);

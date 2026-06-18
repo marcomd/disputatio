@@ -23,3 +23,15 @@ participants:
 # in the model name instead (e.g. "(High)").
 # - adapter: agy
 #   model: Gemini 3.5 Flash (High)
+
+# Respondeo (judge): after the reaction rounds, ONE agent reads the full transcript
+# and renders the consolidatio — settled agreements + per-point rulings, or questions
+# for the human when a point can't be resolved from the transcript alone. Opt-in:
+# remove this block and the debate ends at the reaction rounds. Same keys as a
+# participant. Opus judges the Sonnet+Codex debaters above — a stronger model and a
+# DIFFERENT model from either debater (so no "grading its own argument" warning).
+judge:
+  adapter: claude
+  model: opus
+  effort: high
+  maxBudgetUsd: 2

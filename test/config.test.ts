@@ -19,6 +19,40 @@ test("parses the shipped example config", async () => {
   assert.deepEqual(cfg.participants?.[0], { adapter: "claude", model: "sonnet", maxBudgetUsd: 2 });
   assert.equal(cfg.participants?.[1].adapter, "codex");
   assert.equal(cfg.participants?.[1].bin, "/opt/homebrew/bin/codex");
+  // The judge (respondeo) is Opus — distinct model from the Sonnet debater, so no
+  // exact-display correlated-error match (decision #5).
+  assert.equal(cfg.judge?.adapter, "claude");
+  assert.equal(cfg.judge?.model, "opus");
+});
+
+test("parses a judge: block (respondeo)", () => {
+  const cfg = parseDebateConfig(
+    "participants:\n  - adapter: claude\n  - adapter: codex\njudge:\n  adapter: claude\n  model: opus\n  effort: low\n",
+  );
+  assert.deepEqual(cfg.judge, { adapter: "claude", model: "opus", effort: "low" });
+  assert.equal(cfg.participants?.length, 2); // judge is separate from the debaters
+});
+
+test("judge is undefined when the section is absent", () => {
+  const cfg = parseDebateConfig("participants:\n  - adapter: claude\n  - adapter: codex\n");
+  assert.equal(cfg.judge, undefined);
+});
+
+test("rejects an unknown judge key with the line number", () => {
+  assert.throws(
+    () => parseDebateConfig("judge:\n  adapter: claude\n  budget: 2\n"),
+    /line 3: unknown participant key "budget"/,
+  );
+});
+
+test("rejects a judge without a valid adapter", () => {
+  assert.throws(() => parseDebateConfig("judge:\n  model: opus\n"), /adapter: claude \| agy \| codex/);
+});
+
+test("a top-level key after a judge block closes it (no misattribution)", () => {
+  const cfg = parseDebateConfig("judge:\n  adapter: claude\nrounds: 2\n");
+  assert.deepEqual(cfg.judge, { adapter: "claude" });
+  assert.equal(cfg.rounds, 2);
 });
 
 test("models with spaces and parens survive (agy model names)", () => {
