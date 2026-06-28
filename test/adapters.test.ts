@@ -30,6 +30,20 @@ test("claude: success envelope → ok with text and cost", async () => {
   assert.equal(r.ok && r.costUsd, 0.10388775);
 });
 
+test("claude: --max-budget-usd defaults to $5, overridable via maxBudgetUsd", async () => {
+  const argvFile = join(tmpdir(), `disputatio-claude-argv-${process.pid}.txt`);
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "claude-success.json");
+  process.env.FAKE_ARGV_FILE = argvFile;
+
+  await claudeAdapter().run("ping", cwd);
+  let argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.equal(argv[argv.indexOf("--max-budget-usd") + 1], "5");
+
+  await claudeAdapter("sonnet", { maxBudgetUsd: 10 }).run("ping", cwd);
+  argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.equal(argv[argv.indexOf("--max-budget-usd") + 1], "10");
+});
+
 test("claude: effort is passed as --effort when set, omitted when absent", async () => {
   const argvFile = join(tmpdir(), `disputatio-claude-argv-${process.pid}.txt`);
   process.env.FAKE_STDOUT_FILE = join(fixtures, "claude-success.json");

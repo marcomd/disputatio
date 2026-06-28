@@ -2,6 +2,12 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.5.2] — test: lock --max-budget-usd default and override
+
+- `test/adapters.test.ts`: new test asserts `--max-budget-usd 5` is passed by default
+  and overridden correctly when `maxBudgetUsd` is set — closing the coverage gap that
+  let the $1→$2→$5 default bumps go unguarded.
+
 ## [0.5.1] — raise default judge budget from $2 to $5
 
 The $2 cap was hit on a real medium-sized repo run, wasting the tokens already spent on
