@@ -1,11 +1,11 @@
 # Graph Report - Disputatio  (2026-06-27)
 
 ## Corpus Check
-- 51 files · ~65,123 words
+- 51 files · ~64,151 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 680 nodes · 763 edges · 48 communities (39 shown, 9 thin omitted)
+- 679 nodes · 762 edges · 48 communities (39 shown, 9 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.79)
 - Token cost: 0 input · 0 output
 
@@ -197,8 +197,8 @@ Cohesion: 0.13
 Nodes (13): Architecture (five files, clean layers), Architecture (four files, clean layers), Architecture (seven files, clean layers), Architecture (six files, clean layers), Best practices, Commands, Design docs, graphify (+5 more)
 
 ### Community 30 - "Community 30"
-Cohesion: 0.14
-Nodes (13): Design documents, Disputatio, How it works (v0), How to Run, Install and use, Known v0 limitations (next steps), License, Prerequisites (+5 more)
+Cohesion: 0.15
+Nodes (12): Design documents, Disputatio, How it works (v0), How to Run, Install and use, Known v0 limitations (next steps), License, Prerequisites (+4 more)
 
 ### Community 31 - "Community 31"
 Cohesion: 0.25
@@ -261,7 +261,7 @@ Nodes (3): backupReadme, repoReadme, root
   README.md · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **440 isolated node(s):** `name`, `version`, `description`, `type`, `license` (+435 more)
+- **439 isolated node(s):** `name`, `version`, `description`, `type`, `license` (+434 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -271,7 +271,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **What is the exact relationship between `codexAdapter` and `README Codex Adapter Deferred Note`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _440 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _439 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Debate Engine & Transport Core` be split into smaller, more focused modules?**
   _Cohesion score 0.09103840682788052 - nodes in this community are weakly interconnected._
 - **Should `Headless CLI Capabilities` be split into smaller, more focused modules?**

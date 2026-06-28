@@ -37,6 +37,13 @@ node src/index.ts "Review changes in this branch and find issues." --repo /path/
 # explicit lineup/models/budgets (see examples/debate.yaml)
 node src/index.ts --file path/to/task.md --rounds 1 --repo /path/to/repo --config examples/debate.yaml
 
+# close the loop after a NEEDS_INPUT respondeo: answer its quaestiones and re-judge the
+# LATEST debate (or --debate <dir>). If now RESOLVED, the deliverable is drafted too.
+node src/index.ts --continue "Sync translation; files are comment-free; translator is git-fluent."
+
+# (re)draft the final-report.md deliverable from an already-RESOLVED debate
+node src/index.ts --finalize [--debate .debate/debate-<ts>]
+
 # test suite (fixture-based fake CLIs — no real agent calls, fast)
 npm test
 ```
@@ -60,7 +67,11 @@ npm test
   remain the integration test.
 - Output: a transcript at `.debate/debate-<timestamp>/debate.md` plus per-turn raw CLI
   captures in `.debate/debate-<timestamp>/raw/` (the only way to diagnose a failed
-  turn). **stdout = the artifact path only** (agent-native friendly); all
+  turn). When a judge runs: `respondeo.md` (the ruling ON the debate), and — only on a
+  RESOLVED respondeo — `final-report.md` (the **redactio**: the actual deliverable born
+  FROM the debate, the thing you start the work from). `--continue` versions the verdict
+  (`respondeo-2.md`, `-3.md`, …; highest number is current) and overwrites
+  `final-report.md`. **stdout = the artifact path only** (agent-native friendly); all
   progress/logging goes to **stderr**. **<2 successful proposals → abort, exit 1.**
 - Requires the lineup's CLIs installed and **already authenticated** — auth is out of
   scope. Default lineup: `claude` + `codex`; optional adapters belong in explicit
@@ -74,7 +85,11 @@ npm test
   config (via `install.ts`), builds the participant lineup (default `claude`+`codex`),
   validates the repo is git, runs the cross-vendor sanity check, writes transcript + raw
   captures, exits 1 on abort. `--doctor` (preflight) and `--init` (setup) branch before
-  any quaestio logic and exit 0/1.
+  any quaestio logic and exit 0/1. `--continue "<answers>"` and `--finalize` branch
+  before quaestio resolution too: they re-enter an EXISTING `.debate/<dir>` (latest, or
+  `--debate <dir>`), recover the quaestio from the saved transcript, and run the judge
+  alone — no new debate. Both fall back to the built-in opus judge when the config has
+  none (closing the loop is intrinsically a judge act).
 - **`src/quaestio.ts`** — quaestio input resolution. Pure (no fs): given the `--file`
   path (if any) and the positionals, returns a discriminated result for where the quaestio
   comes from — `{source:"inline"}` (the sole positional IS the question, the default),
@@ -104,7 +119,11 @@ npm test
   classify success/failure. `Participant` = `{ id, display, vendor, run(prompt, cwd) }`.
 - **`src/debate.ts`** — orchestration. Round 1 = parallel independent proposals
   (abort if <2 succeed); then N reaction rounds where each agent reacts to the full
-  transcript snapshot.
+  transcript snapshot; then the opt-in **respondeo** (judge) renders the consolidatio.
+  On a RESOLVED respondeo the judge then acts as **synthesizer** for the **redactio**
+  (`runFinalize`) — authoring the deliverable from the determination, transcript-only
+  like respondeo. `runContinuation` re-judges after the human answers (used by
+  `--continue`). Both are exported so the CLI can drive them standalone over a saved debate.
 
 Data flow: `index` builds `Participant[]` → `runDebate` → per-turn `runIsolated`
 (temp dir, or throwaway git worktree in repo mode) → `Participant.run` → `runCli`
@@ -177,11 +196,26 @@ Follow these three working principles when developing in this repo:
 
 ## Known v0 limitations (from `docs/4_PLAN.md`)
 
-No scholastic `consolidatio`/`respondeo` protocol yet; reaction rounds are parallel
-snapshots (agents don't see each other's same-round reactions); repo mode shows agents HEAD only (uncommitted
-changes invisible, untracked artifacts like `node_modules` absent); a worktree shares
-the repo's object store (CLI sandboxes are the second defense layer); `agy` has no
-spend cap (no flag exists — budget control is claude-only).
+No full scholastic `consolidatio` (pre-debate N-proposal merge) yet — `respondeo` +
+`redactio` exist; reaction rounds are parallel snapshots (agents don't see each other's
+same-round reactions); repo mode shows agents HEAD only (uncommitted changes invisible,
+untracked artifacts like `node_modules` absent); a worktree shares the repo's object
+store (CLI sandboxes are the second defense layer); `agy` has no spend cap (no flag
+exists — budget control is claude-only).
+
+**Deliberately deferred follow-ups (close-the-loop, scoped down on purpose):**
+- **`--continue` re-debate path.** Today `--continue` re-judges ALONE. When the human's
+  answer opens ground the debaters never argued, the judge returns NEEDS_INPUT again
+  (it refuses to invent a verdict) — the signal that a fresh reaction round is needed.
+  Re-engaging the debaters with the human input is the next increment.
+- **Crash-resume.** `runDebate` accumulates in memory; `index.ts` writes only at the end,
+  so a mid-debate crash loses the run (restart from scratch). This is separate from
+  `--continue` (a workflow step, not a crash recovery). A persisted `state.json` spine
+  (planned in `docs/4_PLAN.md` §3) would give both; not built for v0.
+- **Repo-grounded redactio.** `runFinalize` is transcript-only (the debate already put
+  the evidence in the transcript). Giving the synthesizer read-only repo access — to
+  ground the deliverable in real files, like the debaters — is a follow-up; it shares the
+  open question of judge/finalizer repo access.
 
 ## Design docs
 

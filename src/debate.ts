@@ -25,6 +25,9 @@ export type DebateOutcome = {
     status: RespondeoStatus;
     text: string;           // the verdict body — written verbatim to respondeo.md
   };
+  finalReport?: {           // the redactio: the deliverable, only when respondeo RESOLVED
+    text: string;           // written verbatim to final-report.md
+  };
 };
 
 // Transcript view (for the .md artifact): keeps cost + failure detail.
@@ -112,10 +115,85 @@ const respondeoPrompt = (ctx: string) =>
 
 // Only an explicit STATUS: NEEDS_INPUT on the first non-empty line triggers the human
 // path; anything else from a successful turn (RESOLVED or a missing/garbled marker)
-// is a verdict. A failed turn is classified FAILED by the caller.
-function parseRespondeoStatus(text: string): "RESOLVED" | "NEEDS_INPUT" {
+// is a verdict. A failed turn is classified FAILED by the caller. Exported because
+// --continue / --finalize parse a respondeo loaded back from disk (index.ts).
+export function parseRespondeoStatus(text: string): "RESOLVED" | "NEEDS_INPUT" {
   const first = text.split("\n").map((l) => l.trim()).find((l) => l !== "") ?? "";
   return /^STATUS:\s*NEEDS_INPUT\b/i.test(first) ? "NEEDS_INPUT" : "RESOLVED";
+}
+
+// Redactio — the SYNTHESIZER authors the actual deliverable the debate existed to
+// produce (the plan / review / proposal / outline the user will execute), NOT a
+// summary of who-said-what. This is the gap real use surfaced: respondeo.md holds the
+// RULING ON the debate, not the work-product born FROM it, so it lacks the data needed
+// to start the work. Transcript-only like respondeo: the debate already gathered the
+// evidence and it lives in the transcript (repo-grounded redactio is a follow-up).
+const finalizePrompt = (quaestio: string, transcript: string, determination: string) =>
+  `You are the SYNTHESIZER closing a structured debate. Author the FINAL DELIVERABLE the ` +
+  `debate existed to produce — the document a human or agent will use to START THE WORK ` +
+  `(implement, review, present, propose). This is the product, NOT minutes of the debate.\n\n` +
+  `The original quaestio (it fixes the deliverable's PURPOSE and shape):\n\n${quaestio}\n\n` +
+  `The full debate transcript (proposals, reactions, evidence):\n\n${transcript}\n\n` +
+  `The respondeo — the judge's determination (what was settled, what was ruled, and why):\n\n${determination}\n\n` +
+  `Rules:\n` +
+  `1. Infer the deliverable TYPE from the quaestio (implementation plan, code-review report, ` +
+  `proposal, presentation outline, …) and produce THAT artifact, in its natural shape.\n` +
+  `2. Build it from the SETTLED decisions in the respondeo: adopt what won, drop what was ` +
+  `rejected, and fold in the evidence that backed the winning positions.\n` +
+  `3. If a repository is present in your working directory, READ it and run READ-ONLY ` +
+  `commands to ground the deliverable in the REAL files — prefer concrete, file-accurate ` +
+  `steps (real paths, real current shapes) over generic ones. (No repo present = work from ` +
+  `the transcript alone.)\n` +
+  `4. Make it SELF-CONTAINED: someone reading ONLY this document must have everything needed ` +
+  `to begin — restate the context and decisions; never say "as discussed above".\n` +
+  `5. Leave the debate's blow-by-blow OUT; keep a rationale only where it is load-bearing for execution.\n` +
+  `6. If the respondeo left points unresolved, end with a short "## Open points" section so they ` +
+  `are not lost — but do not block the deliverable on them.\n` +
+  `Respond in English, in Markdown.`;
+
+// Continuation (--continue): the human has answered the respondeo's open questions.
+// Re-invoke the JUDGE ALONE (the cheap path) with the transcript + prior determination
+// + the answers. If the answers merely DISAMBIGUATE points the debaters already argued,
+// the judge can now rule (RESOLVED). If they open genuinely NEW ground nobody argued,
+// the judge must NOT invent a verdict — it returns NEEDS_INPUT again, which is the
+// signal that a fresh reaction round is needed (re-debate is the documented follow-up).
+const continuePrompt = (quaestio: string, transcript: string, previousDetermination: string, humanAnswers: string) =>
+  `You are the JUDGE (respondeo) RESUMING a structured debate you previously could not fully ` +
+  `resolve. You reason over the TRANSCRIPT and your PRIOR determination ALONE — no repository ` +
+  `access. The human has now answered your open questions.\n\n` +
+  `The original quaestio:\n\n${quaestio}\n\n` +
+  `The full debate transcript:\n\n${transcript}\n\n` +
+  `Your PRIOR determination (it ended in NEEDS_INPUT):\n\n${previousDetermination}\n\n` +
+  `The human's answers to your open questions:\n\n${humanAnswers}\n\n` +
+  `Rules:\n` +
+  `1. Your FIRST line must be exactly one of: "STATUS: RESOLVED" or "STATUS: NEEDS_INPUT".\n` +
+  `2. Resolve every point you previously left open, USING the human's answers. Do not re-ask ` +
+  `what they have already answered.\n` +
+  `3. Carry forward the settled agreements and prior rulings that still hold.\n` +
+  `4. ONLY if the answers open a genuinely NEW question the debaters never argued, which you ` +
+  `cannot settle from the transcript without inventing a verdict, use STATUS: NEEDS_INPUT, ` +
+  `record what is now settled, and list ONLY the new "## Quaestiones (for the human)". ` +
+  `Do not fabricate a verdict you cannot defend from the transcript.\n` +
+  `Respond in English, concise, in Markdown.`;
+
+// The redactio turn: author the deliverable from a RESOLVED determination. UNLIKE the
+// respondeo (which is transcript-only by invariant — it must ASK, not guess), the
+// synthesizer MAY be repo-grounded: with repoPath it runs in a read-only throwaway
+// worktree of HEAD, so the deliverable can cite real files and current shapes. Exported
+// so --continue / --finalize can reuse it standalone over a saved debate.
+export async function runFinalize(
+  judge: Participant, quaestio: string, transcript: string, determination: string, repoPath?: string,
+): Promise<Turn> {
+  const r = await runIsolated(judge, finalizePrompt(quaestio, transcript, determination), repoPath);
+  return { title: `Final report — ${judge.display}`, participant: judge.id, result: r };
+}
+
+// The continuation turn: re-judge after the human answered. Transcript-only, like respondeo.
+export async function runContinuation(
+  judge: Participant, quaestio: string, transcript: string, previousDetermination: string, humanAnswers: string,
+): Promise<Turn> {
+  const r = await runIsolated(judge, continuePrompt(quaestio, transcript, previousDetermination, humanAnswers));
+  return { title: `Respondeo (continued) — ${judge.display}`, participant: judge.id, result: r };
 }
 
 export async function runDebate(
@@ -171,14 +249,30 @@ export async function runDebate(
   // Respondeo — opt-in judge turn (transcript-only: no repoPath, even in repo mode).
   // A failed judge is non-fatal: it's recorded, but the debate itself still succeeded.
   let respondeo: DebateOutcome["respondeo"];
+  let finalReport: DebateOutcome["finalReport"];
   if (judge) {
+    const debateCtx = ctxParts.join("\n"); // clean transcript snapshot BEFORE the respondeo turn
     log(`Respondeo — ${judge.display} renders the consolidatio`);
-    const r = await runIsolated(judge, respondeoPrompt(ctxParts.join("\n")));
+    const r = await runIsolated(judge, respondeoPrompt(debateCtx));
     record(`Respondeo — ${judge.display}`, judge, r);
     respondeo = r.ok
       ? { status: parseRespondeoStatus(r.text), text: r.text }
       : { status: "FAILED", text: `Respondeo turn failed: ${r.error}` };
+
+    // Redactio — author the deliverable, but ONLY when the respondeo actually RESOLVED.
+    // On NEEDS_INPUT the deliverable waits for the human (--continue); on FAILED there
+    // is nothing to synthesize. The determination is passed separately, so finalize sees
+    // the clean debate transcript (not the respondeo turn re-appended). A failed redactio
+    // is non-fatal — it's recorded, but the debate + verdict still succeeded.
+    if (respondeo.status === "RESOLVED") {
+      log(`Redactio — ${judge.display} drafts the final deliverable`);
+      // Repo-grounded when the debate ran with --repo: the deliverable cites real files.
+      const turn = await runFinalize(judge, task, debateCtx, respondeo.text, repoPath);
+      turns.push(turn);
+      fileParts.push(render(turn.title, turn.result));
+      if (turn.result.ok) finalReport = { text: turn.result.text };
+    }
   }
 
-  return { transcript: fileParts.join("\n"), turns, respondeo };
+  return { transcript: fileParts.join("\n"), turns, respondeo, finalReport };
 }

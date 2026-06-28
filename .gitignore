@@ -8,3 +8,4 @@ examples/private*
 research/private_*
 graphify-out/cost.json
 tmp/
+.serena

@@ -82,13 +82,27 @@ disputatio "Review changes in this branch and find issues." --repo /path/to/your
 # per-participant `effort` doses token spend — claude: low|medium|high|xhigh|max;
 # codex: minimal|low|medium|high; agy: encode it in the model name (no effort key).
 disputatio --file path/to/task.md --rounds 1 --repo /path/to/your/repo --config examples/debate.yaml
+
+# --- closing the loop (when a judge ran) ---------------------------------------------
+
+# the judge ended in NEEDS_INPUT? answer its open questions and re-judge the latest
+# debate. If it now resolves, the final deliverable (final-report.md) is drafted too.
+disputatio --continue "Async translation; files are comment-free; translator hands files to a dev."
+
+# ground that deliverable in your real repo (read-only worktree of HEAD), and/or target
+# a specific past debate instead of the latest one:
+disputatio --continue "<answers>" --debate /path/to/repo/.debate/debate-<ts> --repo /path/to/repo
+
+# (re)draft final-report.md from an already-resolved debate (no re-judging)
+disputatio --finalize --debate .debate/debate-<ts> [--repo /path/to/your/repo]
 ```
 
-Output: a transcript at `.debate/debate-<timestamp>/debate.md` (its path is printed
-to stdout; progress goes to stderr), plus per-turn raw CLI captures under
-`.debate/debate-<timestamp>/raw/` for diagnosing failures. If fewer than two
-proposals succeed the debate **aborts with exit 1** (a one-voice "debate" is
-worthless) — the partial transcript and raw captures are kept.
+Output lands in `.debate/debate-<timestamp>/` (see [the flow](#the-flow-phases--artifacts)
+below for what each file is). The **path printed to stdout** is the primary artifact —
+the deliverable (`final-report.md`) when one was produced, otherwise the transcript
+(`debate.md`); all progress goes to stderr. If fewer than two proposals succeed the
+debate **aborts with exit 1** (a one-voice "debate" is worthless) — the partial
+transcript and raw captures are kept.
 
 ### Run from source
 
@@ -119,10 +133,55 @@ it does not call real agent CLIs.
   `agy` is text-only (stdout is the answer). All invocation details are grounded in
   real local runs — see [`research/canary-results.md`](./research/canary-results.md).
 
+## The flow: phases & artifacts
+
+A run moves through these phases (scholastic names in parentheses — Disputatio models
+a medieval *disputatio*). Everything from the respondeo on is **opt-in**: it runs only
+when the config defines a `judge` (e.g. the opus judge `--init` seeds).
+
+1. **Proposals** (*videtur quod*, "it seems that…") — every agent independently answers
+   the quaestio, in isolation, so no one peeks at another's take. Needs ≥2 to succeed.
+2. **Reaction rounds** (*sed contra*, "but against this…") — each agent reacts
+   adversarially to the full transcript: where it agrees, where it disagrees (with
+   real flaws), what's missing — ideally backed by **executable evidence**. `--rounds N`.
+3. **Respondeo** (the judge's *consolidatio*, the determination) — one judge reads the
+   whole transcript and renders the verdict: the **settled agreements**, a **ruling on
+   each contested point** (favouring positions backed by run code over rhetoric), or —
+   when a point genuinely can't be settled from the transcript — a list of
+   **questions for you** (status `NEEDS_INPUT`) instead of a guessed answer.
+4. **Redactio** (the deliverable) — *only* when the respondeo resolves, the judge then
+   acts as **synthesizer** and writes the document you actually start the work from
+   (an implementation plan, a review, a proposal…), built from the settled decisions.
+   With `--repo` it grounds this in your real files (read-only).
+
+When the respondeo asks for input, you **close the loop** with
+`disputatio --continue "<your answers>"`: it folds your answers in and re-judges. If
+that resolves, the deliverable is drafted. (If your answer opens a question the
+debaters never argued, the judge says so rather than inventing a verdict — re-run the
+debate to bring them back in.)
+
+**What you get in `.debate/debate-<timestamp>/`:**
+
+| File              | What it is                                                              |
+| ----------------- | ---------------------------------------------------------------------- |
+| `debate.md`       | the full transcript — proposals, reactions, and the respondeo          |
+| `respondeo.md`    | the judge's ruling **on** the debate (versioned `-2`, `-3`… per `--continue`) |
+| `final-report.md` | the **redactio**: the deliverable born **from** the debate — start work here |
+| `raw/`            | per-turn raw CLI captures, the only way to diagnose a failed turn      |
+
+> `respondeo.md` judges the debate; `final-report.md` is the product. They are
+> different documents on purpose — the verdict tells you *what was decided*, the
+> deliverable gives you *the thing to execute*.
+
 ## Known v0 limitations (next steps)
 
-- No scholastic `consolidatio` / `respondeo` / structured contribution trailer /
-  evidence-typing yet.
+- No scholastic **`consolidatio` as a pre-debate step** (merging N proposals into one
+  shared object for the skeptics to attack), no structured contribution trailer /
+  evidence-typing yet. The `respondeo` (verdict) and `redactio` (deliverable) phases
+  **do** exist.
+- `--continue` re-judges **alone**; it does not yet re-engage the debaters when your
+  answer opens genuinely new ground (it flags that case instead). A crashed run is not
+  resumable — it accumulates in memory and writes at the end, so restart from scratch.
 - Reaction rounds are parallel snapshots (agents react to proposals, not to each
   other's same-round reactions).
 - Timeout kills the whole **process group** (`SIGTERM`, then `SIGKILL` after a short

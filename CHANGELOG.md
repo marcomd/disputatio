@@ -2,6 +2,42 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.4.0] — redactio (final deliverable) + `--continue` / `--finalize` / `--debate`
+
+Closes the human-in-the-loop: after the judge rules, the deliverable is now drafted
+automatically, and two new flags let you close the loop on a saved debate without
+re-running it.
+
+- **Redactio phase** (`src/debate.ts`, `runDebate`) — when the respondeo resolves, the
+  judge immediately acts as **synthesizer** and writes `final-report.md`: the actual
+  deliverable born from the debate (implementation plan, review, proposal…), built from
+  the settled decisions. With `--repo` it grounds this in real files (read-only worktree
+  of HEAD). A failed redactio is non-fatal — the debate + verdict still succeed.
+- **`--continue "<answers>"`** (`src/index.ts`) — close the loop after a `NEEDS_INPUT`
+  respondeo: fold the human's answers in and re-judge the latest (or `--debate`) debate.
+  If it now resolves, the deliverable is drafted. If the answers open genuinely new ground
+  the debaters never argued, the judge refuses to invent a verdict and flags it instead.
+  Verdict is versioned as `respondeo-2.md`, `-3.md`… (highest number = current);
+  `final-report.md` is overwritten on every resolution.
+- **`--finalize`** (`src/index.ts`) — (re)draft `final-report.md` from an
+  already-RESOLVED debate without re-judging. Refuses on `NEEDS_INPUT` (run
+  `--continue` first). Accepts `--repo` to ground the deliverable in real files.
+- **`--debate <dir>`** (`src/index.ts`) — target a specific `.debate/<dir>` for
+  `--continue` / `--finalize`; defaults to the latest debate.
+- **stdout = primary artifact** (`src/index.ts`) — when a deliverable was produced,
+  stdout prints `final-report.md`; otherwise `debate.md`. Both paths were previously
+  stdout; now the most actionable artifact surfaces first (agent-native friendly).
+- **Exports** (`src/debate.ts`) — `runFinalize`, `runContinuation`, `parseRespondeoStatus`
+  exported so `index.ts` can drive them standalone over a saved debate (seam for
+  `--continue` / `--finalize`).
+- **README** — new "The flow: phases & artifacts" section with scholastic-phase
+  descriptions (proposals → reactions → respondeo → redactio) and an output-files table
+  (`debate.md`, `respondeo.md`, `final-report.md`, `raw/`).
+- **Tests** — 69 tests (up from 62); new cases cover `runFinalize`, `runContinuation`,
+  and worktree cleanup.
+- **Docs** — `docs/4_PLAN.md` updated with 2026-06-27 status note on the surface change
+  (flags, not subcommands) and the partial resolution of execution-ownership point.
+
 ## [0.3.0] — inline quaestio by default; `--rounds`/`--repo` flags
 
 The quaestio no longer has to live in a file: you can ask on the fly. This is a

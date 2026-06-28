@@ -358,6 +358,14 @@ disputatio doctor                                       # version + capability p
 # deferred: disputatio ui
 ```
 
+> **Status (2026-06-27):** the surface landed as flags on one entry, not subcommands:
+> `--finalize [--debate <dir>]` (the redactio / final-report deliverable) and
+> `--continue "<answers>" [--debate <dir>]` (close the loop after a NEEDS_INPUT
+> respondeo) are implemented. They re-enter a saved `.debate/<dir>` and run the judge
+> alone; the deliverable is `final-report.md`. `--continue` re-judges only — re-engaging
+> the debaters, and a true crash-`resume` from a persisted `state.json`, are still
+> deferred (see CLAUDE.md "Deliberately deferred follow-ups").
+
 Agent-native parity (a project value): anything the CLI does, expose so an agent
 can drive it too (structured output on `doctor`, machine-readable `state.json`).
 
@@ -419,7 +427,10 @@ Tracked, to resolve at the marked points — not now:
 3. **`disputatio` trailer schema** — finalize the exact fields + YAML shape.
    (Needed for §5 / M3, draft usable for M1.)
 4. **Execution ownership** — Option A (user executes the plan) vs Option B (return
-   to Disputatio to debate the diff). (Post-MVP; does not block.)
+   to Disputatio to debate the diff). (Post-MVP; does not block.) *Partially addressed
+   (2026-06-27):* the **redactio** (`final-report.md`) now hands off a self-contained
+   deliverable to start the work (Option A), and `--continue` lets the human re-enter the
+   loop without re-running. Debating the produced diff (Option B) remains open.
 5. **Claude cost under subscription auth** — `--bare` is unavailable (canaried);
    rely on prompt-cache reuse within the TTL, or run with `ANTHROPIC_API_KEY`.
    (Operational; affects per-run cost, not architecture.)
