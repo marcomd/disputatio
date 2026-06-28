@@ -6,11 +6,11 @@
 
 Disputatio is a local-first tool that orchestrates a structured debate between
 multiple *real* AI coding agents — Claude Code, Codex CLI, Antigravity (Gemini),
-Pi — run as their native CLIs, not as raw LLM API calls. It automates the
+Pi, GitHub Copilot CLI — run as their native CLIs, not as raw LLM API calls. It automates the
 copy-paste-between-terminals workflow many developers already do by hand: ask one
 agent, have another critique it, iterate, converge.
 
-> **Status: experimental, early MVP — v0.6.1.** Rough but runnable. The core premise —
+> **Status: experimental, early MVP — v0.7.0.** Rough but runnable. The core premise —
 > that cross-harness debate produces materially better decisions than a single
 > strong agent — is **not yet validated**; v0 exists to dogfood the workflow on
 > real tasks. See [`4_PLAN.md`](./docs/4_PLAN.md) for the honest state and roadmap.
@@ -36,8 +36,9 @@ Disputatio is built around.
 - **Node ≥ 24**.
 - [`claude`](https://code.claude.com) and [`codex`](https://developers.openai.com/codex)
   (default lineup) installed and **already authenticated** (authentication is out of
-  scope — log in to each CLI first). [`agy`](https://antigravity.google) is optional,
-  via `--config`. **Account hygiene matters:** only point a CLI at repositories its
+  scope — log in to each CLI first). [`agy`](https://antigravity.google),
+  [`pi`](https://pi.dev), and [GitHub Copilot CLI](https://docs.github.com/copilot/how-tos/copilot-cli)
+  are optional via `--config`. **Account hygiene matters:** only point a CLI at repositories its
   credentials and policy are allowed to access.
 
 ### Install and use
@@ -138,8 +139,8 @@ Run the fixture-based test suite with `npm test`; it does not call real agent CL
 ## How it works (v0)
 
 - **Cross-vendor** participants by design — default `claude` (Anthropic) + `codex`
-  (OpenAI); `agy` (Google/Gemini) via config — because diversity of reasoning is the
-  whole point.
+  (OpenAI); `agy` (Google/Gemini), `pi`, and `copilot-cli` via config — because
+  diversity of reasoning is the whole point.
 - Each agent turn runs in **isolation**: a throwaway temp dir, or — when you pass a
   repo — a **detached throwaway git worktree of HEAD**, so agentic CLIs can't read
   each other's outputs, and test runs / stray writes never touch your real checkout.
@@ -147,8 +148,10 @@ Run the fixture-based test suite with `npm test`; it does not call real agent CL
   `codex` via its JSONL event stream (last `agent_message` + `turn.completed`);
   `pi` ([earendil-works/pi](https://github.com/earendil-works/pi), a minimal,
   low-token multi-LLM harness) via its `--mode json` event stream (last assistant
-  `message_end`); `agy` is text-only (stdout is the answer). All invocation details are
-  grounded in real local runs — see [`research/canary-results.md`](./research/canary-results.md).
+  `message_end`); `copilot-cli` via GitHub Copilot CLI JSONL (`result.exitCode` +
+  last `assistant.message`); `agy` is text-only (stdout is the answer). All invocation
+  details are grounded in real local runs — see [`research/canary-results.md`](./research/canary-results.md)
+  and the per-CLI files in [`research/`](./research/).
 
 ## The flow: phases & artifacts
 
@@ -217,6 +220,7 @@ Currently supported adapters include:
 - `codex` -> https://developers.openai.com/codex/cli
 - `agy` -> https://antigravity.google/product/antigravity-cli
 - `pi` -> https://pi.dev
+- `copilot-cli` -> https://docs.github.com/copilot/how-tos/copilot-cli
 
 Each adapter lives in `src/adapters.ts` and has per-CLI notes in `docs/3_ADAPTERS.md`. The adapters
 implement the small transport layer that lets Disputatio treat different CLIs uniformly.
@@ -233,7 +237,7 @@ logic never has to care which vendor it is talking to. The contract is the
 
 ```ts
 type Participant = {
-  id: string;       // short stable key ("claude", "codex", "pi")
+  id: string;       // short stable key ("claude", "codex", "pi", "copilot-cli")
   display: string;  // human label, encodes model ("Pi (anthropic/claude...)")
   vendor: string;   // used for the cross-vendor diversity check — keep it DISTINCT
   run: (prompt: string, cwd: string) => Promise<AgentResult>;

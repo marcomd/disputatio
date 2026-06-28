@@ -8,7 +8,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { tmpdir } from "node:os";
-import { claudeAdapter, agyAdapter, codexAdapter, piAdapter } from "../src/adapters.ts";
+import { claudeAdapter, agyAdapter, codexAdapter, piAdapter, copilotCliAdapter } from "../src/adapters.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const fixtures = join(here, "fixtures");
@@ -214,5 +214,55 @@ test("pi: auto_retry_end finalError → failure with the error", async () => {
 test("pi: custom bin override is used", async () => {
   process.env.FAKE_STDOUT_FILE = join(fixtures, "pi-success.jsonl");
   const r = await piAdapter(undefined, { bin: join(here, "fakes", "pi") }).run("ping", cwd);
+  assert.equal(r.ok, true);
+});
+
+// --- GitHub Copilot CLI: JSON event stream ------------------------------------------
+
+test("copilot-cli: success JSON lines → LAST assistant.message wins", async () => {
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "copilot-success.jsonl");
+  const r = await copilotCliAdapter(undefined, { bin: join(here, "fakes", "copilot") }).run("ping", cwd);
+  assert.equal(r.ok, true);
+  assert.equal(r.ok && r.text, "pong");
+});
+
+test("copilot-cli: runs read-only (available-tools view/glob/grep, no bash/edit/write) in json mode", async () => {
+  const argvFile = join(tmpdir(), `disputatio-copilot-argv-${process.pid}.txt`);
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "copilot-success.jsonl");
+  process.env.FAKE_ARGV_FILE = argvFile;
+  await copilotCliAdapter(undefined, { bin: join(here, "fakes", "copilot") }).run("ping", cwd);
+  const argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.equal(argv[argv.indexOf("--output-format") + 1], "json");
+  assert.ok(argv.includes("--disable-builtin-mcps"), "expected builtin GitHub MCP disabled");
+  const tools = argv[argv.indexOf("--available-tools") + 1];
+  assert.equal(tools, "view,glob,grep");
+  assert.ok(!/\b(bash|edit|write|create)\b/.test(tools), "read-only: no mutating tools");
+});
+
+test("copilot-cli: effort is passed as --effort when set, omitted when absent", async () => {
+  const argvFile = join(tmpdir(), `disputatio-copilot-effort-argv-${process.pid}.txt`);
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "copilot-success.jsonl");
+  process.env.FAKE_ARGV_FILE = argvFile;
+
+  await copilotCliAdapter(undefined, { bin: join(here, "fakes", "copilot"), effort: "high" }).run("ping", cwd);
+  let argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.equal(argv[argv.indexOf("--effort") + 1], "high");
+
+  await copilotCliAdapter(undefined, { bin: join(here, "fakes", "copilot") }).run("ping", cwd);
+  argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.ok(!argv.includes("--effort"), "expected no --effort when effort is unset");
+});
+
+test("copilot-cli: result exitCode non-zero → failure", async () => {
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "copilot-error.jsonl");
+  process.env.FAKE_EXIT = "1";
+  const r = await copilotCliAdapter(undefined, { bin: join(here, "fakes", "copilot") }).run("ping", cwd);
+  assert.equal(r.ok, false);
+  assert.match(!r.ok ? r.error : "", /rate limit/);
+});
+
+test("copilot-cli: custom bin override is used", async () => {
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "copilot-success.jsonl");
+  const r = await copilotCliAdapter(undefined, { bin: join(here, "fakes", "copilot") }).run("ping", cwd);
   assert.equal(r.ok, true);
 });

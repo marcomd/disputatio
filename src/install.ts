@@ -96,9 +96,10 @@ export async function findAlternatives(bin: string): Promise<string[]> {
 
 // --- init orchestration --------------------------------------------------------------
 
-// Only codex honors a `bin:` override today (claudeAdapter/agyAdapter hardcode their
-// binary name); other adapters can canary their PATH binary but cannot be repointed.
-const BIN_OVERRIDABLE = new Set<string>(["codex", "pi"]);
+// Adapters that honor a `bin:` override can be repointed when a stale shim shadows
+// the real install; other adapters can canary PATH but cannot be repointed.
+const BIN_OVERRIDABLE = new Set<string>(["codex", "pi", "copilot-cli"]);
+const DEFAULT_BIN = new Map<string, string>([["copilot-cli", "copilot"]]);
 
 export type InitDeps = {
   // Inject the lineup factory (it lives in index.ts, the composition root) so install.ts
@@ -132,7 +133,7 @@ export async function runInit(
 
   for (const spec of specs) {
     const overridable = BIN_OVERRIDABLE.has(spec.adapter);
-    const defaultBin = spec.bin ?? spec.adapter;
+    const defaultBin = spec.bin ?? DEFAULT_BIN.get(spec.adapter) ?? spec.adapter;
     const probe = (bin: string) => canary(build({ ...spec, bin }, CANARY_TIMEOUT_MS));
     const alts = overridable ? await findAlts(defaultBin) : [];
     const res = await resolveBinary(defaultBin, alts, probe);

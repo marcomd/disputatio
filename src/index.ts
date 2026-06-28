@@ -9,7 +9,7 @@
 import { mkdir, writeFile, readFile, readdir } from "node:fs/promises";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { claudeAdapter, agyAdapter, codexAdapter, piAdapter, type Participant } from "./adapters.ts";
+import { claudeAdapter, agyAdapter, codexAdapter, piAdapter, copilotCliAdapter, type Participant } from "./adapters.ts";
 import { parseDebateConfig, type ParticipantSpec, type DebateConfig } from "./config.ts";
 import { runDebate, runFinalize, runContinuation, parseRespondeoStatus } from "./debate.ts";
 import { runDoctor, allHealthy, formatDiagnoses, CANARY_TIMEOUT_MS } from "./doctor.ts";
@@ -111,6 +111,7 @@ function buildParticipant(s: ParticipantSpec, timeoutMs: number): Participant {
       return agyAdapter(s.model ?? "Gemini 3.5 Flash (High)", { timeoutMs });
     case "codex": return codexAdapter(s.model, { bin: s.bin, timeoutMs, effort: s.effort });
     case "pi": return piAdapter(s.model, { bin: s.bin, timeoutMs, effort: s.effort });
+    case "copilot-cli": return copilotCliAdapter(s.model, { bin: s.bin, timeoutMs, effort: s.effort });
   }
 }
 

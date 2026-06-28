@@ -1,0 +1,4 @@
+{"type":"session.tools_updated","data":{"model":"gpt-5-mini"}}
+{"type":"assistant.message","data":{"content":"intermediate thought","toolRequests":[]}}
+{"type":"assistant.message","data":{"content":"pong","toolRequests":[]}}
+{"type":"result","exitCode":0,"usage":{"premiumRequests":0}}

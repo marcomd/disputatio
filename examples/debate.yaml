@@ -34,6 +34,13 @@ participants:
 #   model: anthropic/claude-sonnet  # provider/id; omit = the account default
 #   effort: medium                  # pi values: off | minimal | low | medium | high | xhigh
 #   # bin: /opt/homebrew/bin/pi     # OPTIONAL: only if a stale shim shadows pi
+#
+# GitHub Copilot CLI (`npm install -g @github/copilot`, binary: copilot). Read-only via
+# --available-tools view,glob,grep with builtin MCP disabled; effort via --effort.
+# - adapter: copilot-cli
+#   model: auto                     # omit/auto = Copilot chooses; or pin a model name
+#   effort: medium                  # none | low | medium | high | xhigh | max
+#   # bin: /opt/homebrew/bin/copilot # OPTIONAL: only if a stale shim shadows copilot
 
 # Respondeo (judge): after the reaction rounds, ONE agent reads the full transcript
 # and renders the consolidatio — settled agreements + per-point rulings, or questions

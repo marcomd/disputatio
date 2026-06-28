@@ -280,3 +280,61 @@ function piMessageText(message: any): string {
   }
   return "";
 }
+
+// --- GitHub Copilot CLI: JSONL stream ------------------------------------------------
+export type CopilotCliOpts = { bin?: string; timeoutMs?: number; effort?: string };
+
+export function copilotCliAdapter(model?: string, opts: CopilotCliOpts = {}): Participant {
+  // The npm package is @github/copilot, but the installed binary is `copilot`.
+  // Keep `bin` configurable to handle shadowed/stale shims like codex/pi.
+  const bin = opts.bin ?? "copilot";
+  const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  return {
+    id: "copilot-cli",
+    display: `Copilot CLI (${model ?? "auto"})`,
+    vendor: "github-copilot",
+    async run(prompt, cwd) {
+      // Canaried with @github/copilot 1.0.65: `-p` is non-interactive prompt mode;
+      // `--output-format json` is JSONL; read-only evidence is a tool availability
+      // allowlist of view/glob/grep, with builtin GitHub MCP disabled.
+      const r = await runCli(bin, [
+        "-p", prompt,
+        "--output-format", "json",
+        "--stream", "off",
+        "--no-color",
+        "--no-remote",
+        "--no-remote-export",
+        "--no-auto-update",
+        "--no-ask-user",
+        "--disable-builtin-mcps",
+        "--available-tools", "view,glob,grep",
+        ...(model ? ["--model", model] : []),
+        ...(opts.effort ? ["--effort", opts.effort] : []),
+      ], cwd, timeoutMs);
+      if (r.timedOut) return { ok: false, error: "timeout", raw: r };
+      const spawnErr = spawnFailure(r);
+      if (spawnErr) return { ok: false, error: spawnErr, raw: r };
+
+      let text = "";
+      let sawResult = false;
+      let resultExit: number | undefined;
+      let failure = "";
+      for (const line of r.stdout.split("\n")) {
+        if (!line.trim()) continue;
+        let ev: any;
+        try { ev = JSON.parse(line); } catch { continue; }
+        if (ev.type === "assistant.message" && typeof ev.data?.content === "string") {
+          text = ev.data.content.trim();
+        } else if (ev.type === "result") {
+          sawResult = true;
+          resultExit = typeof ev.exitCode === "number" ? ev.exitCode : undefined;
+          if (ev.error) failure ||= String(ev.error);
+        } else if (ev.type === "error") {
+          failure ||= String(ev.message ?? ev.data?.message ?? "error event");
+        }
+      }
+      if (r.code === 0 && sawResult && resultExit === 0 && !failure && text.length > 0) return { ok: true, text, raw: r };
+      return { ok: false, error: failure || r.stderr.trim().slice(0, 200) || `exit=${r.code}`, raw: r };
+    },
+  };
+}

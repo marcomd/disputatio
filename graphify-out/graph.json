@@ -221,7 +221,7 @@
       "label": "scripts",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L26",
       "id": "disputatio_package_scripts",
       "community": 7,
       "norm_label": "scripts"
@@ -230,7 +230,7 @@
       "label": "debate",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L27",
       "id": "disputatio_package_scripts_debate",
       "community": 7,
       "norm_label": "debate"
@@ -239,7 +239,7 @@
       "label": "build",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L28",
       "id": "disputatio_package_scripts_build",
       "community": 7,
       "norm_label": "build"
@@ -248,7 +248,7 @@
       "label": "prepack",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L29",
       "id": "disputatio_package_scripts_prepack",
       "community": 7,
       "norm_label": "prepack"
@@ -257,7 +257,7 @@
       "label": "postpack",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L31",
+      "source_location": "L30",
       "id": "disputatio_package_scripts_postpack",
       "community": 7,
       "norm_label": "postpack"
@@ -266,7 +266,7 @@
       "label": "restore-readme",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L32",
+      "source_location": "L31",
       "id": "disputatio_package_scripts_restore_readme",
       "community": 7,
       "norm_label": "restore-readme"
@@ -275,7 +275,7 @@
       "label": "test",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L33",
+      "source_location": "L32",
       "id": "disputatio_package_scripts_test",
       "community": 7,
       "norm_label": "test"
@@ -284,7 +284,7 @@
       "label": "engines",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L35",
+      "source_location": "L34",
       "id": "disputatio_package_engines",
       "community": 7,
       "norm_label": "engines"
@@ -293,7 +293,7 @@
       "label": "node",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L36",
+      "source_location": "L35",
       "id": "disputatio_package_engines_node",
       "community": 7,
       "norm_label": "node"
@@ -302,7 +302,7 @@
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L38",
+      "source_location": "L37",
       "id": "disputatio_package_devdependencies",
       "community": 7,
       "norm_label": "devdependencies"
@@ -311,7 +311,7 @@
       "label": "esbuild",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L39",
+      "source_location": "L38",
       "id": "disputatio_package_devdependencies_esbuild",
       "community": 7,
       "norm_label": "esbuild"
@@ -430,7 +430,7 @@
       "source_file": "test/debate.test.ts",
       "source_location": "L1",
       "id": "test_debate_test_ts",
-      "community": 48,
+      "community": 1,
       "norm_label": "debate.test.ts"
     },
     {
@@ -439,7 +439,7 @@
       "source_file": "test/debate.test.ts",
       "source_location": "L14",
       "id": "test_debate_test_execfileasync",
-      "community": 48,
+      "community": 1,
       "norm_label": "execfileasync"
     },
     {
@@ -448,7 +448,7 @@
       "source_file": "test/debate.test.ts",
       "source_location": "L16",
       "id": "test_debate_test_fake",
-      "community": 48,
+      "community": 1,
       "norm_label": "fake()"
     },
     {
@@ -457,7 +457,7 @@
       "source_file": "test/debate.test.ts",
       "source_location": "L19",
       "id": "test_debate_test_ok",
-      "community": 48,
+      "community": 1,
       "norm_label": "ok()"
     },
     {
@@ -466,7 +466,7 @@
       "source_file": "test/debate.test.ts",
       "source_location": "L20",
       "id": "test_debate_test_fail",
-      "community": 48,
+      "community": 1,
       "norm_label": "fail()"
     },
     {
@@ -1015,7 +1015,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L63",
       "id": "src_adapters_agentresult",
-      "community": 48,
+      "community": 1,
       "norm_label": "agentresult"
     },
     {
@@ -1116,6 +1116,24 @@
       "id": "src_adapters_pimessagetext",
       "community": 45,
       "norm_label": "pimessagetext()"
+    },
+    {
+      "label": "CopilotCliOpts",
+      "file_type": "code",
+      "source_file": "src/adapters.ts",
+      "source_location": "L285",
+      "id": "src_adapters_copilotcliopts",
+      "community": 45,
+      "norm_label": "copilotcliopts"
+    },
+    {
+      "label": "copilotCliAdapter()",
+      "file_type": "code",
+      "source_file": "src/adapters.ts",
+      "source_location": "L287",
+      "id": "src_adapters_copilotcliadapter",
+      "community": 45,
+      "norm_label": "copilotcliadapter()"
     },
     {
       "label": "doctor.ts",
@@ -1262,10 +1280,19 @@
       "norm_label": "bin_overridable"
     },
     {
+      "label": "DEFAULT_BIN",
+      "file_type": "code",
+      "source_file": "src/install.ts",
+      "source_location": "L102",
+      "id": "src_install_default_bin",
+      "community": 5,
+      "norm_label": "default_bin"
+    },
+    {
       "label": "InitDeps",
       "file_type": "code",
       "source_file": "src/install.ts",
-      "source_location": "L103",
+      "source_location": "L104",
       "id": "src_install_initdeps",
       "community": 5,
       "norm_label": "initdeps"
@@ -1274,7 +1301,7 @@
       "label": "defaultCanary()",
       "file_type": "code",
       "source_file": "src/install.ts",
-      "source_location": "L111",
+      "source_location": "L112",
       "id": "src_install_defaultcanary",
       "community": 1,
       "norm_label": "defaultcanary()"
@@ -1283,7 +1310,7 @@
       "label": "InitResult",
       "file_type": "code",
       "source_file": "src/install.ts",
-      "source_location": "L113",
+      "source_location": "L114",
       "id": "src_install_initresult",
       "community": 5,
       "norm_label": "initresult"
@@ -1292,7 +1319,7 @@
       "label": "runInit()",
       "file_type": "code",
       "source_file": "src/install.ts",
-      "source_location": "L119",
+      "source_location": "L120",
       "id": "src_install_runinit",
       "community": 5,
       "norm_label": "runinit()"
@@ -1580,7 +1607,7 @@
       "label": "withBudget()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L119",
+      "source_location": "L120",
       "id": "src_index_withbudget",
       "community": 46,
       "norm_label": "withbudget()"
@@ -1589,7 +1616,7 @@
       "label": "respondeoNum()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L126",
+      "source_location": "L127",
       "id": "src_index_respondeonum",
       "community": 46,
       "norm_label": "respondeonum()"
@@ -1598,7 +1625,7 @@
       "label": "resolveDebateDir()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L133",
+      "source_location": "L134",
       "id": "src_index_resolvedebatedir",
       "community": 46,
       "norm_label": "resolvedebatedir()"
@@ -1607,7 +1634,7 @@
       "label": "loadLatestRespondeo()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L144",
+      "source_location": "L145",
       "id": "src_index_loadlatestrespondeo",
       "community": 46,
       "norm_label": "loadlatestrespondeo()"
@@ -1616,7 +1643,7 @@
       "label": "extractTask()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L158",
+      "source_location": "L159",
       "id": "src_index_extracttask",
       "community": 46,
       "norm_label": "extracttask()"
@@ -1625,7 +1652,7 @@
       "label": "input",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L295",
+      "source_location": "L296",
       "id": "src_index_input",
       "community": 46,
       "norm_label": "input"
@@ -1634,7 +1661,7 @@
       "label": "participants",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L332",
+      "source_location": "L333",
       "id": "src_index_participants",
       "community": 46,
       "norm_label": "participants"
@@ -1643,7 +1670,7 @@
       "label": "vendors",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L334",
+      "source_location": "L335",
       "id": "src_index_vendors",
       "community": 46,
       "norm_label": "vendors"
@@ -1802,10 +1829,28 @@
       "norm_label": "changelog"
     },
     {
-      "label": "[0.6.0] \u2014 add Pi (earendil-works/pi) adapter",
+      "label": "[0.7.0] \u2014 add GitHub Copilot CLI adapter",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
       "source_location": "L5",
+      "id": "disputatio_changelog_0_7_0_add_github_copilot_cli_adapter",
+      "community": 35,
+      "norm_label": "[0.7.0] \u2014 add github copilot cli adapter"
+    },
+    {
+      "label": "[0.6.1] \u2014 refresh agent guidance and package docs",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L11",
+      "id": "disputatio_changelog_0_6_1_refresh_agent_guidance_and_package_docs",
+      "community": 35,
+      "norm_label": "[0.6.1] \u2014 refresh agent guidance and package docs"
+    },
+    {
+      "label": "[0.6.0] \u2014 add Pi (earendil-works/pi) adapter",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L19",
       "id": "disputatio_changelog_0_6_0_add_pi_earendil_works_pi_adapter",
       "community": 35,
       "norm_label": "[0.6.0] \u2014 add pi (earendil-works/pi) adapter"
@@ -1814,7 +1859,7 @@
       "label": "[0.5.2] \u2014 test: lock --max-budget-usd default and override",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L18",
+      "source_location": "L32",
       "id": "disputatio_changelog_0_5_2_test_lock_max_budget_usd_default_and_override",
       "community": 35,
       "norm_label": "[0.5.2] \u2014 test: lock --max-budget-usd default and override"
@@ -1823,7 +1868,7 @@
       "label": "[0.5.1] \u2014 raise default judge budget from $2 to $5",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L24",
+      "source_location": "L38",
       "id": "disputatio_changelog_0_5_1_raise_default_judge_budget_from_2_to_5",
       "community": 35,
       "norm_label": "[0.5.1] \u2014 raise default judge budget from $2 to $5"
@@ -1832,7 +1877,7 @@
       "label": "[0.5.0] \u2014 `--budget` flag + structured budget-exhaustion detection",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L33",
+      "source_location": "L47",
       "id": "disputatio_changelog_0_5_0_budget_flag_structured_budget_exhaustion_detection",
       "community": 35,
       "norm_label": "[0.5.0] \u2014 `--budget` flag + structured budget-exhaustion detection"
@@ -1841,7 +1886,7 @@
       "label": "[0.4.0] \u2014 redactio (final deliverable) + `--continue` / `--finalize` / `--debate`",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L57",
+      "source_location": "L71",
       "id": "disputatio_changelog_0_4_0_redactio_final_deliverable_continue_finalize_debate",
       "community": 35,
       "norm_label": "[0.4.0] \u2014 redactio (final deliverable) + `--continue` / `--finalize` / `--debate`"
@@ -1850,7 +1895,7 @@
       "label": "[0.3.0] \u2014 inline quaestio by default; `--rounds`/`--repo` flags",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L93",
+      "source_location": "L107",
       "id": "disputatio_changelog_0_3_0_inline_quaestio_by_default_rounds_repo_flags",
       "community": 35,
       "norm_label": "[0.3.0] \u2014 inline quaestio by default; `--rounds`/`--repo` flags"
@@ -1859,7 +1904,7 @@
       "label": "[0.2.2] \u2014 fix: The npm doc now has a short version that links to the one on github",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L118",
+      "source_location": "L132",
       "id": "disputatio_changelog_0_2_2_fix_the_npm_doc_now_has_a_short_version_that_links_to_the_one_on_github",
       "community": 35,
       "norm_label": "[0.2.2] \u2014 fix: the npm doc now has a short version that links to the one on github"
@@ -1868,7 +1913,7 @@
       "label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled JS)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L120",
+      "source_location": "L134",
       "id": "disputatio_changelog_0_2_1_fix_the_published_binary_couldn_t_run_ship_bundled_js",
       "community": 35,
       "norm_label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled js)"
@@ -1877,7 +1922,7 @@
       "label": "[0.2.0] \u2014 portable config + installable `disputatio` binary",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L138",
+      "source_location": "L152",
       "id": "disputatio_changelog_0_2_0_portable_config_installable_disputatio_binary",
       "community": 35,
       "norm_label": "[0.2.0] \u2014 portable config + installable `disputatio` binary"
@@ -1886,7 +1931,7 @@
       "label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L166",
+      "source_location": "L180",
       "id": "disputatio_changelog_0_1_0_respondeo_the_judge_stage_first_scholastic_protocol_step",
       "community": 35,
       "norm_label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)"
@@ -1895,7 +1940,7 @@
       "label": "[0.0.6] \u2014 Per-participant reasoning `effort` in `debate.yaml`",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L208",
+      "source_location": "L222",
       "id": "disputatio_changelog_0_0_6_per_participant_reasoning_effort_in_debate_yaml",
       "community": 35,
       "norm_label": "[0.0.6] \u2014 per-participant reasoning `effort` in `debate.yaml`"
@@ -1904,7 +1949,7 @@
       "label": "[0.0.5] \u2014 Process-group kill + first three-vendor repo-grounded run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L228",
+      "source_location": "L242",
       "id": "disputatio_changelog_0_0_5_process_group_kill_first_three_vendor_repo_grounded_run",
       "community": 35,
       "norm_label": "[0.0.5] \u2014 process-group kill + first three-vendor repo-grounded run"
@@ -1913,7 +1958,7 @@
       "label": "[0.0.4] \u2014 `doctor` preflight (M0, canary half)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L247",
+      "source_location": "L261",
       "id": "disputatio_changelog_0_0_4_doctor_preflight_m0_canary_half",
       "community": 35,
       "norm_label": "[0.0.4] \u2014 `doctor` preflight (m0, canary half)"
@@ -1922,7 +1967,7 @@
       "label": "[0.0.3] \u2014 Hardening after the first real-repo run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L277",
+      "source_location": "L291",
       "id": "disputatio_changelog_0_0_3_hardening_after_the_first_real_repo_run",
       "community": 35,
       "norm_label": "[0.0.3] \u2014 hardening after the first real-repo run"
@@ -1931,7 +1976,7 @@
       "label": "[0.0.2] \u2014 Agent tooling & knowledge graph",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L310",
+      "source_location": "L324",
       "id": "disputatio_changelog_0_0_2_agent_tooling_knowledge_graph",
       "community": 35,
       "norm_label": "[0.0.2] \u2014 agent tooling & knowledge graph"
@@ -1940,7 +1985,7 @@
       "label": "[0.0.1] \u2014 Kaizen MVP v0",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L325",
+      "source_location": "L339",
       "id": "disputatio_changelog_0_0_1_kaizen_mvp_v0",
       "community": 35,
       "norm_label": "[0.0.1] \u2014 kaizen mvp v0"
@@ -2003,7 +2048,7 @@
       "label": "Install and use",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L43",
+      "source_location": "L44",
       "id": "disputatio_readme_install_and_use",
       "community": 30,
       "norm_label": "install and use"
@@ -2012,7 +2057,7 @@
       "label": "Usage",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L59",
+      "source_location": "L60",
       "id": "disputatio_readme_usage",
       "community": 30,
       "norm_label": "usage"
@@ -2021,7 +2066,7 @@
       "label": "Run from source",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L113",
+      "source_location": "L114",
       "id": "disputatio_readme_run_from_source",
       "community": 30,
       "norm_label": "run from source"
@@ -2030,7 +2075,7 @@
       "label": "How it works (v0)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L129",
+      "source_location": "L139",
       "id": "disputatio_readme_how_it_works_v0",
       "community": 30,
       "norm_label": "how it works (v0)"
@@ -2039,7 +2084,7 @@
       "label": "The flow: phases & artifacts",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L144",
+      "source_location": "L156",
       "id": "disputatio_readme_the_flow_phases_artifacts",
       "community": 30,
       "norm_label": "the flow: phases & artifacts"
@@ -2048,16 +2093,43 @@
       "label": "Known v0 limitations (next steps)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L184",
+      "source_location": "L196",
       "id": "disputatio_readme_known_v0_limitations_next_steps",
       "community": 30,
       "norm_label": "known v0 limitations (next steps)"
     },
     {
+      "label": "Adapters",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L214",
+      "id": "disputatio_readme_adapters",
+      "community": 30,
+      "norm_label": "adapters"
+    },
+    {
+      "label": "Supported adapters",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L216",
+      "id": "disputatio_readme_supported_adapters",
+      "community": 30,
+      "norm_label": "supported adapters"
+    },
+    {
+      "label": "What an adapter is",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L228",
+      "id": "disputatio_readme_what_an_adapter_is",
+      "community": 30,
+      "norm_label": "what an adapter is"
+    },
+    {
       "label": "How to add a new adapter",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L202",
+      "source_location": "L257",
       "id": "disputatio_readme_how_to_add_a_new_adapter",
       "community": 30,
       "norm_label": "how to add a new adapter"
@@ -2066,7 +2138,7 @@
       "label": "Design documents",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L260",
+      "source_location": "L285",
       "id": "disputatio_readme_design_documents",
       "community": 30,
       "norm_label": "design documents"
@@ -2075,7 +2147,7 @@
       "label": "License",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L270",
+      "source_location": "L295",
       "id": "disputatio_readme_license",
       "community": 30,
       "norm_label": "license"
@@ -2367,6 +2439,69 @@
       "id": "research_real_run_2026_06_11_repo_grounded_residual_risks_known_accepted_for_v0",
       "community": 32,
       "norm_label": "residual risks (known, accepted for v0)"
+    },
+    {
+      "label": "copilot-cli-headless.md",
+      "file_type": "document",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L1",
+      "id": "research_copilot_cli_headless_md",
+      "community": 48,
+      "norm_label": "copilot-cli-headless.md"
+    },
+    {
+      "label": "GitHub Copilot CLI headless notes",
+      "file_type": "document",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L1",
+      "id": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
+      "community": 48,
+      "norm_label": "github copilot cli headless notes"
+    },
+    {
+      "label": "Binary and install",
+      "file_type": "document",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L5",
+      "id": "research_copilot_cli_headless_binary_and_install",
+      "community": 48,
+      "norm_label": "binary and install"
+    },
+    {
+      "label": "Headless invocation",
+      "file_type": "document",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L11",
+      "id": "research_copilot_cli_headless_headless_invocation",
+      "community": 48,
+      "norm_label": "headless invocation"
+    },
+    {
+      "label": "Read-only mechanism",
+      "file_type": "document",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L38",
+      "id": "research_copilot_cli_headless_read_only_mechanism",
+      "community": 48,
+      "norm_label": "read-only mechanism"
+    },
+    {
+      "label": "JSONL shape and success classification",
+      "file_type": "document",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L48",
+      "id": "research_copilot_cli_headless_jsonl_shape_and_success_classification",
+      "community": 48,
+      "norm_label": "jsonl shape and success classification"
+    },
+    {
+      "label": "Canary: read-only file read",
+      "file_type": "document",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L63",
+      "id": "research_copilot_cli_headless_canary_read_only_file_read",
+      "community": 48,
+      "norm_label": "canary: read-only file read"
     },
     {
       "label": "cursor-and-aider-headless.md",
@@ -4088,10 +4223,19 @@
       "norm_label": "4.3 google antigravity (`agy`) \u2014 text-only"
     },
     {
+      "label": "4.4 GitHub Copilot CLI (`copilot-cli`) \u2014 JSONL stream",
+      "file_type": "document",
+      "source_file": "docs/3_ADAPTERS.md",
+      "source_location": "L212",
+      "id": "docs_3_adapters_4_4_github_copilot_cli_copilot_cli_jsonl_stream",
+      "community": 40,
+      "norm_label": "4.4 github copilot cli (`copilot-cli`) \u2014 jsonl stream"
+    },
+    {
       "label": "5. Capability tiers \u2192 minimum adapter requirement",
       "file_type": "document",
       "source_file": "docs/3_ADAPTERS.md",
-      "source_location": "L214",
+      "source_location": "L250",
       "id": "docs_3_adapters_5_capability_tiers_minimum_adapter_requirement",
       "community": 40,
       "norm_label": "5. capability tiers \u2192 minimum adapter requirement"
@@ -4100,7 +4244,7 @@
       "label": "6. Transport hardening rules (apply to every adapter)",
       "file_type": "document",
       "source_file": "docs/3_ADAPTERS.md",
-      "source_location": "L232",
+      "source_location": "L269",
       "id": "docs_3_adapters_6_transport_hardening_rules_apply_to_every_adapter",
       "community": 40,
       "norm_label": "6. transport hardening rules (apply to every adapter)"
@@ -4109,7 +4253,7 @@
       "label": "7. The adapter as a declarative manifest (+ thin code)",
       "file_type": "document",
       "source_file": "docs/3_ADAPTERS.md",
-      "source_location": "L255",
+      "source_location": "L292",
       "id": "docs_3_adapters_7_the_adapter_as_a_declarative_manifest_thin_code",
       "community": 40,
       "norm_label": "7. the adapter as a declarative manifest (+ thin code)"
@@ -4118,7 +4262,7 @@
       "label": "8. Build sequencing",
       "file_type": "document",
       "source_file": "docs/3_ADAPTERS.md",
-      "source_location": "L288",
+      "source_location": "L325",
       "id": "docs_3_adapters_8_build_sequencing",
       "community": 40,
       "norm_label": "8. build sequencing"
@@ -4127,7 +4271,7 @@
       "label": "9. Open items to verify next",
       "file_type": "document",
       "source_file": "docs/3_ADAPTERS.md",
-      "source_location": "L317",
+      "source_location": "L354",
       "id": "docs_3_adapters_9_open_items_to_verify_next",
       "community": 40,
       "norm_label": "9. open items to verify next"
@@ -6991,8 +7135,19 @@
       "source_location": "L11",
       "weight": 1.0,
       "source": "test_adapters_test_ts",
-      "target": "src_adapters_piadapter",
+      "target": "src_adapters_copilotcliadapter",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "test/adapters.test.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_adapters_test_ts",
+      "target": "src_adapters_piadapter"
     },
     {
       "relation": "imports_from",
@@ -7924,6 +8079,26 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/adapters.ts",
+      "source_location": "L287",
+      "weight": 1.0,
+      "source": "src_adapters_ts",
+      "target": "src_adapters_copilotcliadapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/adapters.ts",
+      "source_location": "L285",
+      "weight": 1.0,
+      "source": "src_adapters_ts",
+      "target": "src_adapters_copilotcliopts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/adapters.ts",
       "source_location": "L37",
       "weight": 1,
       "confidence_score": 1,
@@ -7936,9 +8111,9 @@
       "source_file": "src/adapters.ts",
       "source_location": "L227",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_adapters_ts",
-      "target": "src_adapters_piadapter",
-      "confidence_score": 1.0
+      "target": "src_adapters_piadapter"
     },
     {
       "relation": "contains",
@@ -7946,9 +8121,9 @@
       "source_file": "src/adapters.ts",
       "source_location": "L275",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_adapters_ts",
-      "target": "src_adapters_pimessagetext",
-      "confidence_score": 1.0
+      "target": "src_adapters_pimessagetext"
     },
     {
       "relation": "contains",
@@ -7956,9 +8131,9 @@
       "source_file": "src/adapters.ts",
       "source_location": "L225",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_adapters_ts",
-      "target": "src_adapters_piopts",
-      "confidence_score": 1.0
+      "target": "src_adapters_piopts"
     },
     {
       "relation": "contains",
@@ -8152,8 +8327,30 @@
       "source_file": "src/index.ts",
       "source_location": "L113",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_buildparticipant",
-      "target": "src_adapters_piadapter",
+      "target": "src_adapters_piadapter"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_index_ts",
+      "target": "src_adapters_piadapter"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "src_index_buildparticipant",
+      "target": "src_adapters_copilotcliadapter",
       "confidence_score": 1.0
     },
     {
@@ -8164,7 +8361,7 @@
       "source_location": "L12",
       "weight": 1.0,
       "source": "src_index_ts",
-      "target": "src_adapters_piadapter",
+      "target": "src_adapters_copilotcliadapter",
       "confidence_score": 1.0
     },
     {
@@ -8444,6 +8641,16 @@
       "confidence_score": 1.0,
       "source": "src_install_ts",
       "target": "src_install_binresolution"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/install.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "src_install_ts",
+      "target": "src_install_default_bin",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9242,9 +9449,9 @@
       "source_file": "src/index.ts",
       "source_location": "L119",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_index_withbudget",
-      "confidence_score": 1.0
+      "target": "src_index_withbudget"
     },
     {
       "relation": "calls",
@@ -9589,9 +9796,9 @@
       "source_file": "CHANGELOG.md",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_4_0_redactio_final_deliverable_continue_finalize_debate",
-      "confidence_score": 1.0
+      "target": "disputatio_changelog_0_4_0_redactio_final_deliverable_continue_finalize_debate"
     },
     {
       "relation": "contains",
@@ -9599,9 +9806,9 @@
       "source_file": "CHANGELOG.md",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_5_0_budget_flag_structured_budget_exhaustion_detection",
-      "confidence_score": 1.0
+      "target": "disputatio_changelog_0_5_0_budget_flag_structured_budget_exhaustion_detection"
     },
     {
       "relation": "contains",
@@ -9609,9 +9816,9 @@
       "source_file": "CHANGELOG.md",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_5_1_raise_default_judge_budget_from_2_to_5",
-      "confidence_score": 1.0
+      "target": "disputatio_changelog_0_5_1_raise_default_judge_budget_from_2_to_5"
     },
     {
       "relation": "contains",
@@ -9619,8 +9826,28 @@
       "source_file": "CHANGELOG.md",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_5_2_test_lock_max_budget_usd_default_and_override",
+      "target": "disputatio_changelog_0_5_2_test_lock_max_budget_usd_default_and_override"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "disputatio_changelog_changelog",
+      "target": "disputatio_changelog_0_6_0_add_pi_earendil_works_pi_adapter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "disputatio_changelog_changelog",
+      "target": "disputatio_changelog_0_6_1_refresh_agent_guidance_and_package_docs",
       "confidence_score": 1.0
     },
     {
@@ -9630,7 +9857,7 @@
       "source_location": "L5",
       "weight": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_6_0_add_pi_earendil_works_pi_adapter",
+      "target": "disputatio_changelog_0_7_0_add_github_copilot_cli_adapter",
       "confidence_score": 1.0
     },
     {
@@ -9642,6 +9869,16 @@
       "confidence_score": 1,
       "source": "readme_md",
       "target": "disputatio_readme_disputatio"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L214",
+      "weight": 1.0,
+      "source": "disputatio_readme_disputatio",
+      "target": "disputatio_readme_adapters",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9669,9 +9906,9 @@
       "source_file": "README.md",
       "source_location": "L202",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_readme_disputatio",
-      "target": "disputatio_readme_how_to_add_a_new_adapter",
-      "confidence_score": 1.0
+      "target": "disputatio_readme_how_to_add_a_new_adapter"
     },
     {
       "relation": "contains",
@@ -9719,9 +9956,9 @@
       "source_file": "README.md",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_readme_disputatio",
-      "target": "disputatio_readme_this_project_is_being_talked_about",
-      "confidence_score": 1.0
+      "target": "disputatio_readme_this_project_is_being_talked_about"
     },
     {
       "relation": "contains",
@@ -9782,6 +10019,36 @@
       "confidence_score": 1,
       "source": "disputatio_readme_how_to_run",
       "target": "disputatio_readme_usage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L257",
+      "weight": 1.0,
+      "source": "disputatio_readme_adapters",
+      "target": "disputatio_readme_how_to_add_a_new_adapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L216",
+      "weight": 1.0,
+      "source": "disputatio_readme_adapters",
+      "target": "disputatio_readme_supported_adapters",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L228",
+      "weight": 1.0,
+      "source": "disputatio_readme_adapters",
+      "target": "disputatio_readme_what_an_adapter_is",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9889,9 +10156,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L186",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_agents_agents_md",
-      "target": "disputatio_agents_versioning",
-      "confidence_score": 1.0
+      "target": "disputatio_agents_versioning"
     },
     {
       "relation": "contains",
@@ -10029,9 +10296,9 @@
       "source_file": "CLAUDE.md",
       "source_location": "L243",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_claude_claude_md",
-      "target": "disputatio_claude_versioning_do_this_at_the_end_of_every_change",
-      "confidence_score": 1.0
+      "target": "disputatio_claude_versioning_do_this_at_the_end_of_every_change"
     },
     {
       "relation": "contains",
@@ -10112,6 +10379,66 @@
       "confidence_score": 1,
       "source": "research_real_run_2026_06_11_repo_grounded_real_run_2026_06_11_repo_grounded_debate",
       "target": "research_real_run_2026_06_11_repo_grounded_residual_risks_known_accepted_for_v0"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "research_copilot_cli_headless_md",
+      "target": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
+      "target": "research_copilot_cli_headless_binary_and_install",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
+      "target": "research_copilot_cli_headless_canary_read_only_file_read",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
+      "target": "research_copilot_cli_headless_headless_invocation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
+      "target": "research_copilot_cli_headless_jsonl_shape_and_success_classification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/copilot-cli-headless.md",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
+      "target": "research_copilot_cli_headless_read_only_mechanism",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11942,6 +12269,16 @@
       "confidence_score": 1.0,
       "source": "docs_3_adapters_4_per_cli_adapter_specs_grounded_in_canary",
       "target": "docs_3_adapters_4_3_google_antigravity_agy_text_only"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/3_ADAPTERS.md",
+      "source_location": "L212",
+      "weight": 1.0,
+      "source": "docs_3_adapters_4_per_cli_adapter_specs_grounded_in_canary",
+      "target": "docs_3_adapters_4_4_github_copilot_cli_copilot_cli_jsonl_stream",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14572,5 +14909,5 @@
       "source_file": "assets/images/Cover.jpg"
     }
   ],
-  "built_at_commit": "31c22821a9e6b73815dad8b91cfbab80f9c74ee3"
+  "built_at_commit": "fa64513ade3ad6c06c150d0ddc1d319e13bc022a"
 }

@@ -209,14 +209,51 @@ agy -p "<prompt>" \
 - **This is the text-only reference adapter** — it must rely entirely on the
   Level-B self-emitted trailer (Level C fallback), since there is no envelope.
 
+### 4.4 GitHub Copilot CLI (`copilot-cli`) — JSONL stream
+
+```bash
+copilot -p "<prompt>" \
+  --output-format json \
+  --stream off \
+  --no-color \
+  --no-remote \
+  --no-remote-export \
+  --no-auto-update \
+  --no-ask-user \
+  --disable-builtin-mcps \
+  --available-tools view,glob,grep \
+  --model auto [--effort medium] \
+  </dev/null
+```
+
+- **Package/binary:** npm package `@github/copilot`; installed binary is `copilot`.
+  Disputatio's adapter id is `copilot-cli`.
+- **Prompt channel:** argument via `-p` / `--prompt`; non-interactive mode exits after
+  completion.
+- **Transport capture:** `--output-format json` emits JSONL. The final answer is the
+  **last** `assistant.message.data.content`; earlier assistant messages can contain
+  tool-use narration. Completion is marked by a `result` event with top-level
+  `exitCode` and `usage`.
+- **Success classification:** `process exit==0 && saw result.exitCode==0 && last
+  assistant.message is non-empty`. Early config/auth failures can print plain stderr
+  before any JSONL, so preserve stderr on failure.
+- **Autonomy/read-only:** no OS sandbox. Restrict tool availability to read-only
+  built-ins with `--available-tools view,glob,grep`, disable builtin GitHub MCP with
+  `--disable-builtin-mcps`, and do **not** pass `--allow-all-tools`, `--allow-all`, or
+  `--yolo`. The canary showed mutating/external tools (`bash`, `create`, `edit`,
+  `web_fetch`, etc.) disabled under this allowlist.
+- **Effort:** native `--effort` / `--reasoning-effort` values: `none`, `low`,
+  `medium`, `high`, `xhigh`, `max`.
+
 ---
 
 ## 5. Capability tiers → minimum adapter requirement
 
 The canary proves two tiers coexist, so the engine must not assume an envelope:
 
-- **Tier 1 (envelope):** `claude`, `codex` — JSON/JSONL gives reliable error flags,
-  cost, session id. Transport classifies success from the envelope + exit code.
+- **Tier 1 (envelope):** `claude`, `codex`, `pi`, `copilot-cli` — JSON/JSONL gives
+  reliable structural markers (error flags/completion events/result events). Transport
+  classifies success from the envelope + exit code.
 - **Tier 2 (text-only):** `agy` (and future Aider) — only stdout text + exit code.
   Transport classifies success from exit code + non-empty/parseable output; the
   contribution struct comes from the Level-B trailer.

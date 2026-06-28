@@ -2,6 +2,12 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.7.0] — add GitHub Copilot CLI adapter
+
+- New `copilot-cli` adapter for GitHub Copilot CLI (`@github/copilot`, binary `copilot`): runs headless with `-p` and `--output-format json`, classifies success from process exit + `result.exitCode` + the last `assistant.message`, supports `--model`, `--effort`, and `bin` overrides.
+- Read-only evidence mode restricts Copilot tool availability to `view,glob,grep` and disables builtin MCP servers; no `--allow-all`/`--yolo` permissions are used.
+- Wired through config, `buildParticipant`, and `--init` binary resolution; added fake CLI, fixtures, classifier tests, research notes, and example config docs.
+
 ## [0.6.1] — refresh agent guidance and package docs
 
 - Updated `AGENTS.md` with the current CLI workflow, continuation/finalization paths,
