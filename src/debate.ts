@@ -28,6 +28,10 @@ export type DebateOutcome = {
   finalReport?: {           // the redactio: the deliverable, only when respondeo RESOLVED
     text: string;           // written verbatim to final-report.md
   };
+  finalReportError?: {      // set when the redactio ran but failed (debate + verdict still succeeded)
+    budgetExhausted: boolean;
+    message: string;
+  };
 };
 
 // Transcript view (for the .md artifact): keeps cost + failure detail.
@@ -250,6 +254,7 @@ export async function runDebate(
   // A failed judge is non-fatal: it's recorded, but the debate itself still succeeded.
   let respondeo: DebateOutcome["respondeo"];
   let finalReport: DebateOutcome["finalReport"];
+  let finalReportError: DebateOutcome["finalReportError"];
   if (judge) {
     const debateCtx = ctxParts.join("\n"); // clean transcript snapshot BEFORE the respondeo turn
     log(`Respondeo — ${judge.display} renders the consolidatio`);
@@ -270,9 +275,13 @@ export async function runDebate(
       const turn = await runFinalize(judge, task, debateCtx, respondeo.text, repoPath);
       turns.push(turn);
       fileParts.push(render(turn.title, turn.result));
-      if (turn.result.ok) finalReport = { text: turn.result.text };
+      if (turn.result.ok) {
+        finalReport = { text: turn.result.text };
+      } else {
+        finalReportError = { budgetExhausted: turn.result.budgetExhausted === true, message: turn.result.error };
+      }
     }
   }
 
-  return { transcript: fileParts.join("\n"), turns, respondeo, finalReport };
+  return { transcript: fileParts.join("\n"), turns, respondeo, finalReport, finalReportError };
 }

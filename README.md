@@ -10,7 +10,7 @@ run as their native CLIs, not as raw LLM API calls. It automates the
 copy-paste-between-terminals workflow many developers already do by hand: ask one
 agent, have another critique it, iterate, converge.
 
-> **Status: experimental, early MVP — v0.4.0.** Rough but runnable. The core premise —
+> **Status: experimental, early MVP — v0.5.0.** Rough but runnable. The core premise —
 > that cross-harness debate produces materially better decisions than a single
 > strong agent — is **not yet validated**; v0 exists to dogfood the workflow on
 > real tasks. See [`4_PLAN.md`](./docs/4_PLAN.md) for the honest state and roadmap.

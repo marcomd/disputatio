@@ -34,6 +34,8 @@ function usage(exitCode: number): never {
   console.error("  --rounds   number of reaction rounds after proposals (default 1)");
   console.error("  --repo     optional: agents gather read-only evidence in a throwaway git");
   console.error("             worktree of this repo (git repos only; HEAD is what they see)");
+  console.error("  --budget   override the judge/synthesizer per-turn budget cap in USD (default: $2);");
+  console.error("             use when the redactio fails with 'Reached maximum budget'");
   console.error("  --config   debate.yaml selecting participants/models/budgets + an optional judge");
   console.error("             (see examples/debate.yaml — a TEMPLATE, never auto-loaded). When omitted,");
   console.error(`             reads ${userConfigPath()} if present, else the built-in lineup: claude + codex, no judge`);
@@ -53,6 +55,7 @@ let roundsArg: string | undefined;
 let repoArg: string | undefined;
 let continueArg: string | undefined;
 let debateArg: string | undefined;
+let budgetArg: string | undefined;
 let finalizeMode = false;
 let doctorMode = false;
 let initMode = false;
@@ -79,6 +82,9 @@ for (let i = 0; i < args.length; i++) {
     if (!debateArg) usage(1);
   } else if (args[i] === "--finalize") {
     finalizeMode = true;
+  } else if (args[i] === "--budget") {
+    budgetArg = args[++i];
+    if (!budgetArg || isNaN(Number(budgetArg)) || Number(budgetArg) <= 0) usage(1);
   } else if (args[i] === "--doctor") {
     doctorMode = true;
   } else if (args[i] === "--init") {
@@ -105,6 +111,12 @@ function buildParticipant(s: ParticipantSpec, timeoutMs: number): Participant {
       return agyAdapter(s.model ?? "Gemini 3.5 Flash (High)", { timeoutMs });
     case "codex": return codexAdapter(s.model, { bin: s.bin, timeoutMs, effort: s.effort });
   }
+}
+
+// --budget overrides maxBudgetUsd on judge/synthesizer turns only (claude-only flag).
+// Precedence: --budget > config maxBudgetUsd > default $2. Debater budgets are config-only.
+function withBudget(spec: ParticipantSpec): ParticipantSpec {
+  return budgetArg !== undefined ? { ...spec, maxBudgetUsd: Number(budgetArg) } : spec;
 }
 
 // --- --continue / --finalize helpers: read an existing debate back off disk ----------
@@ -197,7 +209,7 @@ if (continueArg !== undefined || finalizeMode) {
   const { num, text: prevDetermination } = await loadLatestRespondeo(dir);
   const transcript = await readFile(`${dir}/debate.md`, "utf8");
   const quaestio = extractTask(transcript);
-  const judge = buildParticipant(cfg.judge ?? DEFAULT_JUDGE, timeoutMs);
+  const judge = buildParticipant(withBudget(cfg.judge ?? DEFAULT_JUDGE), timeoutMs);
   console.error(`[disputatio] config: ${cfgSource}`);
 
   // --repo grounds ONLY the redactio (the deliverable), in a read-only worktree of HEAD.
@@ -226,7 +238,10 @@ if (continueArg !== undefined || finalizeMode) {
     const fin = await runFinalize(judge, quaestio, transcript, prevDetermination, finalizeRepo);
     await writeFile(`${dir}/raw/finalize-respondeo.json`, JSON.stringify(fin, null, 2), "utf8");
     if (!fin.result.ok) {
-      console.error(`[disputatio] finalize FAILED: ${fin.result.error}`);
+      const hint = fin.result.budgetExhausted
+        ? `\n[disputatio]    retry: disputatio --finalize --budget <usd> --debate ${dir}${finalizeRepo ? ` --repo ${finalizeRepo}` : ""}`
+        : "";
+      console.error(`[disputatio] finalize FAILED: ${fin.result.error}${hint}`);
       process.exit(1);
     }
     await writeFile(`${dir}/final-report.md`, fin.result.text, "utf8");
@@ -266,7 +281,10 @@ if (continueArg !== undefined || finalizeMode) {
     console.error(`[disputatio] final report: ${dir}/final-report.md`);
     console.log(`${dir}/final-report.md`);
   } else {
-    console.error(`[disputatio] ⚠️ finalize failed: ${fin.result.error}`);
+    const hint = fin.result.budgetExhausted
+      ? `\n[disputatio]    retry: disputatio --finalize --budget <usd> --debate ${dir}${finalizeRepo ? ` --repo ${finalizeRepo}` : ""}`
+      : "";
+    console.error(`[disputatio] ⚠️ finalize failed: ${fin.result.error}${hint}`);
     console.log(respPath);
   }
   process.exit(0);
@@ -317,7 +335,7 @@ if (vendors.size < participants.length) {
   console.error("[disputatio] ⚠️ participants are not all cross-vendor — correlated-error risk (docs/2_CONCEPT.md §2)");
 }
 
-const judge = cfg.judge ? buildParticipant(cfg.judge, timeoutMs) : undefined;
+const judge = cfg.judge ? buildParticipant(withBudget(cfg.judge), timeoutMs) : undefined;
 
 // Correlated-error guard for the judge. display encodes adapter+model, so an exact
 // match means a debater is grading its OWN argument (same vendor AND model) — the loud
@@ -369,6 +387,11 @@ if (outcome.respondeo) {
 if (outcome.finalReport) {
   await writeFile(`${dir}/final-report.md`, outcome.finalReport.text, "utf8");
   console.error(`[disputatio] final report: ${dir}/final-report.md`);
+} else if (outcome.finalReportError) {
+  const hint = outcome.finalReportError.budgetExhausted
+    ? `\n[disputatio]    retry: disputatio --finalize --budget <usd> --debate ${dir}${repoPath ? ` --repo ${repoPath}` : ""}`
+    : "";
+  console.error(`[disputatio] ⚠️ redactio failed: ${outcome.finalReportError.message}${hint}`);
 }
 
 console.error(`[disputatio] done`);

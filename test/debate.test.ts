@@ -134,6 +134,20 @@ test("finalize: a failing redactio is non-fatal (debate + respondeo still succee
   assert.match(out.transcript, /## Final report — opus/);   // …but the failed turn is recorded
 });
 
+test("finalize: budget-exhausted redactio sets finalReportError.budgetExhausted", async () => {
+  const budgetFail = (error: string): AgentResult => ({ ok: false, error, budgetExhausted: true });
+  const a = fake("a", "v1", async () => ok("proposal A"));
+  const b = fake("b", "v2", async () => ok("proposal B"));
+  const j = fake("opus", "v3", async (prompt) =>
+    prompt.includes("FINAL DELIVERABLE") ? budgetFail("Reached maximum budget ($2)") : ok("STATUS: RESOLVED\n\nRuling."),
+  );
+  const out = await runDebate("task", [a, b], 0, undefined, j);
+  assert.equal(out.respondeo?.status, "RESOLVED");
+  assert.equal(out.finalReport, undefined);
+  assert.equal(out.finalReportError?.budgetExhausted, true);
+  assert.match(out.finalReportError?.message ?? "", /Reached maximum budget/);
+});
+
 test("continuation: re-invokes the judge with the quaestio, transcript, prior determination, and human answers", async () => {
   let p = "";
   const j = fake("opus", "v3", async (prompt) => {

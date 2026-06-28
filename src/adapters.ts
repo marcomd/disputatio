@@ -62,7 +62,7 @@ function runCli(cmd: string, args: string[], cwd: string, timeoutMs: number): Pr
 
 export type AgentResult =
   | { ok: true; text: string; costUsd?: number; raw?: CliCapture }
-  | { ok: false; error: string; raw?: CliCapture };
+  | { ok: false; error: string; budgetExhausted?: true; raw?: CliCapture };
 
 export type Participant = {
   id: string;
@@ -120,11 +120,14 @@ export function claudeAdapter(model = "sonnet", opts: ClaudeOpts = {}): Particip
         // CANARY LESSON (2026-06-11): on budget exhaustion there is NO `result`
         // string — the message lives in the `errors` array and subtype becomes
         // "error_max_budget_usd". Read all three places, most specific first.
+        // Note: for SUCCESS we trust is_error not subtype (subtype lies); but for
+        // budget exhaustion specifically, subtype IS the reliable discriminator.
+        const budgetExhausted: true | undefined = j.subtype === "error_max_budget_usd" ? true : undefined;
         const error =
           Array.isArray(j.errors) && j.errors.length > 0 ? j.errors.join("; ")
           : typeof j.result === "string" && j.result ? j.result
           : `is_error=${j.is_error} subtype=${j.subtype}`;
-        return { ok: false, error, raw: r };
+        return { ok: false, error, ...(budgetExhausted && { budgetExhausted }), raw: r };
       } catch {
         return { ok: false, error: `exit=${r.code} ${r.stderr.slice(0, 200)}`, raw: r };
       }

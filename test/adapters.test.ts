@@ -65,6 +65,7 @@ test("claude: budget-exceeded envelope (no `result` string) → error from `erro
   const r = await claudeAdapter().run("ping", cwd);
   assert.equal(r.ok, false);
   assert.match(!r.ok ? r.error : "", /Reached maximum budget/);
+  assert.equal(!r.ok ? r.budgetExhausted : undefined, true); // structural flag, not string-match
 });
 
 test("claude: REGRESSION — subtype lies on error; classify on is_error", async () => {

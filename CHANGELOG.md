@@ -2,6 +2,30 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.5.0] — `--budget` flag + structured budget-exhaustion detection
+
+Adds a CLI escape hatch for when the redactio (final-report.md synthesizer) hits the
+per-turn spending cap, and makes budget exhaustion a structured, actionable error rather
+than an opaque string.
+
+- **`--budget <usd>`** (`src/index.ts`) — overrides the judge/synthesizer per-turn
+  budget cap for that run. Precedence: `--budget` > `maxBudgetUsd` in config > default
+  `$2`. Applies to both the main debate redactio and the `--continue`/`--finalize`
+  paths. Debater budgets remain config-only (the issue is always the redactio turn).
+- **Structured `budgetExhausted` flag** (`src/adapters.ts`) — `AgentResult` failure
+  variant gains `budgetExhausted?: true`, set via `j.subtype === "error_max_budget_usd"`
+  (the reliable discriminator; see the existing CANARY LESSON comment). Not a
+  string-match — survives message-wording changes.
+- **`finalReportError` on `DebateOutcome`** (`src/debate.ts`) — when the redactio runs
+  but fails, `{ budgetExhausted, message }` is set on the outcome so callers can branch
+  structurally rather than parsing the transcript.
+- **Actionable retry hint** (`src/index.ts`) — on budget exhaustion in any of the three
+  redactio failure sites (main debate, `--finalize`, `--continue` after RESOLVED), stderr
+  prints the exact retry command:
+  `disputatio --finalize --budget <usd> --debate <dir> [--repo <repo>]`
+- **Tests** — 70 tests (up from 69); new: `budgetExhausted` flag on adapter result,
+  `finalReportError.budgetExhausted` propagation through `runDebate`.
+
 ## [0.4.0] — redactio (final deliverable) + `--continue` / `--finalize` / `--debate`
 
 Closes the human-in-the-loop: after the judge rules, the deliverable is now drafted
