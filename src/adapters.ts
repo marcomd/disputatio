@@ -84,8 +84,9 @@ function spawnFailure(r: CliCapture): string | null {
 export type ClaudeOpts = { maxBudgetUsd?: number; timeoutMs?: number; effort?: string };
 
 export function claudeAdapter(model = "sonnet", opts: ClaudeOpts = {}): Participant {
-  // $2 default: a repo-grounded turn approached the old $1 cap.
-  const budget = opts.maxBudgetUsd ?? 2;
+  // $5 default: raised from $2 after the redactio (full transcript + repo traversal at
+  // effort:high) hit the $2 cap on a real medium-sized run. Use --budget to override.
+  const budget = opts.maxBudgetUsd ?? 5;
   const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
   return {
     id: "claude",

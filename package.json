@@ -1,6 +1,6 @@
 {
   "name": "disputatio",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Structured debate between real AI coding-agent CLIs (Kaizen MVP v0)",
   "type": "module",
   "license": "Apache-2.0",

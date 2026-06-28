@@ -2,6 +2,15 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.5.1] — raise default judge budget from $2 to $5
+
+The $2 cap was hit on a real medium-sized repo run, wasting the tokens already spent on
+the debate. $5 covers medium work; `--budget` is the escape hatch for large repos.
+
+- `claudeAdapter` default raised: `opts.maxBudgetUsd ?? 5` (was `?? 2`).
+- `DEFAULT_JUDGE.maxBudgetUsd` raised to `5` (was `2`).
+- Usage line and comment updated to reflect the new default.
+
 ## [0.5.0] — `--budget` flag + structured budget-exhaustion detection
 
 Adds a CLI escape hatch for when the redactio (final-report.md synthesizer) hits the

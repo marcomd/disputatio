@@ -34,7 +34,7 @@ function usage(exitCode: number): never {
   console.error("  --rounds   number of reaction rounds after proposals (default 1)");
   console.error("  --repo     optional: agents gather read-only evidence in a throwaway git");
   console.error("             worktree of this repo (git repos only; HEAD is what they see)");
-  console.error("  --budget   override the judge/synthesizer per-turn budget cap in USD (default: $2);");
+  console.error("  --budget   override the judge/synthesizer per-turn budget cap in USD (default: $5);");
   console.error("             use when the redactio fails with 'Reached maximum budget'");
   console.error("  --config   debate.yaml selecting participants/models/budgets + an optional judge");
   console.error("             (see examples/debate.yaml — a TEMPLATE, never auto-loaded). When omitted,");
@@ -100,7 +100,7 @@ for (let i = 0; i < args.length; i++) {
 // point. The built-in default lineup is claude+codex (no judge — bare runs stay lean);
 // the respondeo judge is reserved for configured runs (e.g. what `--init` writes).
 const DEFAULT_SPECS: ParticipantSpec[] = [{ adapter: "claude" }, { adapter: "codex" }];
-const DEFAULT_JUDGE: ParticipantSpec = { adapter: "claude", model: "opus", effort: "high", maxBudgetUsd: 2 };
+const DEFAULT_JUDGE: ParticipantSpec = { adapter: "claude", model: "opus", effort: "high", maxBudgetUsd: 5 };
 
 function buildParticipant(s: ParticipantSpec, timeoutMs: number): Participant {
   switch (s.adapter) {
