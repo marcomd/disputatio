@@ -10,7 +10,7 @@ Pi — run as their native CLIs, not as raw LLM API calls. It automates the
 copy-paste-between-terminals workflow many developers already do by hand: ask one
 agent, have another critique it, iterate, converge.
 
-> **Status: experimental, early MVP — v0.6.0.** Rough but runnable. The core premise —
+> **Status: experimental, early MVP — v0.6.1.** Rough but runnable. The core premise —
 > that cross-harness debate produces materially better decisions than a single
 > strong agent — is **not yet validated**; v0 exists to dogfood the workflow on
 > real tasks. See [`4_PLAN.md`](./docs/4_PLAN.md) for the honest state and roadmap.
@@ -122,9 +122,18 @@ node src/index.ts "Review changes in this branch and find issues."
 node src/index.ts --file path/to/task.md --rounds 1 --repo /path/to/your/repo --config examples/debate.yaml
 ```
 
-For local development, `npm run debate -- "<quaestio>"` is equivalent to
-`node src/index.ts "<quaestio>"`. Run the fixture-based test suite with `npm test`;
-it does not call real agent CLIs.
+For local development, the `debate` npm script is a thin alias for
+`node src/index.ts`. Use `--` so npm forwards the following arguments to Disputatio:
+
+```bash
+npm run debate -- --doctor
+npm run debate -- "Review changes in this branch and find issues."
+npm run debate -- --file examples/task.md --rounds 2
+npm run debate -- "Review changes in this branch and find issues." --repo /path/to/your/repo
+npm run debate -- --continue "<answers>" --debate .debate/debate-<ts>
+```
+
+Run the fixture-based test suite with `npm test`; it does not call real agent CLIs.
 
 ## How it works (v0)
 

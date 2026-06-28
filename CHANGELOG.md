@@ -2,6 +2,14 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.6.1] — refresh agent guidance and package docs
+
+- Updated `AGENTS.md` with the current CLI workflow, continuation/finalization paths,
+  adapter invariants, versioning guidance, and graphify workflow.
+- Removed development-only `AGENTS.md` from the npm package `files` allowlist.
+- README: documented `npm run debate -- ...` as the source-run alias for
+  `node src/index.ts ...`.
+
 ## [0.6.0] — add Pi (earendil-works/pi) adapter
 
 - New `pi` adapter ([earendil-works/pi](https://github.com/earendil-works/pi), a
