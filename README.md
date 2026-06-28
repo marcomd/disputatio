@@ -10,10 +10,11 @@ run as their native CLIs, not as raw LLM API calls. It automates the
 copy-paste-between-terminals workflow many developers already do by hand: ask one
 agent, have another critique it, iterate, converge.
 
-> **Status: experimental, early MVP (v0).** Rough but runnable. The core premise —
+> **Status: experimental, early MVP — v0.4.0.** Rough but runnable. The core premise —
 > that cross-harness debate produces materially better decisions than a single
 > strong agent — is **not yet validated**; v0 exists to dogfood the workflow on
 > real tasks. See [`4_PLAN.md`](./docs/4_PLAN.md) for the honest state and roadmap.
+> Full history: [CHANGELOG](./CHANGELOG.md).
 
 ## Why real harnesses (not custom LLM agents)
 
@@ -22,6 +23,11 @@ to **run code**. An objection backed by a failing test ("I ran the suite and it
 fails here") beats one backed by rhetoric. That executable-evidence grounding is the
 thing API-level multi-agent frameworks cannot easily reproduce, and it is what
 Disputatio is built around.
+
+## This project is being talked about
+
+- `EN` [Building a Debate Engine for AI Coding Agents](https://medium.com/@m.mastrodonato/building-a-debate-engine-for-ai-coding-agents-disputatio-5cd1e3e4c5b4?sharedUserId=m.mastrodonato)
+- `IT` [Un motore di dibattito per (far litigare) agenti AI](https://open.spotify.com/episode/1UkBpIJLV3uAurOcHnxvl3?si=A5BX6ECXTSaPEPFRHVEPTw)
 
 ## How to Run
 
@@ -162,12 +168,12 @@ debate to bring them back in.)
 
 **What you get in `.debate/debate-<timestamp>/`:**
 
-| File              | What it is                                                              |
-| ----------------- | ---------------------------------------------------------------------- |
-| `debate.md`       | the full transcript — proposals, reactions, and the respondeo          |
+| File              | What it is                                                                    |
+| ----------------- | ----------------------------------------------------------------------------- |
+| `debate.md`       | the full transcript — proposals, reactions, and the respondeo                 |
 | `respondeo.md`    | the judge's ruling **on** the debate (versioned `-2`, `-3`… per `--continue`) |
-| `final-report.md` | the **redactio**: the deliverable born **from** the debate — start work here |
-| `raw/`            | per-turn raw CLI captures, the only way to diagnose a failed turn      |
+| `final-report.md` | the **redactio**: the deliverable born **from** the debate — start work here  |
+| `raw/`            | per-turn raw CLI captures, the only way to diagnose a failed turn             |
 
 > `respondeo.md` judges the debate; `final-report.md` is the product. They are
 > different documents on purpose — the verdict tells you *what was decided*, the
@@ -193,13 +199,13 @@ debate to bring them back in.)
 
 ## Design documents
 
-| Doc                                | What                                                                                |
-| ---------------------------------- | ----------------------------------------------------------------------------------- |
+| Doc                                     | What                                                                                |
+| --------------------------------------- | ----------------------------------------------------------------------------------- |
 | [`1_IDEA.md`](./docs/1_IDEA.md)         | Original vision                                                                     |
 | [`2_CONCEPT.md`](./docs/2_CONCEPT.md)   | Refined concept: the *disputatio* protocol, roles, executable evidence, convergence |
 | [`3_ADAPTERS.md`](./docs/3_ADAPTERS.md) | Headless-integration design for each agent CLI                                      |
 | [`4_PLAN.md`](./docs/4_PLAN.md)         | Implementation plan, stack rationale, milestones                                    |
-| [`research/`](./research/)         | Headless-mode research + real canary runs per CLI                                   |
+| [`research/`](./research/)              | Headless-mode research + real canary runs per CLI                                   |
 
 ## License
 

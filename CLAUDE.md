@@ -235,6 +235,30 @@ internal paths, business logic, credentials, customer data). Never commit confid
 content from a project Disputatio was pointed at. As a last resort, name the file
 `research/private_*` (gitignored, like `examples/private*`) to keep it local-only.
 
+## Versioning — do this at the end of every change
+
+After any change that is committed, **always** bump the version, update the changelog,
+and update the README. Use standard semver criteria:
+
+- **patch** (0.x.**y**) — bug fixes, doc-only changes, minor internal refactors with no
+  behavioural change visible to users.
+- **minor** (0.**x**.0) — new flags, new features, new phases, new exported APIs, or any
+  change that adds capability without breaking existing invocations.
+- **major** (**x**.0.0) — breaking CLI changes (flag renames/removals, output format
+  changes, config schema changes). Pre-1.0 breaking changes are acceptable but still
+  warrant a minor bump until 1.0.
+
+**Steps (in order, before the commit):**
+
+1. Bump `"version"` in `package.json`.
+2. Add a `## [x.y.z] — <one-line summary>` entry at the top of `CHANGELOG.md` (below
+   the header, above the previous release). List every user-visible change as a bullet.
+3. Update the version in the README.md status callout:
+   `> **Status: experimental, early MVP — vX.Y.Z.**`
+
+All three files go in the same commit as the code change. Commit subject starts with
+`vX.Y.Z`.
+
 ## graphify
 
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
