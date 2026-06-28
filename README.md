@@ -208,15 +208,28 @@ debate to bring them back in.)
   untracked build artifacts (`node_modules`, …) are absent from the worktree, so
   some test suites won't run there.
 
-## How to add a new adapter
+## Adapters
 
-**What an adapter is.** An adapter is Disputatio's anti-corruption boundary around one
-agent CLI. It does exactly one job: spawn the CLI in a sandboxed working directory,
-capture its output, and classify the run as success (`{ok:true, text}`) or failure
-(`{ok:false, error}`). Everything quirky about a given CLI — its flags, its output
-format (JSON envelope vs. JSONL stream vs. plain text), how it signals an error — is
-hidden here, so the debate logic never has to care which vendor it is talking to. The
-contract is the `Participant` type in [`src/adapters.ts`](./src/adapters.ts):
+### Supported adapters
+
+Currently supported adapters include:
+- `claude` -> https://code.claude.com/docs
+- `codex` -> https://developers.openai.com/codex/cli
+- `agy` -> https://antigravity.google/product/antigravity-cli
+- `pi` -> https://pi.dev
+
+Each adapter lives in `src/adapters.ts` and has per-CLI notes in `docs/3_ADAPTERS.md`. The adapters
+implement the small transport layer that lets Disputatio treat different CLIs uniformly.
+
+### What an adapter is
+
+An adapter is Disputatio's anti-corruption boundary around one agent CLI. It does
+exactly one job: spawn the CLI in a sandboxed working directory, capture its output,
+and classify the run as success (`{ok:true, text}`) or failure (`{ok:false, error}`).
+Everything quirky about a given CLI — its flags, its output format (JSON envelope vs.
+JSONL stream vs. plain text), how it signals an error — is hidden here, so the debate
+logic never has to care which vendor it is talking to. The contract is the
+`Participant` type in [`src/adapters.ts`](./src/adapters.ts):
 
 ```ts
 type Participant = {
@@ -237,34 +250,33 @@ Two invariants every adapter must honor (both are correctness, not style):
   diversity of reasoning is the entire premise, and `index.ts` warns on a lineup that
   isn't all-distinct vendors.
 
-**The recipe (a prompt you can hand to an agent):**
+### How to add a new adapter
 
-> Add a new adapter for `<CLI>` to Disputatio, following the existing `codex`/`pi`
-> adapters as the template. Work TDD and keep the repo runnable at each step:
->
-> 1. **Research the CLI's headless mode first.** Find the flags for: non-interactive /
->    print mode, the prompt argument, model selection, a machine-readable output format
->    (JSON if available), reasoning effort, and read-only/sandbox/tool-allowlist. Verify
->    them against a real `--help` or the official docs — do not guess. Capture findings
->    in `research/` (and a real canary capture if you can run it).
-> 2. **Write the adapter** in `src/adapters.ts`: an `xAdapter(model?, opts?)` factory
->    returning a `Participant`. Reuse `runCli`, `spawnFailure`, and the `AgentResult`
->    shape. Parse the output and classify success/failure on a STRUCTURAL signal (exit
->    code + a definite success marker), never a text match. Make `bin` overridable if a
->    stale shim could shadow the binary.
-> 3. **Wire it in** (four sites): add the id to `AdapterId` and the `ADAPTERS` /
->    `PARTICIPANT_KEYS` sets + error strings in `src/config.ts`; add a `case` to
->    `buildParticipant` in `src/index.ts`; if `bin` is overridable, add the id to
->    `BIN_OVERRIDABLE` in `src/install.ts`.
-> 4. **Test it** like the others: drop a `test/fakes/<cli>` shim (copy `test/fakes/pi`)
->    and a captured fixture under `test/fixtures/`, then add classifier tests to
->    `test/adapters.test.ts` (success, the read-only flags, effort on/off, an error
->    path, a `bin` override). Run `npm test`.
-> 5. **Document it**: mention it in this README's "How it works" list and in
->    `docs/3_ADAPTERS.md`, add a commented example block to `examples/debate.yaml`, and
->    bump the version / CHANGELOG / README status line per the rules in `CLAUDE.md`.
-> 6. **Open an MR** with a subject `vX.Y.Z <CLI> adapter` and a body summarizing the
->    headless recipe and the read-only mechanism you chose.
+Recipe / checklist for adding a new adapter (follow TDD and keep the repo runnable):
+
+1. Research the CLI's headless mode first. Find the flags for non-interactive / print
+   mode, the prompt argument, model selection, a machine-readable output format (JSON
+   if available), reasoning-effort controls, and read-only/sandbox/tool-allowlist.
+   Verify these against `--help` or the official docs and capture findings in
+   `research/` (include a small canary run if possible).
+2. Write the adapter in `src/adapters.ts` as an `xAdapter(model?, opts?)` factory that
+   returns a `Participant`. Reuse `runCli`, `spawnFailure`, and the `AgentResult`
+   shape. Parse the CLI output and classify success/failure on STRUCTURAL signals
+   (exit code + a success marker), not brittle text matches. Make `bin` overridable
+   to handle shadowed/stale shims.
+3. Wire it in (four sites): add the id to `AdapterId` and to the `ADAPTERS` /
+   `PARTICIPANT_KEYS` sets and error strings in `src/config.ts`; add a `case` to
+   `buildParticipant` in `src/index.ts`; if `bin` is overridable, include the id in
+   `BIN_OVERRIDABLE` in `src/install.ts`.
+4. Test it like the others: add a `test/fakes/<cli>` shim (copy `test/fakes/pi`) and a
+   captured fixture under `test/fixtures/`, then add classifier tests to
+   `test/adapters.test.ts` (success path, read-only flags, effort on/off, error path,
+   and `bin` override). Run `npm test`.
+5. Document it: update this README, `docs/3_ADAPTERS.md`, add a commented example to
+   `examples/debate.yaml`, and update CHANGELOG/version notes per project rules.
+6. Open an MR titled `vX.Y.Z <CLI> adapter` summarizing the headless recipe and the
+   read-only mechanism chosen.
+
 
 ## Design documents
 
