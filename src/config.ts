@@ -6,7 +6,7 @@
 // No dependency, no build step (the repo's standing rule). When config needs
 // real YAML (nesting, anchors), switch to a parser library; do not grow this.
 
-export type AdapterId = "claude" | "agy" | "codex";
+export type AdapterId = "claude" | "agy" | "codex" | "pi";
 
 export type ParticipantSpec = {
   adapter: AdapterId;
@@ -75,7 +75,7 @@ export function serializeDebateConfig(cfg: DebateConfig): string {
   return out.join("\n") + "\n";
 }
 
-const ADAPTERS = new Set<string>(["claude", "agy", "codex"]);
+const ADAPTERS = new Set<string>(["claude", "agy", "codex", "pi"]);
 const TOP_KEYS = new Set<string>(["rounds", "repo", "timeoutMinutes", "participants", "judge"]);
 const PARTICIPANT_KEYS = new Set<string>(["adapter", "model", "bin", "maxBudgetUsd", "effort"]);
 const NUMERIC_KEYS = new Set<string>(["rounds", "timeoutMinutes", "maxBudgetUsd"]);
@@ -157,7 +157,7 @@ export function parseDebateConfig(text: string): DebateConfig {
   if (participants) {
     for (const p of participants) {
       if (typeof p.adapter !== "string" || !ADAPTERS.has(p.adapter)) {
-        throw new Error(`debate config: each participant needs "adapter: claude | agy | codex" (got ${JSON.stringify(p)})`);
+        throw new Error(`debate config: each participant needs "adapter: claude | agy | codex | pi" (got ${JSON.stringify(p)})`);
       }
     }
     if (participants.length < 2) {
@@ -167,7 +167,7 @@ export function parseDebateConfig(text: string): DebateConfig {
   }
   if (judge) {
     if (typeof judge.adapter !== "string" || !ADAPTERS.has(judge.adapter)) {
-      throw new Error(`debate config: the judge needs "adapter: claude | agy | codex" (got ${JSON.stringify(judge)})`);
+      throw new Error(`debate config: the judge needs "adapter: claude | agy | codex | pi" (got ${JSON.stringify(judge)})`);
     }
     cfg.judge = judge as ParticipantSpec;
   }

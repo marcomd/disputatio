@@ -217,3 +217,66 @@ export function codexAdapter(model?: string, opts: CodexOpts = {}): Participant 
     },
   };
 }
+
+// --- Pi (earendil-works/pi): JSON event stream, multi-LLM harness --------------------
+// `pi` is a minimal, low-overhead coding agent that fronts MANY providers behind one
+// harness (https://github.com/earendil-works/pi). The *harness* is its own vendor here:
+// the cross-vendor diversity check keys on the harness, not the backing model.
+export type PiOpts = { bin?: string; timeoutMs?: number; effort?: string };
+
+export function piAdapter(model?: string, opts: PiOpts = {}): Participant {
+  // `bin` is configurable for the same reason as codex: a stale shim can shadow it.
+  const bin = opts.bin ?? "pi";
+  const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  return {
+    id: "pi",
+    display: `Pi (${model ?? "account default"})`,
+    vendor: "pi",
+    async run(prompt, cwd) {
+      // `--mode json` emits the session as JSON lines on stdout (docs: pi.dev/docs/latest/json).
+      // `--no-session` = ephemeral, the orchestrator owns memory. READ-ONLY evidence: pi has
+      // no OS sandbox, so we restrict the tool ALLOWLIST to read,grep,find,ls (omitting bash,
+      // edit, write) — agents can inspect the repo but never mutate it. `--thinking` doses
+      // reasoning effort (off|minimal|low|medium|high|xhigh). Prompt is the positional.
+      const r = await runCli(bin, [
+        "--mode", "json",
+        "--no-session",
+        "--tools", "read,grep,find,ls",
+        ...(model ? ["--model", model] : []),
+        ...(opts.effort ? ["--thinking", opts.effort] : []),
+        prompt,
+      ], cwd, timeoutMs);
+      if (r.timedOut) return { ok: false, error: "timeout", raw: r };
+      const spawnErr = spawnFailure(r);
+      if (spawnErr) return { ok: false, error: spawnErr, raw: r };
+      // JSON lines: final answer = the LAST `message_end` for an assistant message; its
+      // `message.content` is either a string or an array of blocks (take the `text` ones).
+      // Failures surface in `auto_retry_end.finalError`. Success = exit 0 + a final message.
+      let text = "";
+      let failure = "";
+      for (const line of r.stdout.split("\n")) {
+        if (!line.trim()) continue;
+        let ev: any;
+        try { ev = JSON.parse(line); } catch { continue; } // tolerate non-JSON noise on stdout
+        if (ev.type === "message_end" && ev.message?.role === "assistant") {
+          text = piMessageText(ev.message);
+        } else if (ev.type === "auto_retry_end" && ev.finalError) {
+          failure ||= String(ev.finalError);
+        }
+      }
+      if (r.code === 0 && !failure && text.length > 0) return { ok: true, text, raw: r };
+      return { ok: false, error: failure || `exit=${r.code} ${r.stderr.slice(0, 200)}`, raw: r };
+    },
+  };
+}
+
+// Pi's assistant message content is a string OR an array of content blocks; join the
+// text blocks. Kept tiny and defensive so a shape tweak degrades to "" not a throw.
+function piMessageText(message: any): string {
+  const c = message?.content;
+  if (typeof c === "string") return c.trim();
+  if (Array.isArray(c)) {
+    return c.map((b) => (typeof b === "string" ? b : typeof b?.text === "string" ? b.text : "")).join("").trim();
+  }
+  return "";
+}

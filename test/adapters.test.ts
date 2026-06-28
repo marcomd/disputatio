@@ -8,7 +8,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { tmpdir } from "node:os";
-import { claudeAdapter, agyAdapter, codexAdapter } from "../src/adapters.ts";
+import { claudeAdapter, agyAdapter, codexAdapter, piAdapter } from "../src/adapters.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const fixtures = join(here, "fixtures");
@@ -165,5 +165,54 @@ test("codex: exit 0 but no turn.completed → failure (incomplete stream)", asyn
 test("codex: custom bin override is used", async () => {
   process.env.FAKE_STDOUT_FILE = join(fixtures, "codex-success.jsonl");
   const r = await codexAdapter(undefined, { bin: join(here, "fakes", "codex") }).run("ping", cwd);
+  assert.equal(r.ok, true);
+});
+
+// --- pi: JSON event stream -------------------------------------------------------------
+
+test("pi: success JSON lines → LAST assistant message_end wins", async () => {
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "pi-success.jsonl");
+  const r = await piAdapter().run("ping", cwd);
+  assert.equal(r.ok, true);
+  assert.equal(r.ok && r.text, "pong"); // not "intermediate thought"
+});
+
+test("pi: runs read-only (tools allowlist, no edit/write/bash) in json mode", async () => {
+  const argvFile = join(tmpdir(), `disputatio-pi-argv-${process.pid}.txt`);
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "pi-success.jsonl");
+  process.env.FAKE_ARGV_FILE = argvFile;
+  await piAdapter().run("ping", cwd);
+  const argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.equal(argv[argv.indexOf("--mode") + 1], "json");
+  const tools = argv[argv.indexOf("--tools") + 1];
+  assert.equal(tools, "read,grep,find,ls");
+  assert.ok(!/\b(edit|write|bash)\b/.test(tools), "read-only: no mutating tools");
+});
+
+test("pi: effort is passed as --thinking when set, omitted when absent", async () => {
+  const argvFile = join(tmpdir(), `disputatio-pi-argv-${process.pid}.txt`);
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "pi-success.jsonl");
+  process.env.FAKE_ARGV_FILE = argvFile;
+
+  await piAdapter(undefined, { effort: "high" }).run("ping", cwd);
+  let argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.equal(argv[argv.indexOf("--thinking") + 1], "high");
+
+  await piAdapter().run("ping", cwd);
+  argv = readFileSync(argvFile, "utf8").split("\n");
+  assert.ok(!argv.includes("--thinking"), "expected no --thinking when effort is unset");
+});
+
+test("pi: auto_retry_end finalError → failure with the error", async () => {
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "pi-retry-error.jsonl");
+  process.env.FAKE_EXIT = "1";
+  const r = await piAdapter().run("ping", cwd);
+  assert.equal(r.ok, false);
+  assert.match(!r.ok ? r.error : "", /rate limit/);
+});
+
+test("pi: custom bin override is used", async () => {
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "pi-success.jsonl");
+  const r = await piAdapter(undefined, { bin: join(here, "fakes", "pi") }).run("ping", cwd);
   assert.equal(r.ok, true);
 });

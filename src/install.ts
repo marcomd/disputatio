@@ -98,7 +98,7 @@ export async function findAlternatives(bin: string): Promise<string[]> {
 
 // Only codex honors a `bin:` override today (claudeAdapter/agyAdapter hardcode their
 // binary name); other adapters can canary their PATH binary but cannot be repointed.
-const BIN_OVERRIDABLE = new Set<string>(["codex"]);
+const BIN_OVERRIDABLE = new Set<string>(["codex", "pi"]);
 
 export type InitDeps = {
   // Inject the lineup factory (it lives in index.ts, the composition root) so install.ts

@@ -150,19 +150,24 @@ silently reintroduces bugs that were already caught:
   trimmed stdout *is* the answer. Plain print mode can auto-execute terminal commands
   during evidence gathering. `claude` uses a JSON envelope; `codex` a JSONL stream
   (last `agent_message`; success needs `turn.completed` and no `error`/`turn.failed`
-  event).
+  event); `pi` (earendil-works/pi, a minimal multi-LLM harness) a `--mode json` event
+  stream (last assistant `message_end`; failures in `auto_retry_end.finalError`). `pi`
+  has no OS sandbox, so read-only = a tool ALLOWLIST (`--tools read,grep,find,ls`,
+  omitting bash/edit/write).
 - **Participants must be cross-vendor.** Diversity of reasoning is the entire premise;
   `index.ts` warns when the lineup isn't all distinct `vendor`s. Preserve that check
   when adding adapters.
 - **Keep evidence tools read-only.** `claude`: comma-separated allowlist (the rules
   contain spaces — space-separated strings get mis-parsed) + `--permission-mode
   dontAsk` + `--max-budget-usd` (default $2; $1 was exceeded by one real turn);
-  `codex`: `-s read-only` (OS-enforced); `agy`: `--sandbox`.
+  `codex`: `-s read-only` (OS-enforced); `agy`: `--sandbox`; `pi`: `--tools
+  read,grep,find,ls` allowlist (no OS sandbox — omit bash/edit/write).
 - **Reasoning `effort` is per-CLI, not uniform.** `claude` takes a native
   `--effort {low,medium,high,xhigh,max}`; `codex` has no flag — set it via the config
   override `-c model_reasoning_effort="…"` ({minimal,low,medium,high}); `agy` has NO
   effort control (effort is baked into the model name, e.g. `(High)`) and `index.ts`
-  warns if `effort` is set for it. Keep the per-CLI mapping when adding adapters.
+  warns if `effort` is set for it; `pi` takes `--thinking {off,minimal,low,medium,
+  high,xhigh}`. Keep the per-CLI mapping when adding adapters.
 - **Exit 126/127 from a spawned CLI is a setup failure, not an agent failure** (stale
   asdf shims shadow real binaries on this machine — `codex` needs
   `bin: /opt/homebrew/bin/codex` in debate.yaml). Keep the hint in `spawnFailure`.

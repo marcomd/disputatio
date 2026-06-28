@@ -5,12 +5,12 @@
 ![Cover](assets/images/Cover.jpg)
 
 Disputatio is a local-first tool that orchestrates a structured debate between
-multiple *real* AI coding agents — Claude Code, Codex CLI, Antigravity (Gemini) —
-run as their native CLIs, not as raw LLM API calls. It automates the
+multiple *real* AI coding agents — Claude Code, Codex CLI, Antigravity (Gemini),
+Pi — run as their native CLIs, not as raw LLM API calls. It automates the
 copy-paste-between-terminals workflow many developers already do by hand: ask one
 agent, have another critique it, iterate, converge.
 
-> **Status: experimental, early MVP — v0.5.2.** Rough but runnable. The core premise —
+> **Status: experimental, early MVP — v0.6.0.** Rough but runnable. The core premise —
 > that cross-harness debate produces materially better decisions than a single
 > strong agent — is **not yet validated**; v0 exists to dogfood the workflow on
 > real tasks. See [`4_PLAN.md`](./docs/4_PLAN.md) for the honest state and roadmap.
@@ -136,8 +136,10 @@ it does not call real agent CLIs.
   each other's outputs, and test runs / stray writes never touch your real checkout.
 - `claude` is read via its JSON envelope (success = `exit==0 && is_error==false`);
   `codex` via its JSONL event stream (last `agent_message` + `turn.completed`);
-  `agy` is text-only (stdout is the answer). All invocation details are grounded in
-  real local runs — see [`research/canary-results.md`](./research/canary-results.md).
+  `pi` ([earendil-works/pi](https://github.com/earendil-works/pi), a minimal,
+  low-token multi-LLM harness) via its `--mode json` event stream (last assistant
+  `message_end`); `agy` is text-only (stdout is the answer). All invocation details are
+  grounded in real local runs — see [`research/canary-results.md`](./research/canary-results.md).
 
 ## The flow: phases & artifacts
 
@@ -196,6 +198,64 @@ debate to bring them back in.)
 - Evidence mode shows agents **HEAD only** (uncommitted changes are invisible) and
   untracked build artifacts (`node_modules`, …) are absent from the worktree, so
   some test suites won't run there.
+
+## How to add a new adapter
+
+**What an adapter is.** An adapter is Disputatio's anti-corruption boundary around one
+agent CLI. It does exactly one job: spawn the CLI in a sandboxed working directory,
+capture its output, and classify the run as success (`{ok:true, text}`) or failure
+(`{ok:false, error}`). Everything quirky about a given CLI — its flags, its output
+format (JSON envelope vs. JSONL stream vs. plain text), how it signals an error — is
+hidden here, so the debate logic never has to care which vendor it is talking to. The
+contract is the `Participant` type in [`src/adapters.ts`](./src/adapters.ts):
+
+```ts
+type Participant = {
+  id: string;       // short stable key ("claude", "codex", "pi")
+  display: string;  // human label, encodes model ("Pi (anthropic/claude...)")
+  vendor: string;   // used for the cross-vendor diversity check — keep it DISTINCT
+  run: (prompt: string, cwd: string) => Promise<AgentResult>;
+};
+```
+
+Two invariants every adapter must honor (both are correctness, not style):
+
+- **Read-only evidence.** The agent may inspect the repo but must never mutate it —
+  use the CLI's strongest read-only mechanism (OS sandbox if it has one, otherwise a
+  tool allowlist that omits write/edit/shell-exec). Disputatio already isolates each
+  turn in a throwaway temp dir / git worktree, but the adapter is the second defense.
+- **Cross-vendor diversity.** Give the adapter a `vendor` distinct from the others —
+  diversity of reasoning is the entire premise, and `index.ts` warns on a lineup that
+  isn't all-distinct vendors.
+
+**The recipe (a prompt you can hand to an agent):**
+
+> Add a new adapter for `<CLI>` to Disputatio, following the existing `codex`/`pi`
+> adapters as the template. Work TDD and keep the repo runnable at each step:
+>
+> 1. **Research the CLI's headless mode first.** Find the flags for: non-interactive /
+>    print mode, the prompt argument, model selection, a machine-readable output format
+>    (JSON if available), reasoning effort, and read-only/sandbox/tool-allowlist. Verify
+>    them against a real `--help` or the official docs — do not guess. Capture findings
+>    in `research/` (and a real canary capture if you can run it).
+> 2. **Write the adapter** in `src/adapters.ts`: an `xAdapter(model?, opts?)` factory
+>    returning a `Participant`. Reuse `runCli`, `spawnFailure`, and the `AgentResult`
+>    shape. Parse the output and classify success/failure on a STRUCTURAL signal (exit
+>    code + a definite success marker), never a text match. Make `bin` overridable if a
+>    stale shim could shadow the binary.
+> 3. **Wire it in** (four sites): add the id to `AdapterId` and the `ADAPTERS` /
+>    `PARTICIPANT_KEYS` sets + error strings in `src/config.ts`; add a `case` to
+>    `buildParticipant` in `src/index.ts`; if `bin` is overridable, add the id to
+>    `BIN_OVERRIDABLE` in `src/install.ts`.
+> 4. **Test it** like the others: drop a `test/fakes/<cli>` shim (copy `test/fakes/pi`)
+>    and a captured fixture under `test/fixtures/`, then add classifier tests to
+>    `test/adapters.test.ts` (success, the read-only flags, effort on/off, an error
+>    path, a `bin` override). Run `npm test`.
+> 5. **Document it**: mention it in this README's "How it works" list and in
+>    `docs/3_ADAPTERS.md`, add a commented example block to `examples/debate.yaml`, and
+>    bump the version / CHANGELOG / README status line per the rules in `CLAUDE.md`.
+> 6. **Open an MR** with a subject `vX.Y.Z <CLI> adapter` and a body summarizing the
+>    headless recipe and the read-only mechanism you chose.
 
 ## Design documents
 

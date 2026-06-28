@@ -2,6 +2,19 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.6.0] — add Pi (earendil-works/pi) adapter
+
+- New `pi` adapter ([earendil-works/pi](https://github.com/earendil-works/pi), a
+  minimal low-token multi-LLM harness): runs headless via `--mode json`, reads the last
+  assistant `message_end` as the answer, classifies failure from
+  `auto_retry_end.finalError`. Read-only via a tool allowlist (`--tools
+  read,grep,find,ls` — pi has no OS sandbox); effort via `--thinking`; `bin` overridable
+  like codex.
+- Wired through config (`adapter: pi`), `buildParticipant`, and `--init` binary
+  resolution. New fake CLI + fixtures + classifier tests.
+- README: new "How to add a new adapter" section (what an adapter is + a step-by-step
+  prompt/guide to add one and open an MR); `pi` listed in the lineup and example config.
+
 ## [0.5.2] — test: lock --max-budget-usd default and override
 
 - `test/adapters.test.ts`: new test asserts `--max-budget-usd 5` is passed by default

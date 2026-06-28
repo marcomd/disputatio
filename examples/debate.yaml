@@ -22,11 +22,18 @@ participants:
     # effort: medium               # codex values: minimal | low | medium | high
     #                              # (note: codex's value set differs from claude's)
 
-# Optional third participant; enable only when its credentials and policy are
+# Optional extra participants; enable only when each one's credentials and policy are
 # appropriate for the target repository. agy has NO effort key — encode the effort
 # in the model name instead (e.g. "(High)").
 # - adapter: agy
 #   model: Gemini 3.5 Flash (High)
+#
+# pi (earendil-works/pi) is a minimal, low-token multi-LLM harness. It runs read-only
+# (tool allowlist: read,grep,find,ls) and takes effort via --thinking.
+# - adapter: pi
+#   model: anthropic/claude-sonnet  # provider/id; omit = the account default
+#   effort: medium                  # pi values: off | minimal | low | medium | high | xhigh
+#   # bin: /opt/homebrew/bin/pi     # OPTIONAL: only if a stale shim shadows pi
 
 # Respondeo (judge): after the reaction rounds, ONE agent reads the full transcript
 # and renders the consolidatio — settled agreements + per-point rulings, or questions
