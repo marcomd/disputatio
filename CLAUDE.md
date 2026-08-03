@@ -159,7 +159,8 @@ silently reintroduces bugs that were already caught:
   when adding adapters.
 - **Keep evidence tools read-only.** `claude`: comma-separated allowlist (the rules
   contain spaces — space-separated strings get mis-parsed) + `--permission-mode
-  dontAsk` + `--max-budget-usd` (default $2; $1 was exceeded by one real turn);
+  dontAsk` + `--max-budget-usd` (default **$5**, overridable per-run with `--budget`;
+  $1 then $2 were each exceeded by a real turn);
   `codex`: `-s read-only` (OS-enforced); `agy`: `--sandbox`; `pi`: `--tools
   read,grep,find,ls` allowlist (no OS sandbox — omit bash/edit/write).
 - **Reasoning `effort` is per-CLI, not uniform.** `claude` takes a native
@@ -199,7 +200,7 @@ Follow these three working principles when developing in this repo:
   big speculative rewrite. Each change should leave the tool runnable and a little
   better; capture lessons in `research/` so improvements compound.
 
-## Known v0 limitations (from `docs/4_PLAN.md`)
+## Known v0 limitations (summary of `docs/4_PLAN.md` §11)
 
 No full scholastic `consolidatio` (pre-debate N-proposal merge) yet — `respondeo` +
 `redactio` exist; reaction rounds are parallel snapshots (agents don't see each other's
@@ -225,9 +226,15 @@ exists — budget control is claude-only).
 ## Design docs
 
 `docs/1_IDEA.md` (vision) → `docs/2_CONCEPT.md` (disputatio protocol, roles, convergence) →
-`docs/3_ADAPTERS.md` (per-CLI headless integration) → `docs/4_PLAN.md` (plan, milestones, honest
-status). `research/` holds per-CLI headless research and **verified canary runs** —
-consult it before changing any adapter invocation.
+`docs/3_ADAPTERS.md` (per-CLI headless integration) → `docs/4_PLAN.md` (as-built plan +
+the **status table** in §11: shipped / validating now / deferred pending evidence) →
+`docs/5_METRICS.md` (protocol KPIs — error amplification, coordination overhead,
+redundancy, efficiency; Tier-0 free vs Tier-1 needs a claim ledger). `research/` holds
+per-CLI headless research and **verified canary runs** — consult it before changing any
+adapter invocation.
+
+`4_PLAN.md` §11 is the single source of truth for project status. If any other document
+(including the limitations list below) contradicts it, §11 wins.
 
 ## Private area
 

@@ -320,6 +320,14 @@ A `disputatio doctor` command resolves each manifest against the installed binar
 (version + capability probe) and **fails loudly on drift** before a debate runs —
 motivated directly by the `agy` self-update.
 
+> **Status (2026-08-03): the manifest is NOT built** — it remains the end-state sketch
+> above. All five adapters are hand-written `Participant` factories in `src/adapters.ts`;
+> the per-CLI *facts* in §4 are what actually got encoded, just as code rather than as
+> data. `--doctor` **is** built (`src/doctor.ts`) and canaries each participant through
+> its real classifier, but it does **not** do the version-drift check described here —
+> so the `agy` self-update hazard is currently undetected. See
+> [`4_PLAN.md`](./4_PLAN.md) §4 and §11.
+
 ---
 
 ## 8. Build sequencing
@@ -333,6 +341,15 @@ first. The premise (debate > single agent) is still unvalidated.
    task.
 3. **Add `codex`**, then generalize the three into the declarative manifest.
 4. Only then consider Cursor/Aider and the `disputatio doctor` polish.
+
+> **Status (2026-08-03): steps 1–3 happened, but out of order and further than planned.**
+> Five adapters exist (`claude`, `codex`, `agy`, `pi`, `copilot-cli`) and `--doctor` is
+> built, while the manifest generalization never happened and — the part that matters —
+> **the premise validation this sequencing exists to protect has still not run.** The
+> warning above ("do not build the 5-agent framework first") was, in the event, not
+> heeded. The honest record is [`4_PLAN.md`](./4_PLAN.md) §11 "Deviations, recorded
+> honestly"; adapter breadth is the clearest case of building sideways instead of forward.
+> Adding a sixth adapter should wait for the gate.
 
 > ⚠️ **Backends MUST span different model families for premise validation.**
 > `agy models` shows it can run **Claude Sonnet/Opus 4.6** as backends. If `agy`

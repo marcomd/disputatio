@@ -10,10 +10,13 @@ Pi, GitHub Copilot CLI — run as their native CLIs, not as raw LLM API calls. I
 copy-paste-between-terminals workflow many developers already do by hand: ask one
 agent, have another critique it, iterate, converge.
 
-> **Status: experimental, early MVP — v0.7.0.** Rough but runnable. The core premise —
-> that cross-harness debate produces materially better decisions than a single
-> strong agent — is **not yet validated**; v0 exists to dogfood the workflow on
-> real tasks. See [`4_PLAN.md`](./docs/4_PLAN.md) for the honest state and roadmap.
+> **Status: experimental, early MVP — v0.7.1.** Rough but runnable. The core premise —
+> that cross-vendor adversarial review, grounded in independently gathered executable
+> evidence, catches material risks a strong single-agent review misses — is **not yet
+> validated**; v0 exists to dogfood the workflow on real tasks. The validation gate that
+> would settle it has **not been run**, and it is the project's P0. See
+> [`4_PLAN.md`](./docs/4_PLAN.md) §11 for the status table (shipped / validating now /
+> deferred) and [`5_METRICS.md`](./docs/5_METRICS.md) for the protocol KPIs.
 > Full history: [CHANGELOG](./CHANGELOG.md).
 
 ## Why real harnesses (not custom LLM agents)
@@ -195,15 +198,23 @@ debate to bring them back in.)
 
 ## Known v0 limitations (next steps)
 
+The full picture — what is shipped, what is being validated, and what is deferred and
+why — is the status table in [`4_PLAN.md`](./docs/4_PLAN.md) §11. The short version:
+
+- **The premise is unvalidated and the gate has not been run.** That gate is the P0;
+  everything else is deferred behind it. Its named prerequisite is Tier-0 KPI
+  instrumentation ([`5_METRICS.md`](./docs/5_METRICS.md)) — nothing currently records
+  per-turn wall-clock, and cost is reported by `claude` only.
 - No scholastic **`consolidatio` as a pre-debate step** (merging N proposals into one
-  shared object for the skeptics to attack), no structured contribution trailer /
-  evidence-typing yet. The `respondeo` (verdict) and `redactio` (deliverable) phases
-  **do** exist.
+  shared object for the skeptics to attack), and no structured contribution trailer /
+  evidence-typing. The `respondeo` (verdict) and `redactio` (deliverable) phases **do**
+  exist.
 - `--continue` re-judges **alone**; it does not yet re-engage the debaters when your
   answer opens genuinely new ground (it flags that case instead). A crashed run is not
   resumable — it accumulates in memory and writes at the end, so restart from scratch.
 - Reaction rounds are parallel snapshots (agents react to proposals, not to each
-  other's same-round reactions).
+  other's same-round reactions), and `--rounds N` is fixed by you: nothing measures
+  convergence, so nothing stops early.
 - Timeout kills the whole **process group** (`SIGTERM`, then `SIGKILL` after a short
   grace), so a slow turn can't wedge the run by leaking a worker that holds the output
   pipe open (lesson from the 2026-06-12 repo-grounded run).
@@ -289,7 +300,8 @@ Recipe / checklist for adding a new adapter (follow TDD and keep the repo runnab
 | [`1_IDEA.md`](./docs/1_IDEA.md)         | Original vision                                                                     |
 | [`2_CONCEPT.md`](./docs/2_CONCEPT.md)   | Refined concept: the *disputatio* protocol, roles, executable evidence, convergence |
 | [`3_ADAPTERS.md`](./docs/3_ADAPTERS.md) | Headless-integration design for each agent CLI                                      |
-| [`4_PLAN.md`](./docs/4_PLAN.md)         | Implementation plan, stack rationale, milestones                                    |
+| [`4_PLAN.md`](./docs/4_PLAN.md)         | Implementation plan, as-built stack rationale, and the **status table** (§11)        |
+| [`5_METRICS.md`](./docs/5_METRICS.md)   | Protocol KPIs: error amplification, coordination overhead, redundancy, efficiency    |
 | [`research/`](./research/)              | Headless-mode research + real canary runs per CLI                                   |
 
 ## License

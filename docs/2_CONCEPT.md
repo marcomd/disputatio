@@ -82,6 +82,15 @@ decision versus merely *confirm* it? That answer tells us whether the core value
 is "better decisions" (large) or "less manual context-switching" (smaller, but
 still real).
 
+> **Sharpened into a testable goal (2026-08-03).** "Better decisions" has no oracle,
+> so the validation gate now measures a deliberately narrower claim: *cross-vendor
+> adversarial review, grounded in independently gathered executable evidence, catches
+> material risks that a strong single-agent review misses.* See
+> [`4_PLAN.md`](./4_PLAN.md) §0 and §8 for the gate, and
+> [`5_METRICS.md`](./5_METRICS.md) for the process KPIs that make a gate result
+> diagnosable — subject to the rule that metrics instrument the debate and never
+> render its verdict (the judge-bias caveat in §4 below applies to them too).
+
 ---
 
 ## 3. The Disputatio protocol

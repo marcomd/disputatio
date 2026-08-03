@@ -1,6 +1,10 @@
-// Orchestration (Kaizen v0): a crude round-robin debate that accumulates into one
-// markdown transcript. No scholastic protocol / respondeo / eval yet — those are the
-// next small steps. This is the smallest thing that reproduces the manual workflow.
+// Orchestration (Kaizen v0): the debate accumulates into one markdown transcript.
+// Phases: proposals (videtur quod) → N reaction rounds (sed contra) → respondeo (the
+// judge's verdict) → redactio (the deliverable, only on a RESOLVED verdict). runFinalize
+// and runContinuation are exported so the CLI can re-enter a SAVED debate standalone
+// (--finalize / --continue). Still missing: the pre-debate consolidatio, a structured
+// contribution trailer, and the premise-validation eval — all deferred on purpose
+// (docs/4_PLAN.md §11).
 
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";

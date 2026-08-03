@@ -2,6 +2,55 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.7.1] — roadmap refresh + protocol KPI spec (docs only)
+
+- **`docs/4_PLAN.md` refreshed to as-built.** The stack section no longer specifies Bun,
+  `execa`, `zod`, or `citty` (none shipped; the reasoning for each drop is recorded, and
+  the outcome — **zero runtime dependencies** — is stated). The aspirational module tree
+  is replaced by the shipped seven files, with an explicit table of what was planned and
+  does **not** exist (`normalize/`, `contract/`, `state/`, `eval/`, `state.json`).
+- **New status table (§11) replaces the milestone table:** shipped / validating now /
+  deferred pending evidence. M0 and M1 are marked complete; the **M2 premise-validation
+  gate is marked NOT STARTED and named the P0**. "Validating now" holds only the captured
+  dogfooding runs, which are workflow evidence, not premise evidence.
+- **Fixed goal added (§0):** *cross-vendor adversarial review, grounded in independently
+  gathered executable evidence, catches material risks that a strong single-agent review
+  misses.* §8's metrics are reordered to match it — missed-risk surfacing is now the
+  **primary** metric and blind A/B preference is secondary (the previous ordering made the
+  primary metric the one the plan itself warned would false-negative the gate).
+- **Gate corpus decided:** code-review tasks with known outcomes are the primary corpus
+  (partial ground truth makes the gate scoreable), with plan/design tasks as a secondary
+  probe.
+- **Contradictions fixed:** `consolidatio` and arbitration thresholds are now
+  consistently **post-gate** (§12 said "M1" while §6 and §11 said M3); the stale
+  "no respondeo / no eval yet" header comment in `src/debate.ts` now describes the phases
+  the file actually orchestrates; §4 documents `stdio:["ignore",…]`, the process-group
+  kill, and the `pi`/`copilot-cli` classifiers; §7 documents the **redactio**, a phase the
+  plan never contained; §9 documents the shipped flag surface.
+- **New `docs/5_METRICS.md` — protocol KPIs.** Error amplification, coordination
+  overhead, redundancy, efficiency, and reliability, each defined in Disputatio's own
+  terms, split into **Tier 0** (free from `Turn[]` — no model) and **Tier 1** (needs a
+  claim ledger, which is the deferred `disputatio` trailer finally acquiring a consumer).
+  Includes the anti-circularity rule (KPIs instrument the process, never render the
+  verdict), a precise definition of "judge edits", the verified gaps that block Tier 0
+  today (no per-turn `durationMs`; `costUsd` is claude-only), and no thresholds on purpose
+  — baseline first, then targets.
+- **Adaptive meta-orchestrator evaluated and deferred** (§11 P8) with the reason recorded:
+  a topology router makes the gate unmeasurable, since condition B would stop being a
+  fixed treatment. The safe subset — deterministic, printed topology *advice* — is noted
+  as optional.
+- **Deviations recorded honestly** (§11): a dated table of everything pulled forward out
+  of roadmap order — codex, worktree isolation, the <2-proposal abort, raw captures,
+  group-kill, respondeo, redactio, `--continue`/`--finalize`, npm packaging, `pi`,
+  `copilot-cli` — closing with the admission that none of it advanced the premise.
+- `docs/3_ADAPTERS.md`: status notes on §7 (the declarative manifest is **not built**;
+  `--doctor` exists but does no version-drift check, so the `agy` self-update hazard is
+  undetected) and §8 (the build sequencing was overtaken — five adapters exist while the
+  validation it protects has not run).
+- `docs/2_CONCEPT.md` §2 and `CLAUDE.md`: pointers to the fixed goal, the status table,
+  and the KPI doc, plus a stale budget default corrected ($2 → $5, `--budget`).
+- No behaviour change: docs plus one comment. `src/` is otherwise untouched.
+
 ## [0.7.0] — add GitHub Copilot CLI adapter
 
 - New `copilot-cli` adapter for GitHub Copilot CLI (`@github/copilot`, binary `copilot`): runs headless with `-p` and `--output-format json`, classifies success from process exit + `result.exitCode` + the last `assistant.message`, supports `--model`, `--effort`, and `bin` overrides.
