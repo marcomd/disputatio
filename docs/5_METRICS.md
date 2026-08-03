@@ -90,12 +90,39 @@ every signal above is conditioned on evidence, not on similarity alone.
 
 *What fraction of the run is spent talking about the work rather than doing it.*
 
+> ⚠️ **Agent-time and wall-clock are different quantities and must never be mixed.**
+> Turns within a round run **concurrently** (`Promise.all` in `runDebate`), so summing
+> turn durations measures **resource consumption**, not elapsed time. An earlier draft of
+> this section divided summed non-proposal time by summed total time and called the result
+> a wall-clock share — that formula is wrong for every run with more than one participant.
+> Both quantities are useful; label them.
+
+Let a *phase* be one parallel group (proposals, each reaction round, respondeo, redactio),
+and `d(t)` a turn's duration:
+
 | Signal | Definition | Tier |
 | --- | --- | --- |
-| **Coordination share (wall-clock)** | Time in non-proposal turns (reactions + respondeo + redactio) ÷ total turn time. Round 1 is the irreducible work — N independent answers; everything after is coordination in the strict sense. | 0 |
-| **Coordination share (cost)** | Same ratio in dollars, **where reported** — see the gap in §6. | 0 (partial) |
-| **Context growth per round** | Bytes of transcript fed to each participant per round. Reaction rounds re-send the full snapshot, so this grows superlinearly with rounds × participants, and it is the mechanism behind cost blowup. | 0 |
-| **Wall-clock vs critical path** | Total elapsed run time ÷ slowest single turn. Rounds run in parallel (`Promise.all` in `runDebate`), so this reveals how much is genuinely serial: the round barriers and the judge. | 0 |
+| **Agent-time** | `Σ d(t)` over all turns. What you *consume* — the right denominator for cost-like reasoning and for comparing arm budgets (`4_PLAN.md` §8). | 0 |
+| **Coordination share (agent-time)** | `Σ d(t)` over non-proposal turns ÷ agent-time. Round 1 is the irreducible work — N independent answers; everything after is coordination. | 0 |
+| **Wall-clock per phase** | `max d(t)` **within** the phase — a round is as slow as its slowest participant, because of the round barrier. | 0 |
+| **Run wall-clock (model)** | `Σ_phases max d(t)`, since phases are strictly serial (each reaction round consumes the previous snapshot; the judge waits for all). This is the **critical path** — *not* the slowest single turn, which an earlier draft claimed. | 0 |
+| **Coordination share (wall-clock)** | `Σ_{non-proposal phases} max d(t)` ÷ run wall-clock. Usually **higher** than the agent-time share, because the judge and redactio are single-turn phases with no parallelism to hide behind. | 0 |
+| **Orchestration overhead** | measured run wall-clock − `Σ_phases max d(t)`. What the *orchestrator* costs: temp-dir setup, worktree add/remove, and the `withGitLock` serialization (see the bracketing note below). Should be small; if it isn't, that is a finding. | 0 |
+| **Coordination share (tokens / cost)** | Same ratios in tokens, or dollars where reported — see §6 for what each adapter actually reports. | 0 (partial) |
+| **Context growth per round** | Bytes of prompt fed to each participant per round. Reaction rounds re-send the full snapshot, so this grows superlinearly in rounds × participants, and it is the mechanism behind cost blowup. Requires recording prompt bytes per turn (§6). | 0 |
+
+**What the timing must bracket — decide once, and record both.** `runIsolated` wraps
+`p.run` in temp-dir creation plus, in repo mode, `git worktree add/remove` under
+`withGitLock` — and that lock **genuinely serializes** concurrent turns. So:
+
+- **`agentMs`** — around `p.run` alone. The model's latency. This is what belongs in the
+  per-phase `max` above.
+- **`turnMs`** — around all of `runIsolated`. Includes worktree setup and lock waiting.
+
+Recording both makes `turnMs − agentMs` the per-turn isolation overhead, and keeps the
+git lock from being silently attributed to the model. Timing only `runIsolated` would
+inflate "parallel" durations with lock contention; timing only `p.run` would hide real
+elapsed cost. Neither alone is honest.
 
 **Good for:** deciding whether a third participant or a third round is affordable, and
 whether the round barrier (agents don't see same-round reactions — `4_PLAN.md` §6) is
@@ -120,8 +147,17 @@ if two participants duplicate ~everything, the second one is buying nothing.
 | Signal | Definition | Tier |
 | --- | --- | --- |
 | **New-objection yield per round** | Objections in round *N* not present in rounds < *N*, ÷ total objections in round *N*. | 1 |
-| **Evidence-backed ratio** | Objections carrying command output or a file citation ÷ total objections, per round. **This is the moat, measured** (`4_PLAN.md` §0), so it is arguably the single most important number in this document. | 1 |
-| **Marginal cost per new objection** | Round *N*'s cost or wall-clock ÷ its new objections. The number that tells you a round was not worth running. | 0 + 1 |
+| **Command-output-backed ratio** | Objections carrying **executed command output** ÷ total objections, per round. **This — and only this — is the moat measured** (`4_PLAN.md` §0), and it is the single most important number in this document. | 1 |
+| **Citation-backed ratio** | Objections carrying a **file/line citation** but no execution ÷ total objections. Real grounding and clearly better than assertion, but it is *reading*, which any API-level framework with a file tool can do. | 1 |
+| **Assertion-only ratio** | The remainder: objections resting on neither. The rhetoric the respondeo is instructed to discount. | 1 |
+| **Marginal cost per new objection** | Round *N*'s agent-time (or tokens) ÷ its new objections. The number that tells you a round was not worth running. | 0 + 1 |
+
+**Never collapse these three into one "evidence-backed" figure.** The project's own
+`3_ADAPTERS.md` §3 types evidence as **assertion | citation | command_output** precisely
+because the tiers are not interchangeable, and §0's moat claim is specifically about
+*executing* things. A blended ratio would let a debate that only ever *read* files report
+a strong moat number — which is the one measurement error that could make the gate pass
+for the wrong reason.
 
 **Good for — and this is the payoff:** a **convergence stopping rule**. Today `--rounds N`
 is fixed by the caller, and `4_PLAN.md` §6 notes there is no automatic stopping rule
@@ -162,21 +198,49 @@ kept, both named:
 
 ---
 
-## 4. Tier 0 — free, no model, derivable from `Turn[]`
+## 4. Tier 0 — free, no model, no claim extraction
 
-Everything computable from what `runDebate` already returns (`DebateOutcome.turns`) plus
-the artifacts on disk. No claim extraction, no extra agent calls, no judgement.
+**`Turn[]` alone is not enough** — and saying otherwise was the flaw in this section's
+first draft, which listed `DebateOutcome.aborted` and prompt bytes as sources while
+claiming derivability from `Turn[]`. Tier 0 needs a **run-level input**:
+
+```ts
+type MetricsInput = {
+  outcome: DebateOutcome;          // turns + aborted + respondeo.status + finalReport(Error)
+  lineup: { id, vendor, model, effort }[];   // config: what actually ran, per participant
+  turnMeta: {                      // recorded per turn AT SPAWN TIME — not recoverable later
+    phase: "proposal" | "reaction" | "respondeo" | "redactio";
+    round?: number;                // stop parsing Turn.title (§6.4)
+    promptBytes: number;           // the exact prompt fed in — context growth needs this
+    agentMs: number; turnMs: number;          // both brackets (§3.2)
+  }[];
+  quaestioBytes: number; repoMode: boolean; roundsRequested: number;
+};
+```
+
+Two of those cannot be reconstructed after the fact, which is the whole reason this is a
+recording problem and not a reporting one: **`promptBytes`** (the prompt is built, used,
+and dropped — the transcript is not the prompt, since `renderForContext` strips cost
+footnotes and error dumps) and the **timings**.
 
 | Metric | Source |
 | --- | --- |
-| Turn counts by phase (proposal / reaction / respondeo / redactio) | `Turn.title`, `Turn.participant` |
-| Per-adapter failure rate; abort rate | `Turn.result.ok`, `DebateOutcome.aborted` |
-| Setup vs agent failure split | `Turn.result.error` + `budgetExhausted` (see §6 — string-matching today) |
-| Wall-clock per turn; coordination share; critical path | **needs `durationMs` — does not exist yet (§6)** |
-| Cost per turn and per phase | `Turn.result.costUsd` (**claude only** — §6) |
-| Context growth per round; transcript size | transcript bytes per round in `debate.ts` |
-| Respondeo status; verdict revisions; human-input rounds | `DebateOutcome.respondeo.status`, `respondeo-N.md` file count |
-| Redactio outcome | `finalReport` / `finalReportError.budgetExhausted` |
+| Turn counts by phase; per-participant turn counts | `turnMeta.phase`, `Turn.participant` |
+| Per-adapter failure rate; abort rate | `Turn.result.ok`, `outcome.aborted` |
+| Setup vs agent failure split | `Turn.result.error` + `budgetExhausted` (string-matching today — §6.3) |
+| Agent-time, per-phase wall-clock, critical path, orchestration overhead | `turnMeta.agentMs` / `turnMs` (**needs recording — §6.1**) |
+| Cost per turn/phase (dollars) | `Turn.result.costUsd` — **claude only** (§6.2) |
+| Tokens per turn/phase | claude `usage`/`modelUsage`, codex `turn.completed.usage` — **in `raw` but not surfaced** (§6.2) |
+| Context growth per round | `turnMeta.promptBytes` (**needs recording — §6.1**) |
+| Respondeo status; redactio outcome | `outcome.respondeo.status`, `finalReport` / `finalReportError` |
+| **Ran-any-command (the §8 validity check)** | `codex`: count `command_execution` items in `raw`; `claude`: `num_turns > 1` + `permission_denials` proxies (§6.4) |
+
+**Separate step — artifact-history aggregation.** Verdict revisions and human-input rounds
+(`respondeo-N.md` count, §3.6a) are **not** in `MetricsInput` at all: they accumulate
+across *separate `--continue` invocations*, each a different process. That is a reader over
+the `.debate/<dir>` directory, not a function of one run's outcome. Keeping the two apart
+matters — a pure `MetricsInput → metrics` function stays unit-testable against fixtures
+with no filesystem, and the aggregator is the only part that needs disk.
 
 **Deliverable shape:** a `metrics.json` written alongside `debate.md` in
 `.debate/debate-<ts>/`, machine-readable so an agent can consume it — consistent with the
@@ -224,23 +288,45 @@ Design constraints when it is built:
 Verified against the code, because a metrics spec that assumes data it doesn't have is
 just another aspirational roadmap:
 
-1. **No timing data anywhere.** `AgentResult` (`src/adapters.ts`) is
-   `{ok:true, text, costUsd?, raw?} | {ok:false, error, budgetExhausted?, raw?}` — there
-   is **no duration field**, and `runIsolated` does not time its turns. Every wall-clock
-   metric in §4 needs `durationMs` added first. This is the single highest-value small
-   change in this document.
-2. **Cost is claude-only.** `costUsd` comes from claude's `total_cost_usd`. `codex`
-   reports tokens rather than dollars under ChatGPT-account auth; `agy`, `pi`, and
-   `copilot-cli` report neither. **Therefore: wall-clock and turn counts are the
-   vendor-neutral currency**, and dollars are a partial, per-vendor signal that must never
-   be summed as if it covered the run. A lineup-wide cost total would be quietly wrong.
+All four were checked against the code and against a **real repo-grounded capture**
+(2026-06-12, structure only — those captures are gitignored and may hold private material,
+so only field names are recorded here). Two of them turned out to be *less* bad than a
+first reading suggested, which is exactly why the check was worth doing.
+
+1. **No orchestrator-side timing — but claude reports its own.** `AgentResult`
+   (`src/adapters.ts`) is `{ok:true, text, costUsd?, raw?} | {ok:false, error,
+   budgetExhausted?, raw?}`: **no duration field**, and `runIsolated` does not time its
+   turns. What *is* already in the raw capture: claude's envelope carries `duration_ms`,
+   `duration_api_ms`, and `ttft_ms`. That is per-vendor and API-side, so it cannot give the
+   per-phase maxima §3.2 needs, and it says nothing about worktree/lock overhead.
+   **Recording `agentMs` + `turnMs` in `runIsolated` remains the single highest-value small
+   change in this document** — but the honest claim is "no *vendor-neutral,
+   orchestrator-side* timing," not "no timing anywhere."
+2. **Dollars are claude-only; tokens cover two adapters.** `costUsd` comes from claude's
+   `total_cost_usd`. **Tokens, however, are already present** in the raw captures for
+   claude (`usage`, `modelUsage`) *and* codex (`turn.completed.usage`, with
+   `input`/`cached_input`/`output`/`reasoning` split out) — neither is surfaced on
+   `AgentResult`. `agy` is plain text and reports **nothing** (verified); `pi` and
+   `copilot-cli` are unverified. So: **wall-clock and turn counts remain the only
+   vendor-neutral currency**, tokens are a strong two-adapter signal worth surfacing, and
+   dollars are a single-adapter signal that **must never be summed as a run total** — a
+   lineup-wide cost figure would be quietly wrong by however much codex spent.
 3. **Failure modes are not machine-classifiable.** `ok:false` carries a human-readable
    `error` string, so setup-vs-agent classification means string-matching today. A
    structured `kind` field on the failure branch is the clean fix (`4_PLAN.md` §3 notes
    the same gap from the other direction).
-4. **Rounds are not explicitly labelled** in `Turn` — the round is encoded in
-   `Turn.title` (`"Round 1 reaction — …"`). Per-round aggregation works by parsing the
-   title, which is fragile. A `phase`/`round` field on `Turn` is the honest fix.
+4. **Rounds and phases are not labelled**; the round is encoded in `Turn.title`
+   (`"Round 1 reaction — …"`), so per-round aggregation parses prose. A `phase`/`round`
+   field is the honest fix (§4's `turnMeta`).
+5. **Evidence execution is partly observable today — better news than expected.** `codex`
+   emits `item.completed` items of type **`command_execution`** (a single real repo-grounded
+   turn carried 26), so counting executions per turn needs **no claim ledger** — just a
+   pass over `raw.stdout` that the codex classifier already walks. `claude`'s envelope is a
+   summary with no tool log (`num_turns` and `permission_denials` are proxies only; a real
+   log needs `--output-format stream-json`), and `agy` offers nothing. This is what makes
+   `4_PLAN.md` §8's **run-level validity check** ("did this debate execute anything?")
+   available now rather than deferred — and it is the strongest argument for keeping `codex`
+   in the M2 lineup.
 
 ---
 
@@ -267,13 +353,22 @@ A metric with no decision attached is a number, not a KPI.
 
 Smallest useful step, in TDD order per repo policy:
 
-1. **`durationMs`** — time each turn in `runIsolated` (`src/debate.ts`) and surface it on
-   `AgentResult`/`Turn`. Test against `test/fakes/`.
-2. **`round` / `phase` on `Turn`** — stop parsing titles (§6.4).
-3. **`metrics.json`** — a pure function `Turn[] → Tier-0 metrics`, written next to
-   `debate.md`. Pure means unit-testable against captured fixtures with no CLI at all.
-4. **Aggregate across runs** — a small reader over `.debate/*/metrics.json` for the
-   baseline in §7.
+1. **`agentMs` + `turnMs`** — time both brackets in `runIsolated` (`src/debate.ts`), so
+   isolation overhead stays separable from model latency (§3.2). Test against `test/fakes/`.
+2. **`phase` / `round` / `promptBytes` on the turn record** — stop parsing titles, and
+   capture the prompt size at spawn time, since it is unrecoverable afterwards (§4, §6.4).
+3. **`ranCommands` per turn** — count codex `command_execution` items in the classifier;
+   expose claude's `num_turns`/`permission_denials` as the proxy. This is what makes
+   `4_PLAN.md` §8's evidence-validity check enforceable, so it should land **before** the
+   gate runs, not after.
+4. **`metrics.json`** — a pure function `MetricsInput → Tier-0 metrics` (§4), written next
+   to `debate.md`. Pure means unit-testable against captured fixtures with no CLI and no
+   filesystem at all.
+5. **Artifact-history aggregator** — a separate reader over `.debate/<dir>` for verdict
+   revisions, and over `.debate/*/metrics.json` for the cross-run baseline in §7. Kept out
+   of the pure function on purpose.
+
+Steps 1–3 are the ones the M2 gate actually depends on; 4–5 are reporting convenience.
 
 Deliberately **not** in that increment: the claim ledger (Tier 1), any threshold, and any
 model-in-the-loop metric. Tier 0 first, because it is free, honest, and immediately useful

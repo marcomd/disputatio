@@ -2,6 +2,67 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.7.2] — fix gate design flaws and metric formulas found in review (docs only)
+
+Review of v0.7.1 found seven real defects in the freshly written gate and KPI specs. All
+seven are fixed; two of them were wrong in a way that would have produced a confidently
+meaningless gate result.
+
+- **Condition A is now matched to B** (`4_PLAN.md` §8). The baseline previously got no
+  repo access, no tool allowlist, and no evidence instruction, while only Disputatio was
+  required to gather evidence — so a B win could have come from tool access or extra
+  compute rather than from cross-vendor adversarial review. Three arms now: **A0**
+  (evidence-free, mirrors the status quo), **A1** (fully matched — same HEAD worktree,
+  same read-only tools, same evidence instruction, comparable token/call budget; **the
+  primary comparator**), **B**. States that the gate therefore isolates cross-vendor
+  adversarial review *holding executable evidence constant*, and adds a **pre-registered
+  interpretation rule** — notably that "B ≈ A1 while A1 ≫ A0" means the moat is tool-armed
+  review, not debate: a cheaper product and a real finding, pre-registered so it cannot be
+  re-narrated later.
+- **The evidence precondition is now enforceable, and partly enforceable today.** The gate
+  required at least one command-output-backed objection while the orchestrator only
+  *encourages* evidence in prose — a zero-execution debate succeeded and looked identical
+  to a grounded one. Such runs are now defined as **VOID** (excluded and re-run, with the
+  void rate recorded). Verified against a real repo-grounded capture: **codex emits
+  `command_execution` items**, so the run-level check needs no claim ledger; claude's
+  envelope is a summary (`num_turns`, `permission_denials` are proxies only); `agy` offers
+  nothing. Recommends pinning the M2 lineup to adapters that prove execution.
+- **The primary metric no longer rewards shotgun reviewing.** Missed-risk surfacing is now
+  scored as a **pair** — true material risks **and adjudicated false alarms, with
+  precision** — and a B win requires risks up *without* precision materially down.
+  **Negative controls** (2–3 changes with no material risk) are part of the corpus.
+  **Blinding now covers Metric 1**, which is primary and therefore carries the primary
+  bias risk: pre-registered rubric, pooled findings, source-blind adjudication, controls
+  not disclosed. Adds a pre-registered power caveat — the result is directional, not
+  significant, at this sample size.
+- **M1 is no longer claimed to run "the gate path"** (§11). It runs the *phases* of the
+  gate path; the treatment condition §8 depends on cannot be enforced or even reported.
+- **Wall-clock formulas corrected** (`5_METRICS.md` §3.2). The previous definitions divided
+  summed non-proposal turn time by summed total time and called it a wall-clock share —
+  wrong for every multi-participant run, since turns within a round are concurrent.
+  **Agent-time** (`Σ d(t)`, a resource measure) and **wall-clock** (`Σ_phases max d(t)`,
+  the critical path) are now separate quantities with separate coordination shares; the
+  critical path is no longer "the slowest single turn". Adds orchestration overhead, and
+  specifies that timing must record **both** `agentMs` (around `p.run`) and `turnMs`
+  (around `runIsolated`) so `withGitLock` serialization is not attributed to the model.
+- **Evidence tiers are no longer conflated** (§3.4). "Command output or a file citation"
+  was called "the moat, measured", although `3_ADAPTERS.md` §3 types evidence as
+  assertion / citation / command_output precisely because the tiers differ. Now three
+  separate ratios, with only **command-output-backed** identified as the moat.
+- **The Tier-0 input contract is corrected** (§4). It claimed derivability from `Turn[]`
+  while already citing `DebateOutcome.aborted` and prompt bytes. Now a run-level
+  `MetricsInput` (outcome + lineup + per-turn phase/round/promptBytes/timings), noting
+  that `promptBytes` and timings are unrecoverable after the fact, with verdict-revision
+  counting split into a separate artifact-history aggregator so the metrics function stays
+  pure.
+- **§6's gaps corrected against real captures rather than assumed.** "No timing data
+  anywhere" was too strong — claude's envelope carries `duration_ms`/`ttft_ms`; the honest
+  gap is no *vendor-neutral, orchestrator-side* timing. And while dollars are claude-only,
+  **tokens are already present for claude and codex** (unsurfaced), so tokens are a strong
+  two-adapter signal while wall-clock and turn counts remain the only neutral currency.
+- **`package-lock.json` regenerated** — it still said `0.7.0` after the `0.7.1` bump.
+- No behaviour change: docs only. `src/` untouched.
+
 ## [0.7.1] — roadmap refresh + protocol KPI spec (docs only)
 
 - **`docs/4_PLAN.md` refreshed to as-built.** The stack section no longer specifies Bun,

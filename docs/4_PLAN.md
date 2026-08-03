@@ -373,28 +373,108 @@ that hypothesis, stated so it can fail.
 This reordering is why the gate is now scoreable at all. The original corpus (plan/design
 only) forced the scoring protocol to carry the entire burden of a missing oracle.
 
-**Conditions** (both corpora):
+### Conditions — and what the gate therefore isolates
 
-- **(A) A strong single-agent baseline that mirrors the user's real process** — upfront
-  brainstorm + first agent + self-critique. **Not a strawman**; if A is weak the gate
-  proves nothing.
-- **(B) Disputatio**, unattended gate path (§6), with **at least one objection required
-  to carry `command-output` evidence**.
-- **Model-strength parity is mandatory:** comparable tiers across vendors (e.g. Sonnet
-  vs GPT-5.x vs Gemini Pro — *not* Sonnet vs Flash). A weaker second debater stacks the
-  deck against debate: its objections are shallower, and a null result then means "the
-  cheap model is weak," not "debate doesn't help." Pin the lineup in the eval's
-  `debate.yaml`.
+Three arms. The middle one is the comparator that matters, and getting it wrong is the
+easiest way to produce a confidently meaningless result.
+
+| Arm | What it is | Role |
+| --- | --- | --- |
+| **A0** | Single agent, **no repo/tool access**, brainstorm + self-critique — mirrors the user's actual status quo (§ pre-M0 finding) | Cheap **reference point**, not the comparator |
+| **A1** | Single agent, **fully matched to B**: same HEAD worktree, same read-only tool allowlist, same "gather executable evidence" instruction, self-critique, comparable token/call budget | **The primary comparator** |
+| **B** | Disputatio, unattended gate path (§6), cross-vendor, comparable-tier lineup | The treatment |
+
+**Why A1 must be tool-armed** — this follows from the plan's own rule, not a new one.
+§8 already forbids a strawman baseline, and a *strong* single-agent code review in 2026
+has tool access natively. An A without repo access is therefore not a matched baseline;
+it is the strawman, wearing the word "strong."
+
+**So write down what the gate actually measures.** With A1 matched, the isolated factor is
+**cross-vendor adversarial review (F1), holding executable evidence (F2) constant.** Note
+that §0's goal sentence bundles F1 and F2, which reads as though evidence is the
+differentiator — under matched-A it is a property of *both* arms. A0 exists precisely to
+decompose them.
+
+**Pre-registered interpretation rule (fix this now, before any data exists):**
+
+| Observed | Honest conclusion |
+| --- | --- |
+| B ≫ A1 | **The premise holds.** Cross-vendor adversarial review adds risk-catching power on top of an evidence-armed single agent. |
+| B ≈ A1, and A1 ≫ A0 | **The moat is tool-armed review, not debate.** A real, valuable, *much cheaper* finding: ship a single evidence-armed reviewer and delete the debate. |
+| B ≈ A1 ≈ A0 | Neither debate nor evidence pays off on this corpus. Stop. |
+| B < A1 | Debate actively hurts — most likely via the amplification path (`5_METRICS.md` §3.1). Diagnose with the KPIs before concluding. |
+
+Pre-registering this matters because the second row is the outcome most likely to be
+re-narrated after the fact ("well, debate still helped somewhat"). It is a **success** for
+the user and a **failure** for the debate premise, and it must be allowed to say so.
+
+**Budget parity, recorded:** A1 gets a token/call budget comparable to B's *total* across
+all participants and rounds — otherwise a B win may be bought with compute rather than
+with adversarial structure. Record actual spend per arm (`5_METRICS.md` §4); an unmatched
+budget makes the trial descriptive, not comparative.
+
+**Model-strength parity is mandatory:** comparable tiers across vendors (e.g. Sonnet vs
+GPT-5.x vs Gemini Pro — *not* Sonnet vs Flash). A weaker second debater stacks the deck
+against debate: its objections are shallower, and a null result then means "the cheap
+model is weak," not "debate doesn't help." Pin the lineup in the eval's `debate.yaml`,
+and use the **same model** for A1 as B's strongest debater.
+
+### The evidence precondition — and whether it is enforceable
+
+Condition B is only exercising the moat if the debate **actually ran commands**. Today the
+orchestrator merely *encourages* evidence in prose (`reactPrompt` in `src/debate.ts`);
+there is no verifier phase and no evidence ledger, so **a zero-execution debate succeeds
+and looks identical to a grounded one.** That is a hole in the treatment, not a
+documentation nit: it would let the gate "test" the moat without the moat present.
+
+**Rule: a B run in which no participant executed a command is VOID, not failed** — excluded
+and re-run, the same way a trial with a broken instrument is excluded. Record the void rate;
+a high one is itself a finding (the prompt does not reliably induce evidence gathering).
+
+**How much of that is checkable today** (verified against a real repo-grounded capture,
+2026-06-12, structure only):
+
+| Adapter | Evidence-execution signal in the raw capture | Verdict |
+| --- | --- | --- |
+| `codex` | `item.completed` items of type **`command_execution`** — a real turn carried 26 | **Directly countable now** |
+| `claude` | Envelope is a *summary*: no tool log. `num_turns > 1` (a repo-grounded turn showed 5) and `permission_denials` are usable **proxies**; a real log needs `--output-format stream-json` | Proxy only |
+| `agy` | Plain text, nothing | Not checkable |
+| `pi`, `copilot-cli` | Event streams expose tool/session events; **unverified** for real evidence-gathering runs | Unknown |
+
+**Therefore, two cheap decisions:** (1) **pin the M2 lineup to adapters whose captures
+prove execution** — with `codex` in the lineup the validity check is available immediately,
+with no claim ledger and no new phase; (2) treat the full per-objection accounting
+(*which* objection rests on *which* command) as Tier-1 work (`5_METRICS.md` §5). The
+run-level check is the one the gate actually needs, and it exists.
 
 ### Scoring protocol (non-circular)
 
 Plan/design artifacts have no objective reference, and **an LLM judge reintroduces the
 very sycophancy the gate exists to detect**. So:
 
-- **Metric 1 — missed-risk surfacing (PRIMARY).** Regardless of whether the headline
-  decision changed: *did B surface a risk / objection / **failing test** that A missed,
-  and was it material?* On the review corpus this is checkable against what actually
-  happened. This metric **is** the goal in §0 restated as a measurement.
+- **Metric 1 — missed-risk surfacing (PRIMARY), scored as a PAIR.** Regardless of whether
+  the headline decision changed: *did the arm surface a risk / objection / **failing test**
+  the other missed, and was it material?* On the review corpus this is checkable against
+  what actually happened. This metric **is** the goal in §0 restated as a measurement —
+  but it must be scored as two numbers, never one:
+  - **1a — true material risks found** (the numerator everyone remembers).
+  - **1b — adjudicated false alarms**, and **precision** = 1a ÷ (1a + 1b).
+  - ⚠️ **Without 1b the metric rewards shotgun reviewing.** An arm that lists twenty
+    speculative concerns will "catch more risks" than a careful one, and a debate is
+    structurally prone to exactly that — each participant is prompted to find flaws, and
+    the judge sees volume as thoroughness. A gate that passes on 1a alone would be
+    measuring verbosity. **A B win requires 1a up without precision materially down.**
+  - **Negative controls are part of the corpus, not an extra:** include 2–3 changes with
+    **no material risk** (clean, well-tested, later uneventful). The correct output is "no
+    material risk found." An arm that manufactures findings there is penalized, and this
+    is the only part of the design that can detect a confidently-wrong debate.
+- **Blinding applies to Metric 1 too** — it is now the primary metric, so it carries the
+  primary bias risk. Adjudicating "was this risk material?" while knowing which arm
+  produced it is precisely the bias that excluding LLM judges was meant to avoid.
+  Concretely: **pre-register the materiality rubric and the false-alarm rule before
+  running**; then **pool all arms' findings**, strip attribution, randomize order, and
+  adjudicate **source-blind** — with the adjudicator **not told which corpus items are
+  negative controls**.
 - **Metric 2 — blind A/B preference (SECONDARY, directional).** Two outputs side by
   side, labels stripped, order randomized; the human records which they would rather
   execute **before** labels are revealed. Win-rate of B over A.
@@ -412,6 +492,13 @@ very sycophancy the gate exists to detect**. So:
   disappointing. They do not score the gate. See that document's anti-circularity rule.
 - **Output:** a verdict — *where* (which task types) the moat pays off, or that it
   doesn't (a valid, money-saving finding).
+- **Pre-registered honesty about power:** ~10 review tasks plus controls, three arms. That
+  is enough to see a **large** effect and nowhere near enough for statistical
+  significance. The gate's output is **directional**, and 6/10 vs 4/10 must not be read as
+  a win. Decide the effect size worth acting on *before* looking (e.g. "B must find a
+  material risk A1 missed on at least half the tasks, at no worse precision"), and if the
+  result lands inside the noise, the honest report is "inconclusive at this sample size" —
+  which is a legitimate outcome and still worth the money.
 
 **Cost budget (real).** One debate is dozens of frontier-agent calls. A single
 repo-grounded turn cost **$0.91** (2026-06-11), judge turns exhausted $1 then $2 (the cap
@@ -420,8 +507,10 @@ asymmetric. M2 = that matrix × 8–15 tasks × 2 conditions, re-run during deve
 per-turn spend, reuse the prompt cache within its TTL, prefer cheap models where the phase
 allows. Budget the eval explicitly: cost bites precisely at the gate.
 
-**Prerequisite:** Tier-0 metrics (`5_METRICS.md`) — cheap, and without them a gate run
-produces a verdict with no explanation attached.
+**Prerequisites, both cheap** (`5_METRICS.md` §8): the **evidence-validity check** — without
+it a run cannot be shown to have exercised the moat at all, so condition B is unverified —
+and **Tier-0 metrics**, without which a gate run produces a verdict with no explanation
+attached and a null result cannot be diagnosed.
 
 ---
 
@@ -489,10 +578,18 @@ measurement is actually running — an item may not sit there because work is *p
 | Per-turn raw captures | `.debate/*/raw/` |
 | Offline test suite; npm packaging (`prepack` → `dist/`) | `test/`, `package.json` |
 
-**M0 and M1 are complete** in substance: the transport round-trips with correct
-classification and `doctor` reports status (M0); a cross-vendor lineup runs the gate path
-unattended end-to-end and produces a deliverable (M1). Nothing above required the premise
-to be true.
+**M0 is complete:** the transport round-trips with correct classification and `doctor`
+reports status.
+
+**M1 is complete as a phase sequence, but NOT as the gate treatment.** A cross-vendor
+lineup does run proposals → reactions → respondeo unattended and produce a deliverable.
+What is missing is the part §8's condition B depends on: **the tool cannot enforce, or even
+report, that any executable evidence was gathered.** Evidence is encouraged in prose
+(`reactPrompt`), there is no verifier phase and no evidence ledger, so a zero-execution
+debate succeeds and is indistinguishable from a grounded one. Until a run-level
+execution check exists (§8 — cheap, and available today for `codex`), "M1 runs the gate
+path" overstates it: it runs the *phases* of the gate path. Nothing above required the
+premise to be true.
 
 ### Deviations, recorded honestly
 
@@ -533,8 +630,8 @@ is the exact failure this refresh exists to correct.
 
 | # | Item | Blocked on / why deferred |
 | --- | --- | --- |
-| **P0** | **M2 premise-validation gate** (§8) | **NOT STARTED.** Nothing blocks it but effort and token budget. Every other row waits behind it. Prerequisite: Tier-0 KPIs. |
-| **P1** | **Tier-0 KPI instrumentation** (`5_METRICS.md`) | Small and nearly free off `Turn[]`, but needs real code: per-turn `durationMs` does not exist today. Makes a gate run diagnosable. **Next increment.** |
+| **P0** | **M2 premise-validation gate** (§8) | **NOT STARTED.** Every other row waits behind it. Two real prerequisites, both in P1: the evidence-validity check (without it condition B cannot be shown to have exercised the moat) and Tier-0 KPIs (without them a null result is undiagnosable). |
+| **P1** | **Evidence-validity check + Tier-0 KPI instrumentation** (`5_METRICS.md` §8) | **Gate-blocking, and small.** Needs real code: per-turn timings and `promptBytes` are not recorded, and nothing counts executed commands — though codex's raw capture already carries `command_execution` items, so the check is cheap. **Next increment.** |
 | P2 | Tier-1 KPIs + the `disputatio` trailer / normalization layer (§5) | Needs a claim ledger; design work + extra per-debate calls. Do it when Tier-1 metrics are wanted, not before. |
 | P3 | `state.json` + crash-resume, per-run provenance, version-drift check (§3, §4) | One artifact serves all three. Painful only on long runs so far. |
 | P4 | `--continue` **re-debate** path (re-engage debaters with human input) | Today `--continue` re-judges alone and honestly says so by returning NEEDS_INPUT again. |

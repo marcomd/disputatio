@@ -1,7 +1,7 @@
 {
   "/Users/mark/Lavoro/AI/Disputatio/package.json": {
-    "mtime": 1785752339.7598495,
-    "ast_hash": "9599ec6b41c7bcdcd46f40abc7870449",
+    "mtime": 1785753752.261072,
+    "ast_hash": "8332e64cb92e251446a014bb92c67bc8",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/.claude/settings.json": {
@@ -30,13 +30,13 @@
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/CHANGELOG.md": {
-    "mtime": 1785752354.6914368,
-    "ast_hash": "72523beeaba7a5cd646cd6cd802db96c",
+    "mtime": 1785753784.1047013,
+    "ast_hash": "0dd47929fd3709faaa4b5994e27efff8",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/README.md": {
-    "mtime": 1785752326.7494674,
-    "ast_hash": "b1627136304daa4f8ddcd6c277e39bbe",
+    "mtime": 1785753852.0667238,
+    "ast_hash": "3dd55a6b07c5c8b493774889283cac03",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/AGENTS.md": {
@@ -45,8 +45,8 @@
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/CLAUDE.md": {
-    "mtime": 1785752406.115706,
-    "ast_hash": "a61002e2ec29ed4e96caf30156efff5a",
+    "mtime": 1785752546.6776793,
+    "ast_hash": "47cc381e98b2189cf0600855ed88eba0",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/research/cursor-and-aider-headless.md": {
@@ -175,13 +175,13 @@
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/docs/3_ADAPTERS.md": {
-    "mtime": 1782645262.8153162,
-    "ast_hash": "de3982e1e97aa94db1304c5073c57759",
+    "mtime": 1785752540.6969762,
+    "ast_hash": "1451f20c7f2ac14c67c395f7f6028af6",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/docs/4_PLAN.md": {
-    "mtime": 1785752193.0967646,
-    "ast_hash": "c9fe642938766fff254bb3e581c69df5",
+    "mtime": 1785753839.1734722,
+    "ast_hash": "853d934d792a3bd11523294a13541bca",
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/docs/2_CONCEPT.md": {
@@ -285,8 +285,8 @@
     "semantic_hash": ""
   },
   "/Users/mark/Lavoro/AI/Disputatio/docs/5_METRICS.md": {
-    "mtime": 1785752281.3088043,
-    "ast_hash": "07767718d1700f663b3e871419fcc669",
+    "mtime": 1785753823.77524,
+    "ast_hash": "fd4c737015d4d8d22c5c83b4ceccabaf",
     "semantic_hash": ""
   }
 }

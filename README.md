@@ -10,7 +10,7 @@ Pi, GitHub Copilot CLI — run as their native CLIs, not as raw LLM API calls. I
 copy-paste-between-terminals workflow many developers already do by hand: ask one
 agent, have another critique it, iterate, converge.
 
-> **Status: experimental, early MVP — v0.7.1.** Rough but runnable. The core premise —
+> **Status: experimental, early MVP — v0.7.2.** Rough but runnable. The core premise —
 > that cross-vendor adversarial review, grounded in independently gathered executable
 > evidence, catches material risks a strong single-agent review misses — is **not yet
 > validated**; v0 exists to dogfood the workflow on real tasks. The validation gate that
@@ -202,9 +202,12 @@ The full picture — what is shipped, what is being validated, and what is defer
 why — is the status table in [`4_PLAN.md`](./docs/4_PLAN.md) §11. The short version:
 
 - **The premise is unvalidated and the gate has not been run.** That gate is the P0;
-  everything else is deferred behind it. Its named prerequisite is Tier-0 KPI
-  instrumentation ([`5_METRICS.md`](./docs/5_METRICS.md)) — nothing currently records
-  per-turn wall-clock, and cost is reported by `claude` only.
+  everything else is deferred behind it. Two cheap prerequisites
+  ([`5_METRICS.md`](./docs/5_METRICS.md)): an **evidence-validity check** — evidence is
+  only *encouraged* in prose today, so a debate that ran no commands succeeds and looks
+  identical to a grounded one — and **Tier-0 KPIs**, since nothing records per-turn
+  timings or prompt size. Dollar cost is reported by `claude` only (tokens by `claude` and
+  `codex`), so wall-clock and turn counts are the vendor-neutral currency.
 - No scholastic **`consolidatio` as a pre-debate step** (merging N proposals into one
   shared object for the skeptics to attack), and no structured contribution trailer /
   evidence-typing. The `respondeo` (verdict) and `redactio` (deliverable) phases **do**

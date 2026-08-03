@@ -1015,7 +1015,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L63",
       "id": "src_adapters_agentresult",
-      "community": 1,
+      "community": 47,
       "norm_label": "agentresult"
     },
     {
@@ -1024,7 +1024,7 @@
       "source_file": "src/adapters.ts",
       "source_location": "L67",
       "id": "src_adapters_participant",
-      "community": 47,
+      "community": 5,
       "norm_label": "participant"
     },
     {
@@ -1303,7 +1303,7 @@
       "source_file": "src/install.ts",
       "source_location": "L112",
       "id": "src_install_defaultcanary",
-      "community": 1,
+      "community": 47,
       "norm_label": "defaultcanary()"
     },
     {
@@ -1337,7 +1337,7 @@
       "label": "execFileAsync",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L12",
+      "source_location": "L16",
       "id": "src_debate_execfileasync",
       "community": 1,
       "norm_label": "execfileasync"
@@ -1346,7 +1346,7 @@
       "label": "log()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L14",
+      "source_location": "L18",
       "id": "src_debate_log",
       "community": 1,
       "norm_label": "log()"
@@ -1355,7 +1355,7 @@
       "label": "Turn",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L16",
+      "source_location": "L20",
       "id": "src_debate_turn",
       "community": 1,
       "norm_label": "turn"
@@ -1364,7 +1364,7 @@
       "label": "RespondeoStatus",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L18",
+      "source_location": "L22",
       "id": "src_debate_respondeostatus",
       "community": 1,
       "norm_label": "respondeostatus"
@@ -1373,7 +1373,7 @@
       "label": "DebateOutcome",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L20",
+      "source_location": "L24",
       "id": "src_debate_debateoutcome",
       "community": 1,
       "norm_label": "debateoutcome"
@@ -1382,7 +1382,7 @@
       "label": "render()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L38",
+      "source_location": "L42",
       "id": "src_debate_render",
       "community": 1,
       "norm_label": "render()"
@@ -1391,7 +1391,7 @@
       "label": "renderForContext()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L48",
+      "source_location": "L52",
       "id": "src_debate_renderforcontext",
       "community": 1,
       "norm_label": "renderforcontext()"
@@ -1400,7 +1400,7 @@
       "label": "gitLock",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L55",
+      "source_location": "L59",
       "id": "src_debate_gitlock",
       "community": 1,
       "norm_label": "gitlock"
@@ -1409,25 +1409,25 @@
       "label": "withGitLock()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L56",
+      "source_location": "L60",
       "id": "src_debate_withgitlock",
-      "community": 1,
+      "community": 47,
       "norm_label": "withgitlock()"
     },
     {
       "label": "runIsolated()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L70",
+      "source_location": "L74",
       "id": "src_debate_runisolated",
-      "community": 1,
+      "community": 47,
       "norm_label": "runisolated()"
     },
     {
       "label": "proposePrompt()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L89",
+      "source_location": "L93",
       "id": "src_debate_proposeprompt",
       "community": 1,
       "norm_label": "proposeprompt()"
@@ -1436,7 +1436,7 @@
       "label": "reactPrompt()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L95",
+      "source_location": "L99",
       "id": "src_debate_reactprompt",
       "community": 1,
       "norm_label": "reactprompt()"
@@ -1445,7 +1445,7 @@
       "label": "respondeoPrompt()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L106",
+      "source_location": "L110",
       "id": "src_debate_respondeoprompt",
       "community": 1,
       "norm_label": "respondeoprompt()"
@@ -1454,7 +1454,7 @@
       "label": "parseRespondeoStatus()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L124",
+      "source_location": "L128",
       "id": "src_debate_parserespondeostatus",
       "community": 1,
       "norm_label": "parserespondeostatus()"
@@ -1463,7 +1463,7 @@
       "label": "finalizePrompt()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L135",
+      "source_location": "L139",
       "id": "src_debate_finalizeprompt",
       "community": 1,
       "norm_label": "finalizeprompt()"
@@ -1472,7 +1472,7 @@
       "label": "continuePrompt()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L164",
+      "source_location": "L168",
       "id": "src_debate_continueprompt",
       "community": 1,
       "norm_label": "continueprompt()"
@@ -1481,7 +1481,7 @@
       "label": "runFinalize()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L188",
+      "source_location": "L192",
       "id": "src_debate_runfinalize",
       "community": 1,
       "norm_label": "runfinalize()"
@@ -1490,7 +1490,7 @@
       "label": "runContinuation()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L196",
+      "source_location": "L200",
       "id": "src_debate_runcontinuation",
       "community": 1,
       "norm_label": "runcontinuation()"
@@ -1499,7 +1499,7 @@
       "label": "runDebate()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L203",
+      "source_location": "L207",
       "id": "src_debate_rundebate",
       "community": 1,
       "norm_label": "rundebate()"
@@ -1829,10 +1829,19 @@
       "norm_label": "changelog"
     },
     {
-      "label": "[0.7.0] \u2014 add GitHub Copilot CLI adapter",
+      "label": "[0.7.1] \u2014 roadmap refresh + protocol KPI spec (docs only)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
       "source_location": "L5",
+      "id": "disputatio_changelog_0_7_1_roadmap_refresh_protocol_kpi_spec_docs_only",
+      "community": 35,
+      "norm_label": "[0.7.1] \u2014 roadmap refresh + protocol kpi spec (docs only)"
+    },
+    {
+      "label": "[0.7.0] \u2014 add GitHub Copilot CLI adapter",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L44",
       "id": "disputatio_changelog_0_7_0_add_github_copilot_cli_adapter",
       "community": 35,
       "norm_label": "[0.7.0] \u2014 add github copilot cli adapter"
@@ -1841,7 +1850,7 @@
       "label": "[0.6.1] \u2014 refresh agent guidance and package docs",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L11",
+      "source_location": "L50",
       "id": "disputatio_changelog_0_6_1_refresh_agent_guidance_and_package_docs",
       "community": 35,
       "norm_label": "[0.6.1] \u2014 refresh agent guidance and package docs"
@@ -1850,7 +1859,7 @@
       "label": "[0.6.0] \u2014 add Pi (earendil-works/pi) adapter",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L19",
+      "source_location": "L58",
       "id": "disputatio_changelog_0_6_0_add_pi_earendil_works_pi_adapter",
       "community": 35,
       "norm_label": "[0.6.0] \u2014 add pi (earendil-works/pi) adapter"
@@ -1859,7 +1868,7 @@
       "label": "[0.5.2] \u2014 test: lock --max-budget-usd default and override",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L32",
+      "source_location": "L71",
       "id": "disputatio_changelog_0_5_2_test_lock_max_budget_usd_default_and_override",
       "community": 35,
       "norm_label": "[0.5.2] \u2014 test: lock --max-budget-usd default and override"
@@ -1868,7 +1877,7 @@
       "label": "[0.5.1] \u2014 raise default judge budget from $2 to $5",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L38",
+      "source_location": "L77",
       "id": "disputatio_changelog_0_5_1_raise_default_judge_budget_from_2_to_5",
       "community": 35,
       "norm_label": "[0.5.1] \u2014 raise default judge budget from $2 to $5"
@@ -1877,7 +1886,7 @@
       "label": "[0.5.0] \u2014 `--budget` flag + structured budget-exhaustion detection",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L47",
+      "source_location": "L86",
       "id": "disputatio_changelog_0_5_0_budget_flag_structured_budget_exhaustion_detection",
       "community": 35,
       "norm_label": "[0.5.0] \u2014 `--budget` flag + structured budget-exhaustion detection"
@@ -1886,7 +1895,7 @@
       "label": "[0.4.0] \u2014 redactio (final deliverable) + `--continue` / `--finalize` / `--debate`",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L71",
+      "source_location": "L110",
       "id": "disputatio_changelog_0_4_0_redactio_final_deliverable_continue_finalize_debate",
       "community": 35,
       "norm_label": "[0.4.0] \u2014 redactio (final deliverable) + `--continue` / `--finalize` / `--debate`"
@@ -1895,7 +1904,7 @@
       "label": "[0.3.0] \u2014 inline quaestio by default; `--rounds`/`--repo` flags",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L107",
+      "source_location": "L146",
       "id": "disputatio_changelog_0_3_0_inline_quaestio_by_default_rounds_repo_flags",
       "community": 35,
       "norm_label": "[0.3.0] \u2014 inline quaestio by default; `--rounds`/`--repo` flags"
@@ -1904,7 +1913,7 @@
       "label": "[0.2.2] \u2014 fix: The npm doc now has a short version that links to the one on github",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L132",
+      "source_location": "L171",
       "id": "disputatio_changelog_0_2_2_fix_the_npm_doc_now_has_a_short_version_that_links_to_the_one_on_github",
       "community": 35,
       "norm_label": "[0.2.2] \u2014 fix: the npm doc now has a short version that links to the one on github"
@@ -1913,7 +1922,7 @@
       "label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled JS)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L134",
+      "source_location": "L173",
       "id": "disputatio_changelog_0_2_1_fix_the_published_binary_couldn_t_run_ship_bundled_js",
       "community": 35,
       "norm_label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled js)"
@@ -1922,7 +1931,7 @@
       "label": "[0.2.0] \u2014 portable config + installable `disputatio` binary",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L152",
+      "source_location": "L191",
       "id": "disputatio_changelog_0_2_0_portable_config_installable_disputatio_binary",
       "community": 35,
       "norm_label": "[0.2.0] \u2014 portable config + installable `disputatio` binary"
@@ -1931,7 +1940,7 @@
       "label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L180",
+      "source_location": "L219",
       "id": "disputatio_changelog_0_1_0_respondeo_the_judge_stage_first_scholastic_protocol_step",
       "community": 35,
       "norm_label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)"
@@ -1940,7 +1949,7 @@
       "label": "[0.0.6] \u2014 Per-participant reasoning `effort` in `debate.yaml`",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L222",
+      "source_location": "L261",
       "id": "disputatio_changelog_0_0_6_per_participant_reasoning_effort_in_debate_yaml",
       "community": 35,
       "norm_label": "[0.0.6] \u2014 per-participant reasoning `effort` in `debate.yaml`"
@@ -1949,7 +1958,7 @@
       "label": "[0.0.5] \u2014 Process-group kill + first three-vendor repo-grounded run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L242",
+      "source_location": "L281",
       "id": "disputatio_changelog_0_0_5_process_group_kill_first_three_vendor_repo_grounded_run",
       "community": 35,
       "norm_label": "[0.0.5] \u2014 process-group kill + first three-vendor repo-grounded run"
@@ -1958,7 +1967,7 @@
       "label": "[0.0.4] \u2014 `doctor` preflight (M0, canary half)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L261",
+      "source_location": "L300",
       "id": "disputatio_changelog_0_0_4_doctor_preflight_m0_canary_half",
       "community": 35,
       "norm_label": "[0.0.4] \u2014 `doctor` preflight (m0, canary half)"
@@ -1967,7 +1976,7 @@
       "label": "[0.0.3] \u2014 Hardening after the first real-repo run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L291",
+      "source_location": "L330",
       "id": "disputatio_changelog_0_0_3_hardening_after_the_first_real_repo_run",
       "community": 35,
       "norm_label": "[0.0.3] \u2014 hardening after the first real-repo run"
@@ -1976,7 +1985,7 @@
       "label": "[0.0.2] \u2014 Agent tooling & knowledge graph",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L324",
+      "source_location": "L363",
       "id": "disputatio_changelog_0_0_2_agent_tooling_knowledge_graph",
       "community": 35,
       "norm_label": "[0.0.2] \u2014 agent tooling & knowledge graph"
@@ -1985,7 +1994,7 @@
       "label": "[0.0.1] \u2014 Kaizen MVP v0",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L339",
+      "source_location": "L378",
       "id": "disputatio_changelog_0_0_1_kaizen_mvp_v0",
       "community": 35,
       "norm_label": "[0.0.1] \u2014 kaizen mvp v0"
@@ -2012,7 +2021,7 @@
       "label": "Why real harnesses (not custom LLM agents)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L19",
+      "source_location": "L22",
       "id": "disputatio_readme_why_real_harnesses_not_custom_llm_agents",
       "community": 30,
       "norm_label": "why real harnesses (not custom llm agents)"
@@ -2021,7 +2030,7 @@
       "label": "This project is being talked about",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L27",
+      "source_location": "L30",
       "id": "disputatio_readme_this_project_is_being_talked_about",
       "community": 30,
       "norm_label": "this project is being talked about"
@@ -2030,7 +2039,7 @@
       "label": "How to Run",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L32",
+      "source_location": "L35",
       "id": "disputatio_readme_how_to_run",
       "community": 30,
       "norm_label": "how to run"
@@ -2039,7 +2048,7 @@
       "label": "Prerequisites",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L34",
+      "source_location": "L37",
       "id": "disputatio_readme_prerequisites",
       "community": 30,
       "norm_label": "prerequisites"
@@ -2048,7 +2057,7 @@
       "label": "Install and use",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L44",
+      "source_location": "L47",
       "id": "disputatio_readme_install_and_use",
       "community": 30,
       "norm_label": "install and use"
@@ -2057,7 +2066,7 @@
       "label": "Usage",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L60",
+      "source_location": "L63",
       "id": "disputatio_readme_usage",
       "community": 30,
       "norm_label": "usage"
@@ -2066,7 +2075,7 @@
       "label": "Run from source",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L114",
+      "source_location": "L117",
       "id": "disputatio_readme_run_from_source",
       "community": 30,
       "norm_label": "run from source"
@@ -2075,7 +2084,7 @@
       "label": "How it works (v0)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L139",
+      "source_location": "L142",
       "id": "disputatio_readme_how_it_works_v0",
       "community": 30,
       "norm_label": "how it works (v0)"
@@ -2084,7 +2093,7 @@
       "label": "The flow: phases & artifacts",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L156",
+      "source_location": "L159",
       "id": "disputatio_readme_the_flow_phases_artifacts",
       "community": 30,
       "norm_label": "the flow: phases & artifacts"
@@ -2093,7 +2102,7 @@
       "label": "Known v0 limitations (next steps)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L196",
+      "source_location": "L199",
       "id": "disputatio_readme_known_v0_limitations_next_steps",
       "community": 30,
       "norm_label": "known v0 limitations (next steps)"
@@ -2102,7 +2111,7 @@
       "label": "Adapters",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L214",
+      "source_location": "L225",
       "id": "disputatio_readme_adapters",
       "community": 30,
       "norm_label": "adapters"
@@ -2111,7 +2120,7 @@
       "label": "Supported adapters",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L216",
+      "source_location": "L227",
       "id": "disputatio_readme_supported_adapters",
       "community": 30,
       "norm_label": "supported adapters"
@@ -2120,7 +2129,7 @@
       "label": "What an adapter is",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L228",
+      "source_location": "L239",
       "id": "disputatio_readme_what_an_adapter_is",
       "community": 30,
       "norm_label": "what an adapter is"
@@ -2129,7 +2138,7 @@
       "label": "How to add a new adapter",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L257",
+      "source_location": "L268",
       "id": "disputatio_readme_how_to_add_a_new_adapter",
       "community": 30,
       "norm_label": "how to add a new adapter"
@@ -2138,7 +2147,7 @@
       "label": "Design documents",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L285",
+      "source_location": "L296",
       "id": "disputatio_readme_design_documents",
       "community": 30,
       "norm_label": "design documents"
@@ -2147,7 +2156,7 @@
       "label": "License",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L295",
+      "source_location": "L307",
       "id": "disputatio_readme_license",
       "community": 30,
       "norm_label": "license"
@@ -2318,7 +2327,7 @@
       "label": "Best practices",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L182",
+      "source_location": "L183",
       "id": "disputatio_claude_best_practices",
       "community": 29,
       "norm_label": "best practices"
@@ -2327,7 +2336,7 @@
       "label": "Known v0 limitations (from `docs/4_PLAN.md`)",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L202",
+      "source_location": "L203",
       "id": "disputatio_claude_known_v0_limitations_from_docs_4_plan_md",
       "community": 29,
       "norm_label": "known v0 limitations (from `docs/4_plan.md`)"
@@ -2336,7 +2345,7 @@
       "label": "Design docs",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L225",
+      "source_location": "L226",
       "id": "disputatio_claude_design_docs",
       "community": 29,
       "norm_label": "design docs"
@@ -2345,7 +2354,7 @@
       "label": "Private area",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L232",
+      "source_location": "L239",
       "id": "disputatio_claude_private_area",
       "community": 29,
       "norm_label": "private area"
@@ -2354,7 +2363,7 @@
       "label": "Versioning \u2014 do this at the end of every change",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L243",
+      "source_location": "L250",
       "id": "disputatio_claude_versioning_do_this_at_the_end_of_every_change",
       "community": 29,
       "norm_label": "versioning \u2014 do this at the end of every change"
@@ -2363,7 +2372,7 @@
       "label": "graphify",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L267",
+      "source_location": "L274",
       "id": "disputatio_claude_graphify",
       "community": 29,
       "norm_label": "graphify"
@@ -4295,145 +4304,190 @@
       "norm_label": "disputatio: implementation plan"
     },
     {
-      "label": "1. Stack & rationale",
+      "label": "0. The fixed goal",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L14",
-      "id": "docs_4_plan_1_stack_rationale",
+      "source_location": "L21",
+      "id": "docs_4_plan_0_the_fixed_goal",
       "community": 39,
-      "norm_label": "1. stack & rationale"
+      "norm_label": "0. the fixed goal"
     },
     {
-      "label": "2. Architecture & modules",
+      "label": "1. Stack & rationale (as built)",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L43",
-      "id": "docs_4_plan_2_architecture_modules",
+      "source_location": "L47",
+      "id": "docs_4_plan_1_stack_rationale_as_built",
       "community": 39,
-      "norm_label": "2. architecture & modules"
+      "norm_label": "1. stack & rationale (as built)"
+    },
+    {
+      "label": "2. Architecture & modules (as built)",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L102",
+      "id": "docs_4_plan_2_architecture_modules_as_built",
+      "community": 39,
+      "norm_label": "2. architecture & modules (as built)"
     },
     {
       "label": "3. Domain model & data",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L83",
+      "source_location": "L152",
       "id": "docs_4_plan_3_domain_model_data",
       "community": 39,
       "norm_label": "3. domain model & data"
     },
     {
-      "label": "`.debate/` on-disk layout (refined from `2_CONCEPT.md` \u00a78)",
+      "label": "`.debate/` on-disk layout \u2014 as built",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L85",
-      "id": "docs_4_plan_debate_on_disk_layout_refined_from_2_concept_md_8",
+      "source_location": "L154",
+      "id": "docs_4_plan_debate_on_disk_layout_as_built",
       "community": 39,
-      "norm_label": "`.debate/` on-disk layout (refined from `2_concept.md` \u00a78)"
+      "norm_label": "`.debate/` on-disk layout \u2014 as built"
     },
     {
-      "label": "Key schemas (illustrative zod/TS sketches \u2014 to finalize in code)",
+      "label": "The shipped contract",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L107",
-      "id": "docs_4_plan_key_schemas_illustrative_zod_ts_sketches_to_finalize_in_code",
+      "source_location": "L177",
+      "id": "docs_4_plan_the_shipped_contract",
       "community": 39,
-      "norm_label": "key schemas (illustrative zod/ts sketches \u2014 to finalize in code)"
-    },
-    {
-      "label": "Adapter manifest (data-first, per `3_ADAPTERS.md` \u00a77)",
-      "file_type": "document",
-      "source_file": "docs/4_PLAN.md",
-      "source_location": "L134",
-      "id": "docs_4_plan_adapter_manifest_data_first_per_3_adapters_md_7",
-      "community": 39,
-      "norm_label": "adapter manifest (data-first, per `3_adapters.md` \u00a77)"
+      "norm_label": "the shipped contract"
     },
     {
       "label": "4. Transport layer (the risky core)",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L154",
+      "source_location": "L203",
       "id": "docs_4_plan_4_transport_layer_the_risky_core",
       "community": 39,
       "norm_label": "4. transport layer (the risky core)"
     },
     {
-      "label": "`disputatio doctor`",
+      "label": "5. Normalization layer \u2014 NOT BUILT",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L175",
-      "id": "docs_4_plan_disputatio_doctor",
+      "source_location": "L248",
+      "id": "docs_4_plan_5_normalization_layer_not_built",
       "community": 39,
-      "norm_label": "`disputatio doctor`"
-    },
-    {
-      "label": "5. Normalization layer",
-      "file_type": "document",
-      "source_file": "docs/4_PLAN.md",
-      "source_location": "L184",
-      "id": "docs_4_plan_5_normalization_layer",
-      "community": 39,
-      "norm_label": "5. normalization layer"
+      "norm_label": "5. normalization layer \u2014 not built"
     },
     {
       "label": "6. Debate engine",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L204",
+      "source_location": "L270",
       "id": "docs_4_plan_6_debate_engine",
       "community": 39,
       "norm_label": "6. debate engine"
     },
     {
-      "label": "7. Respondeo & finalization",
+      "label": "7. Respondeo & redactio (both shipped)",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L249",
-      "id": "docs_4_plan_7_respondeo_finalization",
+      "source_location": "L315",
+      "id": "docs_4_plan_7_respondeo_redactio_both_shipped",
       "community": 39,
-      "norm_label": "7. respondeo & finalization"
+      "norm_label": "7. respondeo & redactio (both shipped)"
     },
     {
-      "label": "8. Premise-validation eval harness (the real first deliverable of value)",
+      "label": "8. The premise-validation gate (M2) \u2014 the P0, NOT STARTED",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L262",
-      "id": "docs_4_plan_8_premise_validation_eval_harness_the_real_first_deliverable_of_value",
+      "source_location": "L342",
+      "id": "docs_4_plan_8_the_premise_validation_gate_m2_the_p0_not_started",
       "community": 39,
-      "norm_label": "8. premise-validation eval harness (the real first deliverable of value)"
+      "norm_label": "8. the premise-validation gate (m2) \u2014 the p0, not started"
     },
     {
-      "label": "9. CLI surface (`citty`)",
+      "label": "Corpus: review tasks first, plan/design second (decided 2026-08-03)",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L351",
-      "id": "docs_4_plan_9_cli_surface_citty",
+      "source_location": "L365",
+      "id": "docs_4_plan_corpus_review_tasks_first_plan_design_second_decided_2026_08_03",
       "community": 39,
-      "norm_label": "9. cli surface (`citty`)"
+      "norm_label": "corpus: review tasks first, plan/design second (decided 2026-08-03)"
+    },
+    {
+      "label": "Scoring protocol (non-circular)",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L389",
+      "id": "docs_4_plan_scoring_protocol_non_circular",
+      "community": 39,
+      "norm_label": "scoring protocol (non-circular)"
+    },
+    {
+      "label": "9. CLI surface (as built)",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L428",
+      "id": "docs_4_plan_9_cli_surface_as_built",
+      "community": 39,
+      "norm_label": "9. cli surface (as built)"
     },
     {
       "label": "10. Testing strategy",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L374",
+      "source_location": "L452",
       "id": "docs_4_plan_10_testing_strategy",
       "community": 39,
       "norm_label": "10. testing strategy"
     },
     {
-      "label": "11. Milestones",
+      "label": "11. Status",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L390",
-      "id": "docs_4_plan_11_milestones",
+      "source_location": "L471",
+      "id": "docs_4_plan_11_status",
       "community": 39,
-      "norm_label": "11. milestones"
+      "norm_label": "11. status"
+    },
+    {
+      "label": "Shipped",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L476",
+      "id": "docs_4_plan_shipped",
+      "community": 39,
+      "norm_label": "shipped"
+    },
+    {
+      "label": "Validating now",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L497",
+      "id": "docs_4_plan_validating_now",
+      "community": 39,
+      "norm_label": "validating now"
+    },
+    {
+      "label": "Deferred pending evidence",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L506",
+      "id": "docs_4_plan_deferred_pending_evidence",
+      "community": 39,
+      "norm_label": "deferred pending evidence"
+    },
+    {
+      "label": "Verdict on the adaptive meta-orchestrator (P8)",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L526",
+      "id": "docs_4_plan_verdict_on_the_adaptive_meta_orchestrator_p8",
+      "community": 39,
+      "norm_label": "verdict on the adaptive meta-orchestrator (p8)"
     },
     {
       "label": "12. Open decisions carried in",
       "file_type": "document",
       "source_file": "docs/4_PLAN.md",
-      "source_location": "L419",
+      "source_location": "L555",
       "id": "docs_4_plan_12_open_decisions_carried_in",
       "community": 39,
       "norm_label": "12. open decisions carried in"
@@ -4523,7 +4577,7 @@
       "label": "3. The Disputatio protocol",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L87",
+      "source_location": "L96",
       "id": "docs_2_concept_3_the_disputatio_protocol",
       "community": 38,
       "norm_label": "3. the disputatio protocol"
@@ -4532,7 +4586,7 @@
       "label": "Why the `consolidatio` step exists",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L125",
+      "source_location": "L134",
       "id": "docs_2_concept_why_the_consolidatio_step_exists",
       "community": 38,
       "norm_label": "why the `consolidatio` step exists"
@@ -4541,7 +4595,7 @@
       "label": "4. Roles and participants",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L136",
+      "source_location": "L145",
       "id": "docs_2_concept_4_roles_and_participants",
       "community": 38,
       "norm_label": "4. roles and participants"
@@ -4550,7 +4604,7 @@
       "label": "Model and effort are configured per *phase*, not per role",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L152",
+      "source_location": "L161",
       "id": "docs_2_concept_model_and_effort_are_configured_per_phase_not_per_role",
       "community": 38,
       "norm_label": "model and effort are configured per *phase*, not per role"
@@ -4559,7 +4613,7 @@
       "label": "Caveat on judge bias",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L164",
+      "source_location": "L173",
       "id": "docs_2_concept_caveat_on_judge_bias",
       "community": 38,
       "norm_label": "caveat on judge bias"
@@ -4568,7 +4622,7 @@
       "label": "5. Executable evidence",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L173",
+      "source_location": "L182",
       "id": "docs_2_concept_5_executable_evidence",
       "community": 38,
       "norm_label": "5. executable evidence"
@@ -4577,7 +4631,7 @@
       "label": "Evidence survives a plan-only world",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L187",
+      "source_location": "L196",
       "id": "docs_2_concept_evidence_survives_a_plan_only_world",
       "community": 38,
       "norm_label": "evidence survives a plan-only world"
@@ -4586,7 +4640,7 @@
       "label": "6. Convergence and human-in-the-loop",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L203",
+      "source_location": "L212",
       "id": "docs_2_concept_6_convergence_and_human_in_the_loop",
       "community": 38,
       "norm_label": "6. convergence and human-in-the-loop"
@@ -4595,7 +4649,7 @@
       "label": "Two distinct human intervention points",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L212",
+      "source_location": "L221",
       "id": "docs_2_concept_two_distinct_human_intervention_points",
       "community": 38,
       "norm_label": "two distinct human intervention points"
@@ -4604,7 +4658,7 @@
       "label": "7. Contribution contract",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L232",
+      "source_location": "L241",
       "id": "docs_2_concept_7_contribution_contract",
       "community": 38,
       "norm_label": "7. contribution contract"
@@ -4613,7 +4667,7 @@
       "label": "8. State model",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L263",
+      "source_location": "L272",
       "id": "docs_2_concept_8_state_model",
       "community": 38,
       "norm_label": "8. state model"
@@ -4622,7 +4676,7 @@
       "label": "9. MVP scope",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L290",
+      "source_location": "L299",
       "id": "docs_2_concept_9_mvp_scope",
       "community": 38,
       "norm_label": "9. mvp scope"
@@ -4631,7 +4685,7 @@
       "label": "Open question: where does execution live?",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L306",
+      "source_location": "L315",
       "id": "docs_2_concept_open_question_where_does_execution_live",
       "community": 38,
       "norm_label": "open question: where does execution live?"
@@ -4640,7 +4694,7 @@
       "label": "10. Open risks and decisions",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L322",
+      "source_location": "L331",
       "id": "docs_2_concept_10_open_risks_and_decisions",
       "community": 38,
       "norm_label": "10. open risks and decisions"
@@ -4649,7 +4703,7 @@
       "label": "Risks to watch",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L324",
+      "source_location": "L333",
       "id": "docs_2_concept_risks_to_watch",
       "community": 38,
       "norm_label": "risks to watch"
@@ -4658,7 +4712,7 @@
       "label": "Decisions still open",
       "file_type": "document",
       "source_file": "docs/2_CONCEPT.md",
-      "source_location": "L336",
+      "source_location": "L345",
       "id": "docs_2_concept_decisions_still_open",
       "community": 38,
       "norm_label": "decisions still open"
@@ -4961,6 +5015,150 @@
       "norm_label": "status"
     },
     {
+      "label": "5_METRICS.md",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L1",
+      "id": "docs_5_metrics_md",
+      "community": 52,
+      "norm_label": "5_metrics.md"
+    },
+    {
+      "label": "Disputatio: Protocol KPIs",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L1",
+      "id": "docs_5_metrics_disputatio_protocol_kpis",
+      "community": 52,
+      "norm_label": "disputatio: protocol kpis"
+    },
+    {
+      "label": "1. Why process metrics, and not just quality + cost",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L18",
+      "id": "docs_5_metrics_1_why_process_metrics_and_not_just_quality_cost",
+      "community": 52,
+      "norm_label": "1. why process metrics, and not just quality + cost"
+    },
+    {
+      "label": "2. The anti-circularity rule (read this before adding any metric)",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L44",
+      "id": "docs_5_metrics_2_the_anti_circularity_rule_read_this_before_adding_any_metric",
+      "community": 52,
+      "norm_label": "2. the anti-circularity rule (read this before adding any metric)"
+    },
+    {
+      "label": "3. Metric families, defined in Disputatio's terms",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L68",
+      "id": "docs_5_metrics_3_metric_families_defined_in_disputatio_s_terms",
+      "community": 52,
+      "norm_label": "3. metric families, defined in disputatio's terms"
+    },
+    {
+      "label": "3.1 Error amplification",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L73",
+      "id": "docs_5_metrics_3_1_error_amplification",
+      "community": 52,
+      "norm_label": "3.1 error amplification"
+    },
+    {
+      "label": "3.2 Coordination overhead",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L88",
+      "id": "docs_5_metrics_3_2_coordination_overhead",
+      "community": 52,
+      "norm_label": "3.2 coordination overhead"
+    },
+    {
+      "label": "3.3 Redundancy",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L103",
+      "id": "docs_5_metrics_3_3_redundancy",
+      "community": 52,
+      "norm_label": "3.3 redundancy"
+    },
+    {
+      "label": "3.4 Efficiency",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L115",
+      "id": "docs_5_metrics_3_4_efficiency",
+      "community": 52,
+      "norm_label": "3.4 efficiency"
+    },
+    {
+      "label": "3.5 Failed reviews (reliability)",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L131",
+      "id": "docs_5_metrics_3_5_failed_reviews_reliability",
+      "community": 52,
+      "norm_label": "3.5 failed reviews (reliability)"
+    },
+    {
+      "label": "3.6 \"Judge edits\" \u2014 the term, made precise",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L146",
+      "id": "docs_5_metrics_3_6_judge_edits_the_term_made_precise",
+      "community": 52,
+      "norm_label": "3.6 \"judge edits\" \u2014 the term, made precise"
+    },
+    {
+      "label": "4. Tier 0 \u2014 free, no model, derivable from `Turn[]`",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L164",
+      "id": "docs_5_metrics_4_tier_0_free_no_model_derivable_from_turn",
+      "community": 52,
+      "norm_label": "4. tier 0 \u2014 free, no model, derivable from `turn[]`"
+    },
+    {
+      "label": "5. Tier 1 \u2014 needs a claim ledger",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L187",
+      "id": "docs_5_metrics_5_tier_1_needs_a_claim_ledger",
+      "community": 52,
+      "norm_label": "5. tier 1 \u2014 needs a claim ledger"
+    },
+    {
+      "label": "6. Honest gaps \u2014 what blocks Tier 0 today",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L221",
+      "id": "docs_5_metrics_6_honest_gaps_what_blocks_tier_0_today",
+      "community": 52,
+      "norm_label": "6. honest gaps \u2014 what blocks tier 0 today"
+    },
+    {
+      "label": "7. No targets yet \u2014 on purpose",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L246",
+      "id": "docs_5_metrics_7_no_targets_yet_on_purpose",
+      "community": 52,
+      "norm_label": "7. no targets yet \u2014 on purpose"
+    },
+    {
+      "label": "8. Next increment (specified, not built)",
+      "file_type": "document",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L265",
+      "id": "docs_5_metrics_8_next_increment_specified_not_built",
+      "community": 52,
+      "norm_label": "8. next increment (specified, not built)"
+    },
+    {
       "label": "implement_I_Love_Coding_mvp_0_9.md",
       "file_type": "document",
       "source_file": "examples/implement_I_Love_Coding_mvp_0_9.md",
@@ -5031,6 +5229,105 @@
       "id": "examples_task_task",
       "community": 36,
       "norm_label": "task"
+    },
+    {
+      "label": "1. Stack & rationale",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L14",
+      "community": 39,
+      "norm_label": "1. stack & rationale",
+      "id": "docs_4_plan_1_stack_rationale"
+    },
+    {
+      "label": "2. Architecture & modules",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L43",
+      "community": 39,
+      "norm_label": "2. architecture & modules",
+      "id": "docs_4_plan_2_architecture_modules"
+    },
+    {
+      "label": "`.debate/` on-disk layout (refined from `2_CONCEPT.md` \u00a78)",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L85",
+      "community": 39,
+      "norm_label": "`.debate/` on-disk layout (refined from `2_concept.md` \u00a78)",
+      "id": "docs_4_plan_debate_on_disk_layout_refined_from_2_concept_md_8"
+    },
+    {
+      "label": "Key schemas (illustrative zod/TS sketches \u2014 to finalize in code)",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L107",
+      "community": 39,
+      "norm_label": "key schemas (illustrative zod/ts sketches \u2014 to finalize in code)",
+      "id": "docs_4_plan_key_schemas_illustrative_zod_ts_sketches_to_finalize_in_code"
+    },
+    {
+      "label": "Adapter manifest (data-first, per `3_ADAPTERS.md` \u00a77)",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L134",
+      "community": 39,
+      "norm_label": "adapter manifest (data-first, per `3_adapters.md` \u00a77)",
+      "id": "docs_4_plan_adapter_manifest_data_first_per_3_adapters_md_7"
+    },
+    {
+      "label": "`disputatio doctor`",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L175",
+      "community": 39,
+      "norm_label": "`disputatio doctor`",
+      "id": "docs_4_plan_disputatio_doctor"
+    },
+    {
+      "label": "5. Normalization layer",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L184",
+      "community": 39,
+      "norm_label": "5. normalization layer",
+      "id": "docs_4_plan_5_normalization_layer"
+    },
+    {
+      "label": "7. Respondeo & finalization",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L249",
+      "community": 39,
+      "norm_label": "7. respondeo & finalization",
+      "id": "docs_4_plan_7_respondeo_finalization"
+    },
+    {
+      "label": "8. Premise-validation eval harness (the real first deliverable of value)",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L262",
+      "community": 39,
+      "norm_label": "8. premise-validation eval harness (the real first deliverable of value)",
+      "id": "docs_4_plan_8_premise_validation_eval_harness_the_real_first_deliverable_of_value"
+    },
+    {
+      "label": "9. CLI surface (`citty`)",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L351",
+      "community": 39,
+      "norm_label": "9. cli surface (`citty`)",
+      "id": "docs_4_plan_9_cli_surface_citty"
+    },
+    {
+      "label": "11. Milestones",
+      "file_type": "document",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L390",
+      "community": 39,
+      "norm_label": "11. milestones",
+      "id": "docs_4_plan_11_milestones"
     },
     {
       "label": "Architecture (six files, clean layers)",
@@ -7134,9 +7431,9 @@
       "source_file": "test/adapters.test.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_adapters_test_ts",
-      "target": "src_adapters_copilotcliadapter",
-      "confidence_score": 1.0
+      "target": "src_adapters_copilotcliadapter"
     },
     {
       "relation": "imports",
@@ -8081,9 +8378,9 @@
       "source_file": "src/adapters.ts",
       "source_location": "L287",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_adapters_ts",
-      "target": "src_adapters_copilotcliadapter",
-      "confidence_score": 1.0
+      "target": "src_adapters_copilotcliadapter"
     },
     {
       "relation": "contains",
@@ -8091,9 +8388,9 @@
       "source_file": "src/adapters.ts",
       "source_location": "L285",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_adapters_ts",
-      "target": "src_adapters_copilotcliopts",
-      "confidence_score": 1.0
+      "target": "src_adapters_copilotcliopts"
     },
     {
       "relation": "contains",
@@ -8349,9 +8646,9 @@
       "source_file": "src/index.ts",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_buildparticipant",
-      "target": "src_adapters_copilotcliadapter",
-      "confidence_score": 1.0
+      "target": "src_adapters_copilotcliadapter"
     },
     {
       "relation": "imports",
@@ -8360,9 +8657,9 @@
       "source_file": "src/index.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_adapters_copilotcliadapter",
-      "confidence_score": 1.0
+      "target": "src_adapters_copilotcliadapter"
     },
     {
       "relation": "imports",
@@ -8648,9 +8945,9 @@
       "source_file": "src/install.ts",
       "source_location": "L102",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_install_ts",
-      "target": "src_install_default_bin",
-      "confidence_score": 1.0
+      "target": "src_install_default_bin"
     },
     {
       "relation": "contains",
@@ -9846,9 +10143,19 @@
       "source_file": "CHANGELOG.md",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_6_1_refresh_agent_guidance_and_package_docs",
-      "confidence_score": 1.0
+      "target": "disputatio_changelog_0_6_1_refresh_agent_guidance_and_package_docs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "disputatio_changelog_changelog",
+      "target": "disputatio_changelog_0_7_0_add_github_copilot_cli_adapter"
     },
     {
       "relation": "contains",
@@ -9857,7 +10164,7 @@
       "source_location": "L5",
       "weight": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_7_0_add_github_copilot_cli_adapter",
+      "target": "disputatio_changelog_0_7_1_roadmap_refresh_protocol_kpi_spec_docs_only",
       "confidence_score": 1.0
     },
     {
@@ -9876,9 +10183,9 @@
       "source_file": "README.md",
       "source_location": "L214",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_readme_disputatio",
-      "target": "disputatio_readme_adapters",
-      "confidence_score": 1.0
+      "target": "disputatio_readme_adapters"
     },
     {
       "relation": "contains",
@@ -10026,9 +10333,9 @@
       "source_file": "README.md",
       "source_location": "L257",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_readme_adapters",
-      "target": "disputatio_readme_how_to_add_a_new_adapter",
-      "confidence_score": 1.0
+      "target": "disputatio_readme_how_to_add_a_new_adapter"
     },
     {
       "relation": "contains",
@@ -10036,9 +10343,9 @@
       "source_file": "README.md",
       "source_location": "L216",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_readme_adapters",
-      "target": "disputatio_readme_supported_adapters",
-      "confidence_score": 1.0
+      "target": "disputatio_readme_supported_adapters"
     },
     {
       "relation": "contains",
@@ -10046,9 +10353,9 @@
       "source_file": "README.md",
       "source_location": "L228",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "disputatio_readme_adapters",
-      "target": "disputatio_readme_what_an_adapter_is",
-      "confidence_score": 1.0
+      "target": "disputatio_readme_what_an_adapter_is"
     },
     {
       "relation": "contains",
@@ -10386,9 +10693,9 @@
       "source_file": "research/copilot-cli-headless.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "research_copilot_cli_headless_md",
-      "target": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
-      "confidence_score": 1.0
+      "target": "research_copilot_cli_headless_github_copilot_cli_headless_notes"
     },
     {
       "relation": "contains",
@@ -10396,9 +10703,9 @@
       "source_file": "research/copilot-cli-headless.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
-      "target": "research_copilot_cli_headless_binary_and_install",
-      "confidence_score": 1.0
+      "target": "research_copilot_cli_headless_binary_and_install"
     },
     {
       "relation": "contains",
@@ -10406,9 +10713,9 @@
       "source_file": "research/copilot-cli-headless.md",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
-      "target": "research_copilot_cli_headless_canary_read_only_file_read",
-      "confidence_score": 1.0
+      "target": "research_copilot_cli_headless_canary_read_only_file_read"
     },
     {
       "relation": "contains",
@@ -10416,9 +10723,9 @@
       "source_file": "research/copilot-cli-headless.md",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
-      "target": "research_copilot_cli_headless_headless_invocation",
-      "confidence_score": 1.0
+      "target": "research_copilot_cli_headless_headless_invocation"
     },
     {
       "relation": "contains",
@@ -10426,9 +10733,9 @@
       "source_file": "research/copilot-cli-headless.md",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
-      "target": "research_copilot_cli_headless_jsonl_shape_and_success_classification",
-      "confidence_score": 1.0
+      "target": "research_copilot_cli_headless_jsonl_shape_and_success_classification"
     },
     {
       "relation": "contains",
@@ -10436,9 +10743,9 @@
       "source_file": "research/copilot-cli-headless.md",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "research_copilot_cli_headless_github_copilot_cli_headless_notes",
-      "target": "research_copilot_cli_headless_read_only_mechanism",
-      "confidence_score": 1.0
+      "target": "research_copilot_cli_headless_read_only_mechanism"
     },
     {
       "relation": "contains",
@@ -12276,9 +12583,9 @@
       "source_file": "docs/3_ADAPTERS.md",
       "source_location": "L212",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_3_adapters_4_per_cli_adapter_specs_grounded_in_canary",
-      "target": "docs_3_adapters_4_4_github_copilot_cli_copilot_cli_jsonl_stream",
-      "confidence_score": 1.0
+      "target": "docs_3_adapters_4_4_github_copilot_cli_copilot_cli_jsonl_stream"
     },
     {
       "relation": "contains",
@@ -12289,6 +12596,16 @@
       "confidence_score": 1.0,
       "source": "docs_4_plan_md",
       "target": "docs_4_plan_disputatio_implementation_plan"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "docs_4_plan_disputatio_implementation_plan",
+      "target": "docs_4_plan_0_the_fixed_goal",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12314,6 +12631,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/4_PLAN.md",
+      "source_location": "L471",
+      "weight": 1.0,
+      "source": "docs_4_plan_disputatio_implementation_plan",
+      "target": "docs_4_plan_11_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
       "source_location": "L411",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -12334,11 +12661,31 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/4_PLAN.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "docs_4_plan_disputatio_implementation_plan",
+      "target": "docs_4_plan_1_stack_rationale_as_built",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
       "source_location": "L43",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "docs_4_plan_disputatio_implementation_plan",
       "target": "docs_4_plan_2_architecture_modules"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "docs_4_plan_disputatio_implementation_plan",
+      "target": "docs_4_plan_2_architecture_modules_as_built",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12374,6 +12721,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/4_PLAN.md",
+      "source_location": "L248",
+      "weight": 1.0,
+      "source": "docs_4_plan_disputatio_implementation_plan",
+      "target": "docs_4_plan_5_normalization_layer_not_built",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
       "source_location": "L204",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -12394,11 +12751,41 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/4_PLAN.md",
+      "source_location": "L315",
+      "weight": 1.0,
+      "source": "docs_4_plan_disputatio_implementation_plan",
+      "target": "docs_4_plan_7_respondeo_redactio_both_shipped",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
       "source_location": "L262",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "docs_4_plan_disputatio_implementation_plan",
       "target": "docs_4_plan_8_premise_validation_eval_harness_the_real_first_deliverable_of_value"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L342",
+      "weight": 1.0,
+      "source": "docs_4_plan_disputatio_implementation_plan",
+      "target": "docs_4_plan_8_the_premise_validation_gate_m2_the_p0_not_started",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L428",
+      "weight": 1.0,
+      "source": "docs_4_plan_disputatio_implementation_plan",
+      "target": "docs_4_plan_9_cli_surface_as_built",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12424,6 +12811,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/4_PLAN.md",
+      "source_location": "L154",
+      "weight": 1.0,
+      "source": "docs_4_plan_3_domain_model_data",
+      "target": "docs_4_plan_debate_on_disk_layout_as_built",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
       "source_location": "L85",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -12444,11 +12841,81 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/4_PLAN.md",
+      "source_location": "L177",
+      "weight": 1.0,
+      "source": "docs_4_plan_3_domain_model_data",
+      "target": "docs_4_plan_the_shipped_contract",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
       "source_location": "L175",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "docs_4_plan_4_transport_layer_the_risky_core",
       "target": "docs_4_plan_disputatio_doctor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L365",
+      "weight": 1.0,
+      "source": "docs_4_plan_8_the_premise_validation_gate_m2_the_p0_not_started",
+      "target": "docs_4_plan_corpus_review_tasks_first_plan_design_second_decided_2026_08_03",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L389",
+      "weight": 1.0,
+      "source": "docs_4_plan_8_the_premise_validation_gate_m2_the_p0_not_started",
+      "target": "docs_4_plan_scoring_protocol_non_circular",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L506",
+      "weight": 1.0,
+      "source": "docs_4_plan_11_status",
+      "target": "docs_4_plan_deferred_pending_evidence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L476",
+      "weight": 1.0,
+      "source": "docs_4_plan_11_status",
+      "target": "docs_4_plan_shipped",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L497",
+      "weight": 1.0,
+      "source": "docs_4_plan_11_status",
+      "target": "docs_4_plan_validating_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/4_PLAN.md",
+      "source_location": "L526",
+      "weight": 1.0,
+      "source": "docs_4_plan_11_status",
+      "target": "docs_4_plan_verdict_on_the_adaptive_meta_orchestrator_p8",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12999,6 +13466,156 @@
       "confidence_score": 1.0,
       "source": "docs_npm_package_disputatio",
       "target": "docs_npm_package_status"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_5_metrics_md",
+      "target": "docs_5_metrics_disputatio_protocol_kpis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "docs_5_metrics_disputatio_protocol_kpis",
+      "target": "docs_5_metrics_1_why_process_metrics_and_not_just_quality_cost",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "docs_5_metrics_disputatio_protocol_kpis",
+      "target": "docs_5_metrics_2_the_anti_circularity_rule_read_this_before_adding_any_metric",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "docs_5_metrics_disputatio_protocol_kpis",
+      "target": "docs_5_metrics_3_metric_families_defined_in_disputatio_s_terms",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L164",
+      "weight": 1.0,
+      "source": "docs_5_metrics_disputatio_protocol_kpis",
+      "target": "docs_5_metrics_4_tier_0_free_no_model_derivable_from_turn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L187",
+      "weight": 1.0,
+      "source": "docs_5_metrics_disputatio_protocol_kpis",
+      "target": "docs_5_metrics_5_tier_1_needs_a_claim_ledger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L221",
+      "weight": 1.0,
+      "source": "docs_5_metrics_disputatio_protocol_kpis",
+      "target": "docs_5_metrics_6_honest_gaps_what_blocks_tier_0_today",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L246",
+      "weight": 1.0,
+      "source": "docs_5_metrics_disputatio_protocol_kpis",
+      "target": "docs_5_metrics_7_no_targets_yet_on_purpose",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L265",
+      "weight": 1.0,
+      "source": "docs_5_metrics_disputatio_protocol_kpis",
+      "target": "docs_5_metrics_8_next_increment_specified_not_built",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "docs_5_metrics_3_metric_families_defined_in_disputatio_s_terms",
+      "target": "docs_5_metrics_3_1_error_amplification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "docs_5_metrics_3_metric_families_defined_in_disputatio_s_terms",
+      "target": "docs_5_metrics_3_2_coordination_overhead",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L103",
+      "weight": 1.0,
+      "source": "docs_5_metrics_3_metric_families_defined_in_disputatio_s_terms",
+      "target": "docs_5_metrics_3_3_redundancy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L115",
+      "weight": 1.0,
+      "source": "docs_5_metrics_3_metric_families_defined_in_disputatio_s_terms",
+      "target": "docs_5_metrics_3_4_efficiency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L131",
+      "weight": 1.0,
+      "source": "docs_5_metrics_3_metric_families_defined_in_disputatio_s_terms",
+      "target": "docs_5_metrics_3_5_failed_reviews_reliability",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/5_METRICS.md",
+      "source_location": "L146",
+      "weight": 1.0,
+      "source": "docs_5_metrics_3_metric_families_defined_in_disputatio_s_terms",
+      "target": "docs_5_metrics_3_6_judge_edits_the_term_made_precise",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14909,5 +15526,5 @@
       "source_file": "assets/images/Cover.jpg"
     }
   ],
-  "built_at_commit": "fa64513ade3ad6c06c150d0ddc1d319e13bc022a"
+  "built_at_commit": "706995b0934ba3ad28684c6b68e965b1b0d9995c"
 }

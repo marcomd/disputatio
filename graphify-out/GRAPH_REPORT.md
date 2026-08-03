@@ -1,16 +1,16 @@
 # Graph Report - Disputatio  (2026-08-03)
 
 ## Corpus Check
-- 55 files · ~75,257 words
+- 55 files · ~78,945 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 742 nodes · 830 edges · 53 communities (44 shown, 9 thin omitted)
+- 748 nodes · 836 edges · 53 communities (44 shown, 9 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.79)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `706995b0`
+- Built from commit: `5fac6f7f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -70,8 +70,8 @@
 - [[_COMMUNITY_Community 52|Community 52]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Disputatio: Implementation Plan` - 21 edges
-2. `Changelog` - 20 edges
+1. `Changelog` - 21 edges
+2. `Disputatio: Implementation Plan` - 21 edges
 3. `What You Must Do When Invoked` - 16 edges
 4. `/graphify` - 15 edges
 5. `/graphify` - 14 edges
@@ -110,8 +110,8 @@ Cohesion: 0.09
 Nodes (38): AgentResult, agyAdapter, Antigravity Text-Only Output, claudeAdapter, Claude JSON Envelope Classification, codexAdapter, Codex JSONL Stream Classification, Participant Protocol (+30 more)
 
 ### Community 1 - "Headless CLI Capabilities"
-Cohesion: 0.13
-Nodes (15): continuePrompt(), DebateOutcome, execFileAsync, finalizePrompt(), gitLock, log(), parseRespondeoStatus(), render() (+7 more)
+Cohesion: 0.12
+Nodes (19): AgentResult, continuePrompt(), DebateOutcome, execFileAsync, finalizePrompt(), gitLock, log(), parseRespondeoStatus() (+11 more)
 
 ### Community 2 - "Source Code Modules"
 Cohesion: 0.06
@@ -127,7 +127,7 @@ Nodes (13): api_error_status, is_error, result, session_id, stop_reason, subtype
 
 ### Community 5 - "Package Manifest"
 Cohesion: 0.09
-Nodes (30): Participant, AdapterId, ADAPTERS, DebateConfig, emitScalar(), emitSpec(), fail(), NUMERIC_KEYS (+22 more)
+Nodes (29): AdapterId, ADAPTERS, DebateConfig, emitScalar(), emitSpec(), fail(), NUMERIC_KEYS, parseDebateConfig() (+21 more)
 
 ### Community 6 - "CLI Output Classification"
 Cohesion: 0.31
@@ -199,7 +199,7 @@ Nodes (10): Architecture, Development Style, Git And Workspace Hygiene, graphify
 
 ### Community 29 - "Community 29"
 Cohesion: 0.12
-Nodes (14): Architecture (five files, clean layers), Architecture (four files, clean layers), Architecture (seven files, clean layers), Architecture (six files, clean layers), Best practices, Commands, Design docs, graphify (+6 more)
+Nodes (15): Architecture (five files, clean layers), Architecture (four files, clean layers), Architecture (seven files, clean layers), Architecture (six files, clean layers), Best practices, Commands, Design docs, graphify (+7 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.11
@@ -222,8 +222,8 @@ Cohesion: 0.33
 Nodes (5): Files, Installed versions on this machine (2026-06-05), Provenance, Research: Headless Invocation & Output Capture of AI Coding-Agent CLIs, Why this discipline matters
 
 ### Community 35 - "Community 35"
-Cohesion: 0.10
-Nodes (20): [0.0.1] — Kaizen MVP v0, [0.0.2] — Agent tooling & knowledge graph, [0.0.3] — Hardening after the first real-repo run, [0.0.4] — `doctor` preflight (M0, canary half), [0.0.5] — Process-group kill + first three-vendor repo-grounded run, [0.0.6] — Per-participant reasoning `effort` in `debate.yaml`, [0.1.0] — `respondeo`: the judge stage (first scholastic-protocol step), [0.2.0] — portable config + installable `disputatio` binary (+12 more)
+Cohesion: 0.09
+Nodes (21): [0.0.1] — Kaizen MVP v0, [0.0.2] — Agent tooling & knowledge graph, [0.0.3] — Hardening after the first real-repo run, [0.0.4] — `doctor` preflight (M0, canary half), [0.0.5] — Process-group kill + first three-vendor repo-grounded run, [0.0.6] — Per-participant reasoning `effort` in `debate.yaml`, [0.1.0] — `respondeo`: the judge stage (first scholastic-protocol step), [0.2.0] — portable config + installable `disputatio` binary (+13 more)
 
 ### Community 37 - "Community 37"
 Cohesion: 0.07
@@ -234,8 +234,8 @@ Cohesion: 0.08
 Nodes (24): 10. Open risks and decisions, 1. Positioning, 2. Premise and validation, 3. The Disputatio protocol, 4. Roles and participants, 5. Executable evidence, 6. Convergence and human-in-the-loop, 7. Contribution contract (+16 more)
 
 ### Community 39 - "Community 39"
-Cohesion: 0.06
-Nodes (33): 0. The fixed goal, 10. Testing strategy, 11. Milestones, 11. Status, 12. Open decisions carried in, 1. Stack & rationale, 1. Stack & rationale (as built), 2. Architecture & modules (+25 more)
+Cohesion: 0.05
+Nodes (36): 0. The fixed goal, 10. Testing strategy, 11. Milestones, 11. Status, 12. Open decisions carried in, 1. Stack & rationale, 1. Stack & rationale (as built), 2. Architecture & modules (+28 more)
 
 ### Community 40 - "Community 40"
 Cohesion: 0.12
@@ -258,8 +258,8 @@ Cohesion: 0.13
 Nodes (12): args, DEFAULT_JUDGE, DEFAULT_SPECS, execFileAsync, input, loadLatestRespondeo(), participants, positionals (+4 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.23
-Nodes (10): AgentResult, runIsolated(), withGitLock(), allHealthy(), diagnose(), Diagnosis, excerpt(), formatDiagnoses() (+2 more)
+Cohesion: 0.33
+Nodes (7): Participant, allHealthy(), diagnose(), Diagnosis, excerpt(), formatDiagnoses(), runDoctor()
 
 ### Community 48 - "Community 48"
 Cohesion: 0.29
@@ -279,14 +279,14 @@ Nodes (3): backupReadme, repoReadme, root
 
 ### Community 52 - "Community 52"
 Cohesion: 0.12
-Nodes (15): 1. Why process metrics, and not just quality + cost, 2. The anti-circularity rule (read this before adding any metric), 3.1 Error amplification, 3.2 Coordination overhead, 3.3 Redundancy, 3.4 Efficiency, 3.5 Failed reviews (reliability), 3.6 "Judge edits" — the term, made precise (+7 more)
+Nodes (16): 1. Why process metrics, and not just quality + cost, 2. The anti-circularity rule (read this before adding any metric), 3.1 Error amplification, 3.2 Coordination overhead, 3.3 Redundancy, 3.4 Efficiency, 3.5 Failed reviews (reliability), 3.6 "Judge edits" — the term, made precise (+8 more)
 
 ## Ambiguous Edges - Review These
 - `codexAdapter` → `README Codex Adapter Deferred Note`  [AMBIGUOUS]
   README.md · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **489 isolated node(s):** `name`, `version`, `description`, `type`, `license` (+484 more)
+- **495 isolated node(s):** `name`, `version`, `description`, `type`, `license` (+490 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -296,11 +296,11 @@ _Questions this graph is uniquely positioned to answer:_
 - **What is the exact relationship between `codexAdapter` and `README Codex Adapter Deferred Note`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _489 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _495 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Debate Engine & Transport Core` be split into smaller, more focused modules?**
   _Cohesion score 0.09103840682788052 - nodes in this community are weakly interconnected._
 - **Should `Headless CLI Capabilities` be split into smaller, more focused modules?**
-  _Cohesion score 0.13043478260869565 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11965811965811966 - nodes in this community are weakly interconnected._
 - **Should `Source Code Modules` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
 - **Should `Design Principles & Prior Art` be split into smaller, more focused modules?**
