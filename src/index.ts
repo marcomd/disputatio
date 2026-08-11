@@ -11,7 +11,7 @@ import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { claudeAdapter, agyAdapter, codexAdapter, piAdapter, copilotCliAdapter, type Participant } from "./adapters.ts";
 import { parseDebateConfig, type ParticipantSpec, type DebateConfig } from "./config.ts";
-import { runDebate, runFinalize, runContinuation, parseRespondeoStatus } from "./debate.ts";
+import { runDebate, runFinalize, runContinuation, parseRespondeoStatus, summarizeEvidence } from "./debate.ts";
 import { runDoctor, allHealthy, formatDiagnoses, CANARY_TIMEOUT_MS } from "./doctor.ts";
 import { resolveConfigText, userConfigPath, runInit } from "./install.ts";
 import { resolveQuaestioInput } from "./quaestio.ts";
@@ -364,6 +364,31 @@ for (let i = 0; i < outcome.turns.length; i++) {
   const t = outcome.turns[i];
   const slug = t.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
   await writeFile(`${dir}/raw/${String(i + 1).padStart(2, "0")}-${slug}.json`, JSON.stringify(t, null, 2), "utf8");
+}
+
+// Evidence-validity check (docs/4_PLAN.md §8). Executable evidence is the moat, so a
+// debate that gathered none must SAY so — otherwise a pure-reasoning run is
+// indistinguishable from a repo-grounded one. Reported, never fatal: shell-less
+// participants and non-repo runs are legitimate. stderr only (stdout = artifact path).
+const ev = summarizeEvidence(outcome.turns);
+if (ev.turns > 0) {
+  // The ratio is over OBSERVED turns only. Folding unobservable turns into the
+  // denominator would read an unknown as a known zero — the one thing this check exists
+  // to prevent — so they are reported separately, always, not just when non-empty.
+  const unknown = ev.unobservable.length > 0 ? `, ${ev.unobservable.length} unobservable` : "";
+  console.error(
+    `[disputatio] evidence: ${ev.executedTurns}/${ev.observedTurns} observed turns ran commands ` +
+    `(${ev.totalCommands} commands, ${ev.totalToolCalls} tool calls${unknown})`,
+  );
+  if (repoPath && ev.observedTurns > 0 && ev.executedTurns === 0) {
+    console.error(`[disputatio] ⚠️ repo mode, but NO observed turn executed anything — this debate is unevidenced`);
+  } else if (repoPath && ev.observedTurns === 0) {
+    // Every turn came from a CLI that reports nothing: we cannot claim evidence NOR
+    // claim its absence. Say exactly that.
+    console.error(`[disputatio] ⚠️ repo mode, but NO turn reports counts — evidence can neither be confirmed nor ruled out`);
+  }
+  for (const t of ev.ungrounded) console.error(`[disputatio]    ungrounded (could execute, did not): ${t}`);
+  for (const t of ev.unobservable) console.error(`[disputatio]    unobservable (CLI emits no counts): ${t}`);
 }
 
 if (outcome.aborted) {

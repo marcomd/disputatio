@@ -9,7 +9,21 @@ import { spawn } from "node:child_process";
 // 5m is too tight for larger evidence-gathering turns.
 export const DEFAULT_TIMEOUT_MS = 10 * 60 * 1000;
 
-export type CliCapture = { code: number | null; stdout: string; stderr: string; timedOut: boolean };
+// `signal` is NOT decoration: when a CLI is killed, `code` is null and the signal is the
+// ONLY evidence of why. The 2026-08-04 run lost a pi turn to `exit=null` with empty
+// stdout and stderr, undiagnosable because this field was dropped on the floor.
+export type CliCapture = {
+  code: number | null;
+  signal: NodeJS.Signals | null;
+  stdout: string;
+  stderr: string;
+  timedOut: boolean;
+};
+
+// How a run ended, for error strings. `exit=null` alone is a dead end; name the signal.
+function exitLabel(r: CliCapture): string {
+  return r.signal ? `signal=${r.signal}` : `exit=${r.code}`;
+}
 
 // After SIGTERM-ing a timed-out group, wait this long for a graceful exit, then
 // SIGKILL the whole group. A CLI that traps/ignores SIGTERM cannot outlive this.
@@ -55,19 +69,38 @@ function runCli(cmd: string, args: string[], cwd: string, timeoutMs: number): Pr
 
     child.stdout.on("data", (d) => { stdout += d.toString(); });
     child.stderr.on("data", (d) => { stderr += d.toString(); });
-    child.on("error", (e) => { finish({ code: null, stdout, stderr: String(e), timedOut }); });
-    child.on("close", (code) => { finish({ code, stdout, stderr, timedOut }); });
+    child.on("error", (e) => { finish({ code: null, signal: null, stdout, stderr: String(e), timedOut }); });
+    child.on("close", (code, signal) => { finish({ code, signal, stdout, stderr, timedOut }); });
   });
 }
 
+// Tier-0 evidence counts, extracted per turn by the classifier that already parses the
+// stream (docs/5_METRICS.md §8 step 3). This is what makes the evidence-validity check in
+// 4_PLAN.md §8 enforceable: today a zero-execution debate is indistinguishable from a
+// repo-grounded one.
+//
+// `ranCommands` distinguishes UNDEFINED (this CLI does not report commands — unknown)
+// from 0 (known to have executed none). The gate needs that difference: only 0 paired
+// with `canExecute: true` means "could have gathered evidence and did not".
+export type Evidence = {
+  ranCommands?: number;       // shell commands actually executed
+  toolCalls?: number;         // tool invocations of any kind (read/grep/view/…)
+  agentTurns?: number;        // claude `num_turns` — a coarse activity proxy, NOT a tool count
+  permissionDenials?: number; // tool calls the harness refused (claude)
+};
+
 export type AgentResult =
-  | { ok: true; text: string; costUsd?: number; raw?: CliCapture }
-  | { ok: false; error: string; budgetExhausted?: true; raw?: CliCapture };
+  | { ok: true; text: string; costUsd?: number; evidence?: Evidence; raw?: CliCapture }
+  | { ok: false; error: string; budgetExhausted?: true; evidence?: Evidence; raw?: CliCapture };
 
 export type Participant = {
   id: string;
   display: string;
   vendor: string; // used for the cross-vendor sanity check (diversity is the whole point)
+  // Whether this adapter grants a shell AT ALL. `pi` and `copilot-cli` are shell-less by
+  // invariant (allowlist-only, no OS sandbox / no shell tool), so their `ranCommands: 0`
+  // is obedience, not an evidence failure. Scoring the two apart requires this flag.
+  canExecute: boolean;
   run: (prompt: string, cwd: string) => Promise<AgentResult>;
 };
 
@@ -92,6 +125,7 @@ export function claudeAdapter(model = "sonnet", opts: ClaudeOpts = {}): Particip
     id: "claude",
     display: `Claude (${model})`,
     vendor: "anthropic",
+    canExecute: true, // Bash(...) rules in --allowedTools below
     async run(prompt, cwd) {
       const r = await runCli("claude", [
         "-p", prompt,
@@ -113,10 +147,16 @@ export function claudeAdapter(model = "sonnet", opts: ClaudeOpts = {}): Particip
       if (spawnErr) return { ok: false, error: spawnErr, raw: r };
       try {
         const j = JSON.parse(r.stdout);
+        // The envelope reports no per-command breakdown, so `ranCommands` stays UNDEFINED
+        // (unknown, not zero) and num_turns serves as the coarse activity proxy (§8 step 3).
+        const evidence: Evidence = {
+          ...(typeof j.num_turns === "number" && { agentTurns: j.num_turns }),
+          ...(Array.isArray(j.permission_denials) && { permissionDenials: j.permission_denials.length }),
+        };
         // CANARY LESSON: trust is_error, NOT subtype. On error, subtype stays "success"
         // while is_error flips true. So classify on is_error + exit code.
         if (r.code === 0 && j.is_error === false) {
-          return { ok: true, text: String(j.result ?? ""), costUsd: j.total_cost_usd, raw: r };
+          return { ok: true, text: String(j.result ?? ""), costUsd: j.total_cost_usd, evidence, raw: r };
         }
         // CANARY LESSON (2026-06-11): on budget exhaustion there is NO `result`
         // string — the message lives in the `errors` array and subtype becomes
@@ -128,9 +168,9 @@ export function claudeAdapter(model = "sonnet", opts: ClaudeOpts = {}): Particip
           Array.isArray(j.errors) && j.errors.length > 0 ? j.errors.join("; ")
           : typeof j.result === "string" && j.result ? j.result
           : `is_error=${j.is_error} subtype=${j.subtype}`;
-        return { ok: false, error, ...(budgetExhausted && { budgetExhausted }), raw: r };
+        return { ok: false, error, ...(budgetExhausted && { budgetExhausted }), evidence, raw: r };
       } catch {
-        return { ok: false, error: `exit=${r.code} ${r.stderr.slice(0, 200)}`, raw: r };
+        return { ok: false, error: `${exitLabel(r)} ${r.stderr.slice(0, 200)}`, raw: r };
       }
     },
   };
@@ -145,6 +185,7 @@ export function agyAdapter(model = "Gemini 3.5 Flash (High)", opts: AgyOpts = {}
     id: "agy",
     display: `Antigravity (${model})`,
     vendor: "google",
+    canExecute: true, // print mode is agentic; --sandbox restricts it but does not remove the shell
     async run(prompt, cwd) {
       // agy has NO --output-format/--json (canary): stdout IS the answer, clean.
       // --sandbox: print mode is agentic and can auto-execute terminal commands;
@@ -158,12 +199,20 @@ export function agyAdapter(model = "Gemini 3.5 Flash (High)", opts: AgyOpts = {}
       if (r.timedOut) return { ok: false, error: "timeout", raw: r };
       const spawnErr = spawnFailure(r);
       if (spawnErr) return { ok: false, error: spawnErr, raw: r };
+      // agy is text-only: no event stream, so nothing to count. Evidence stays undefined
+      // (unknown) rather than 0 — it CAN execute, we just cannot observe whether it did.
       const text = r.stdout.trim();
       if (r.code === 0 && text.length > 0) return { ok: true, text, raw: r };
-      return { ok: false, error: `exit=${r.code} ${r.stderr.slice(0, 200)}`, raw: r };
+      return { ok: false, error: `${exitLabel(r)} ${r.stderr.slice(0, 200)}`, raw: r };
     },
   };
 }
+
+// Codex item detail types that are TOOL invocations (research/codex-cli-headless.md).
+// `agent_message`, `reasoning`, `todo_list` and `error` are narration, not tool use, so
+// they stay out: `toolCalls` must not be a plain alias of `ranCommands` — a codex turn
+// that only reads files or searches the web would otherwise report zero tool activity.
+const CODEX_TOOL_ITEMS = new Set(["command_execution", "file_change", "mcp_tool_call", "collab_tool_call", "web_search"]);
 
 // --- Codex (OpenAI): JSONL stream ----------------------------------------------------
 export type CodexOpts = { bin?: string; timeoutMs?: number; effort?: string };
@@ -177,6 +226,7 @@ export function codexAdapter(model?: string, opts: CodexOpts = {}): Participant 
     id: "codex",
     display: `Codex (${model ?? "account default"})`,
     vendor: "openai",
+    canExecute: true, // -s read-only is an OS-sandboxed SHELL, not a tool allowlist
     async run(prompt, cwd) {
       // Recipe canaried on codex 0.139.0 (2026-06-11) + research/codex-cli-headless.md:
       // -s read-only is an OS-enforced sandbox; --ephemeral = no session rollout
@@ -201,19 +251,29 @@ export function codexAdapter(model?: string, opts: CodexOpts = {}): Participant 
       let text = "";
       let turnCompleted = false;
       let failure = "";
+      let ranCommands = 0;
+      let toolCalls = 0;
       for (const line of r.stdout.split("\n")) {
         if (!line.trim()) continue;
         let ev: any;
         try { ev = JSON.parse(line); } catch { continue; } // tolerate non-JSON noise on stdout
         if (ev.type === "item.completed" && ev.item?.type === "agent_message") text = String(ev.item.text ?? "");
+        // Count item.completed ONLY. `item.started` carries the same item.type, so
+        // counting both double-reports every command — the exact error a hand-analysis
+        // of the 2026-08-04 run made before this moved into the classifier.
+        else if (ev.type === "item.completed" && CODEX_TOOL_ITEMS.has(ev.item?.type)) {
+          toolCalls++;
+          if (ev.item.type === "command_execution") ranCommands++;
+        }
         else if (ev.type === "turn.completed") turnCompleted = true;
         else if (ev.type === "turn.failed") failure ||= String(ev.error?.message ?? "turn.failed");
         else if (ev.type === "error") failure ||= String(ev.message ?? "error event");
       }
+      const evidence: Evidence = { ranCommands, toolCalls };
       if (r.code === 0 && turnCompleted && !failure && text.length > 0) {
-        return { ok: true, text, raw: r }; // no costUsd: ChatGPT-account auth reports tokens, not dollars
+        return { ok: true, text, evidence, raw: r }; // no costUsd: ChatGPT-account auth reports tokens, not dollars
       }
-      return { ok: false, error: failure || `exit=${r.code} ${r.stderr.slice(0, 200)}`, raw: r };
+      return { ok: false, error: failure || `${exitLabel(r)} ${r.stderr.slice(0, 200)}`, evidence, raw: r };
     },
   };
 }
@@ -232,6 +292,7 @@ export function piAdapter(model?: string, opts: PiOpts = {}): Participant {
     id: "pi",
     display: `Pi (${model ?? "account default"})`,
     vendor: "pi",
+    canExecute: false, // --tools read,grep,find,ls — bash is deliberately omitted (no OS sandbox)
     async run(prompt, cwd) {
       // `--mode json` emits the session as JSON lines on stdout (docs: pi.dev/docs/latest/json).
       // `--no-session` = ephemeral, the orchestrator owns memory. READ-ONLY evidence: pi has
@@ -254,18 +315,25 @@ export function piAdapter(model?: string, opts: PiOpts = {}): Participant {
       // Failures surface in `auto_retry_end.finalError`. Success = exit 0 + a final message.
       let text = "";
       let failure = "";
+      let toolCalls = 0;
       for (const line of r.stdout.split("\n")) {
         if (!line.trim()) continue;
         let ev: any;
         try { ev = JSON.parse(line); } catch { continue; } // tolerate non-JSON noise on stdout
         if (ev.type === "message_end" && ev.message?.role === "assistant") {
           text = piMessageText(ev.message);
+        } else if (ev.type === "tool_execution_start") {
+          toolCalls++;
         } else if (ev.type === "auto_retry_end" && ev.finalError) {
           failure ||= String(ev.finalError);
         }
       }
-      if (r.code === 0 && !failure && text.length > 0) return { ok: true, text, raw: r };
-      return { ok: false, error: failure || `exit=${r.code} ${r.stderr.slice(0, 200)}`, raw: r };
+      // ranCommands is a hard 0, not undefined: the allowlist above omits bash, so we
+      // KNOW none ran. Paired with canExecute:false that reads as compliance, not a
+      // missing-evidence failure.
+      const evidence: Evidence = { ranCommands: 0, toolCalls };
+      if (r.code === 0 && !failure && text.length > 0) return { ok: true, text, evidence, raw: r };
+      return { ok: false, error: failure || `${exitLabel(r)} ${r.stderr.slice(0, 200)}`, evidence, raw: r };
     },
   };
 }
@@ -293,6 +361,11 @@ export function copilotCliAdapter(model?: string, opts: CopilotCliOpts = {}): Pa
     id: "copilot-cli",
     display: `Copilot CLI (${model ?? "auto"})`,
     vendor: "github-copilot",
+    // --available-tools view,glob,grep — no shell tool exists for this participant, so it
+    // cannot run `git` either. In repo mode that is load-bearing: a git WORKTREE has no
+    // `.git/` directory (`.git` is a file holding a gitdir pointer), so a shell-less agent
+    // cannot reach history by path either. See research/run-2026-08-04-*.md.
+    canExecute: false,
     async run(prompt, cwd) {
       // Canaried with @github/copilot 1.0.65: `-p` is non-interactive prompt mode;
       // `--output-format json` is JSONL; read-only evidence is a tool availability
@@ -319,12 +392,15 @@ export function copilotCliAdapter(model?: string, opts: CopilotCliOpts = {}): Pa
       let sawResult = false;
       let resultExit: number | undefined;
       let failure = "";
+      let toolCalls = 0;
       for (const line of r.stdout.split("\n")) {
         if (!line.trim()) continue;
         let ev: any;
         try { ev = JSON.parse(line); } catch { continue; }
         if (ev.type === "assistant.message" && typeof ev.data?.content === "string") {
           text = ev.data.content.trim();
+        } else if (ev.type === "tool.execution_start") {
+          toolCalls++;
         } else if (ev.type === "result") {
           sawResult = true;
           resultExit = typeof ev.exitCode === "number" ? ev.exitCode : undefined;
@@ -333,8 +409,13 @@ export function copilotCliAdapter(model?: string, opts: CopilotCliOpts = {}): Pa
           failure ||= String(ev.message ?? ev.data?.message ?? "error event");
         }
       }
-      if (r.code === 0 && sawResult && resultExit === 0 && !failure && text.length > 0) return { ok: true, text, raw: r };
-      return { ok: false, error: failure || r.stderr.trim().slice(0, 200) || `exit=${r.code}`, raw: r };
+      // ranCommands is a hard 0 for the same reason as pi: no shell tool is available.
+      const evidence: Evidence = { ranCommands: 0, toolCalls };
+      if (r.code === 0 && sawResult && resultExit === 0 && !failure && text.length > 0) return { ok: true, text, evidence, raw: r };
+      // exitLabel FIRST, like every other adapter: stderr must never be able to hide the
+      // signal. A SIGKILLed copilot that printed one deprecation warning would otherwise
+      // report only that warning — the exact 2026-08-04 blind spot this release closes.
+      return { ok: false, error: failure || `${exitLabel(r)} ${r.stderr.trim().slice(0, 200)}`.trim(), evidence, raw: r };
     },
   };
 }

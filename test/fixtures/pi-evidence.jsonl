@@ -1,0 +1,10 @@
+{"type":"session","version":3,"id":"abc","timestamp":"t","cwd":"/tmp"}
+{"type":"agent_start"}
+{"type":"turn_start"}
+{"type":"tool_execution_start","toolCallId":"tc1","toolName":"ls","args":{"path":"."}}
+{"type":"tool_execution_end","toolCallId":"tc1"}
+{"type":"tool_execution_start","toolCallId":"tc2","toolName":"read","args":{"path":"README.md"}}
+{"type":"tool_execution_end","toolCallId":"tc2"}
+{"type":"message_end","message":{"role":"assistant","content":[{"type":"text","text":"pong"}]}}
+{"type":"turn_end"}
+{"type":"agent_end","messages":[]}

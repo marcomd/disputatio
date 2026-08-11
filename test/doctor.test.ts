@@ -11,7 +11,7 @@ import { runDoctor, allHealthy, formatDiagnoses } from "../src/doctor.ts";
 import type { Participant, AgentResult } from "../src/adapters.ts";
 
 function stub(id: string, vendor: string, result: AgentResult): Participant {
-  return { id, display: `${id} (stub)`, vendor, run: async () => result };
+  return { id, display: `${id} (stub)`, vendor, canExecute: true, run: async () => result };
 }
 
 test("doctor: all participants answer the canary → all ok, allHealthy true", async () => {
@@ -40,7 +40,7 @@ test("doctor: one participant fails → that diagnosis ok:false and allHealthy f
 test("doctor: a participant that throws is reported as unhealthy, not crash the run", async () => {
   const ds = await runDoctor([
     stub("claude", "anthropic", { ok: true, text: "pong" }),
-    { id: "boom", display: "boom", vendor: "x", run: async () => { throw new Error("kaboom"); } },
+    { id: "boom", display: "boom", vendor: "x", canExecute: true, run: async () => { throw new Error("kaboom"); } },
   ]);
   assert.equal(allHealthy(ds), false);
   assert.match(ds.find((d) => d.id === "boom")?.detail ?? "", /kaboom/);

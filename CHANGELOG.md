@@ -2,6 +2,49 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.8.0] — Tier-0 turn instrumentation + the evidence-validity check (P1)
+
+`4_PLAN.md` §11's P1, the gate-blocking increment: until now Disputatio could not enforce,
+or even *report*, whether a debate gathered any executable evidence — a pure-reasoning run
+was indistinguishable from a repo-grounded one. Driven by the 2026-08-04 review run
+(`research/run-2026-08-04-shell-less-adapters-and-worktrees.md`), whose per-turn numbers
+had to be reconstructed by hand from raw captures.
+
+- **Per-turn measurement** (`5_METRICS.md` §8 steps 1-2). Every `Turn` now records
+  `phase` (`proposal`/`reaction`/`respondeo`/`redactio`/`continuation`), `round` on
+  reactions, `promptBytes`, `agentMs` and `turnMs`. `turnMs` brackets isolation
+  setup/teardown so worktree overhead stays separable from model latency; `promptBytes` is
+  captured at spawn because the prompt is never persisted and is unrecoverable afterwards.
+  All of it lands in the existing `raw/NN-*.json` captures.
+- **Per-turn evidence counts** (§8 step 3), extracted by the classifier that already
+  parses each stream: `ranCommands`, `toolCalls`, plus claude's `agentTurns`
+  (`num_turns`) and `permissionDenials`. `ranCommands` distinguishes *undefined*
+  (this CLI reports nothing) from *0* (known to have executed none). For codex,
+  `toolCalls` counts every tool-ish `item.completed` (`command_execution`, `file_change`,
+  `mcp_tool_call`, `collab_tool_call`, `web_search`) — not just commands, or a read-only
+  turn that never shelled out would report zero tool activity.
+- **`Participant.canExecute`** — new required field. `pi` and `copilot-cli` are shell-less
+  by invariant, so their `ranCommands: 0` is compliance, not missing evidence; a raw count
+  would have scored them the same as a turn that could have gathered evidence and did not.
+- **`summarizeEvidence(turns)`** — new exported pure function implementing the
+  evidence-validity check (`4_PLAN.md` §8). Reports commands/tool calls, flags
+  `ungrounded` turns (could execute, succeeded, ran nothing) and `unobservable` ones
+  (CLI emits no counts). Judge turns are exempt: they are transcript-only by invariant.
+  Failed turns are never counted as ungrounded — they died, they did not skip the work.
+  The reported ratio is `executedTurns / observedTurns`: unobservable turns are excluded
+  from the denominator and listed separately, so an unknown is never read as a known zero.
+- **Run summary on stderr**, and a loud warning when a `--repo` run executed nothing at
+  all. Reported, never fatal. stdout remains the artifact path only.
+- **`CliCapture.signal`** — a signal-killed CLI now reports `signal=SIGKILL` instead of a
+  bare `exit=null`. The 2026-08-04 run lost a `pi` turn to exactly this (`code: null`,
+  empty stdout *and* stderr, not a timeout) and it was undiagnosable. Reproduced live
+  against the real `pi` while validating this release, and correctly diagnosed. Every
+  adapter names the signal first — including `copilot-cli`, whose error string used to put
+  stderr ahead of the exit label, so a single warning line could hide the signal.
+
+**Breaking:** `runIsolated` now returns `{ result, agentMs, turnMs, promptBytes }` instead
+of a bare `AgentResult`, and `Participant` requires `canExecute`.
+
 ## [0.7.2] — fix gate design flaws and metric formulas found in review (docs only)
 
 Review of v0.7.1 found seven real defects in the freshly written gate and KPI specs. All

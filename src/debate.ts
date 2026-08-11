@@ -17,7 +17,27 @@ const execFileAsync = promisify(execFile);
 
 function log(msg: string) { console.error(`[disputatio] ${msg}`); }
 
-export type Turn = { title: string; participant: string; result: AgentResult };
+// The phase a turn belongs to. Recorded explicitly so metrics never have to parse it back
+// out of the title string (docs/5_METRICS.md §8 step 2).
+export type TurnPhase = "proposal" | "reaction" | "respondeo" | "redactio" | "continuation";
+
+// Tier-0 per-turn record. The measurement fields exist because the 2026-08-04 run had to
+// be reconstructed by hand from raw captures: nothing recorded how long a turn took, how
+// big its prompt was, or whether it gathered any evidence.
+export type Turn = {
+  title: string;
+  participant: string;
+  result: AgentResult;
+  phase: TurnPhase;
+  round?: number;      // reaction turns only, 1-based
+  promptBytes: number; // captured at spawn — the prompt is never persisted, so it is unrecoverable later
+  agentMs: number;     // the agent call alone
+  turnMs: number;      // agentMs + isolation setup/teardown, so overhead stays separable (§3.2)
+  canExecute: boolean; // copied from the participant: ranCommands 0 only counts against those who could
+};
+
+// What runIsolated measures around a single agent call.
+export type IsolatedRun = { result: AgentResult; agentMs: number; turnMs: number; promptBytes: number };
 
 export type RespondeoStatus = "RESOLVED" | "NEEDS_INPUT" | "FAILED";
 
@@ -71,23 +91,44 @@ function withGitLock<T>(fn: () => Promise<T>): Promise<T> {
 //   into the target repo. In a worktree those writes land in the disposable copy
 //   and die with it. Trade-off: agents see HEAD only (uncommitted changes are invisible) and
 //   untracked build artifacts (node_modules, …) are absent.
-export async function runIsolated(p: Participant, prompt: string, repoPath?: string): Promise<AgentResult> {
+//
+// Also the measurement bracket (§8 step 1): `agentMs` times the agent call alone while
+// `turnMs` spans worktree setup + teardown too, so isolation overhead never hides inside
+// model latency. promptBytes is captured here because this is the last place that sees
+// the prompt — it is never written to disk.
+export async function runIsolated(p: Participant, prompt: string, repoPath?: string): Promise<IsolatedRun> {
+  const promptBytes = Buffer.byteLength(prompt, "utf8");
+  const turnStart = performance.now();
+  let agentMs = 0;
+  // Time only p.run(), wherever it is called from below.
+  const timedRun = async (cwd: string): Promise<AgentResult> => {
+    const agentStart = performance.now();
+    try { return await p.run(prompt, cwd); }
+    finally { agentMs = performance.now() - agentStart; }
+  };
+  let result: AgentResult;
   const dir = await mkdtemp(join(tmpdir(), "disputatio-"));
   try {
-    if (!repoPath) return await p.run(prompt, dir);
-    const wt = join(dir, "wt");
-    await withGitLock(() => execFileAsync("git", ["-C", repoPath, "worktree", "add", "--detach", wt, "HEAD"]));
-    try {
-      return await p.run(prompt, wt);
-    } finally {
-      await withGitLock(async () => {
-        try { await execFileAsync("git", ["-C", repoPath, "worktree", "remove", "--force", wt]); }
-        catch { /* dir removal below + git's own prune cover the rest */ }
-      });
+    if (!repoPath) {
+      result = await timedRun(dir);
+    } else {
+      const wt = join(dir, "wt");
+      await withGitLock(() => execFileAsync("git", ["-C", repoPath, "worktree", "add", "--detach", wt, "HEAD"]));
+      try {
+        result = await timedRun(wt);
+      } finally {
+        await withGitLock(async () => {
+          try { await execFileAsync("git", ["-C", repoPath, "worktree", "remove", "--force", wt]); }
+          catch { /* dir removal below + git's own prune cover the rest */ }
+        });
+      }
     }
   } finally {
     await rm(dir, { recursive: true, force: true });
   }
+  // Stamped AFTER teardown on purpose — a `return` inside the try would evaluate this
+  // before the finally blocks ran, silently excluding the very overhead it exists to show.
+  return { result, agentMs, turnMs: performance.now() - turnStart, promptBytes };
 }
 
 const proposePrompt = (task: string) =>
@@ -184,6 +225,76 @@ const continuePrompt = (quaestio: string, transcript: string, previousDeterminat
   `Do not fabricate a verdict you cannot defend from the transcript.\n` +
   `Respond in English, concise, in Markdown.`;
 
+// The evidence-validity check (docs/4_PLAN.md §8, §11 P1). Until this existed, a debate
+// where nobody ran anything succeeded and looked exactly like a repo-grounded one — the
+// gap that made "M1 runs the gate path" an overstatement.
+//
+// Pure over Turn[], so it is unit-testable with no CLI and no filesystem.
+export type EvidenceSummary = {
+  turns: number;           // debate turns considered (proposals + reactions only)
+  observedTurns: number;   // …of those: succeeded AND the CLI reported counts at all
+  executedTurns: number;   // …of the OBSERVED ones, how many actually ran a command
+  totalCommands: number;
+  totalToolCalls: number;
+  ungrounded: string[];    // titles: COULD execute, succeeded, ran nothing — the real finding
+  unobservable: string[];  // titles: succeeded, but the CLI reports no counts at all (unknown ≠ zero)
+};
+
+// Only proposals and reactions count. The respondeo and continuation are transcript-only
+// BY INVARIANT (they must not touch the repo), so flagging them would be noise.
+const EVIDENCE_PHASES: ReadonlySet<TurnPhase> = new Set<TurnPhase>(["proposal", "reaction"]);
+
+export function summarizeEvidence(turns: Turn[]): EvidenceSummary {
+  const considered = turns.filter((t) => EVIDENCE_PHASES.has(t.phase));
+  const s: EvidenceSummary = {
+    turns: considered.length,
+    observedTurns: 0, executedTurns: 0, totalCommands: 0, totalToolCalls: 0,
+    ungrounded: [], unobservable: [],
+  };
+  for (const t of considered) {
+    // A failed turn produced no evidence because it died, not because it skipped the
+    // work — counting it as ungrounded would blame the agent for a transport failure.
+    if (!t.result.ok) continue;
+    const ran = t.result.evidence?.ranCommands;
+    s.totalCommands += ran ?? 0;
+    s.totalToolCalls += t.result.evidence?.toolCalls ?? 0;
+    if (ran === undefined) {
+      // Unknown, not zero: this CLI reports nothing (agy is text-only), or is an
+      // in-process participant. Never assert absence of evidence from absence of data.
+      // Deliberately NOT counted in observedTurns: executedTurns/observedTurns must be a
+      // ratio of known values, or the gate reads unknowns as known-zero.
+      s.unobservable.push(t.title);
+      continue;
+    }
+    s.observedTurns++;
+    if (ran > 0) {
+      s.executedTurns++;
+    } else if (t.canExecute) {
+      // The only real finding: it was permitted to execute, succeeded, and ran nothing.
+      s.ungrounded.push(t.title);
+    }
+    // else: shell-less by invariant (pi, copilot-cli) — 0 is compliance, not a failure.
+  }
+  return s;
+}
+
+// Assemble a Turn from a measured run. One builder so no phase can forget a field.
+function toTurn(
+  title: string, p: Participant, run: IsolatedRun, phase: TurnPhase, round?: number,
+): Turn {
+  return {
+    title,
+    participant: p.id,
+    result: run.result,
+    phase,
+    ...(round !== undefined && { round }),
+    promptBytes: run.promptBytes,
+    agentMs: run.agentMs,
+    turnMs: run.turnMs,
+    canExecute: p.canExecute,
+  };
+}
+
 // The redactio turn: author the deliverable from a RESOLVED determination. UNLIKE the
 // respondeo (which is transcript-only by invariant — it must ASK, not guess), the
 // synthesizer MAY be repo-grounded: with repoPath it runs in a read-only throwaway
@@ -192,16 +303,16 @@ const continuePrompt = (quaestio: string, transcript: string, previousDeterminat
 export async function runFinalize(
   judge: Participant, quaestio: string, transcript: string, determination: string, repoPath?: string,
 ): Promise<Turn> {
-  const r = await runIsolated(judge, finalizePrompt(quaestio, transcript, determination), repoPath);
-  return { title: `Final report — ${judge.display}`, participant: judge.id, result: r };
+  const run = await runIsolated(judge, finalizePrompt(quaestio, transcript, determination), repoPath);
+  return toTurn(`Final report — ${judge.display}`, judge, run, "redactio");
 }
 
 // The continuation turn: re-judge after the human answered. Transcript-only, like respondeo.
 export async function runContinuation(
   judge: Participant, quaestio: string, transcript: string, previousDetermination: string, humanAnswers: string,
 ): Promise<Turn> {
-  const r = await runIsolated(judge, continuePrompt(quaestio, transcript, previousDetermination, humanAnswers));
-  return { title: `Respondeo (continued) — ${judge.display}`, participant: judge.id, result: r };
+  const run = await runIsolated(judge, continuePrompt(quaestio, transcript, previousDetermination, humanAnswers));
+  return toTurn(`Respondeo (continued) — ${judge.display}`, judge, run, "continuation");
 }
 
 export async function runDebate(
@@ -216,27 +327,27 @@ export async function runDebate(
   const ctxParts: string[] = [header];
   const turns: Turn[] = [];
 
-  const record = (title: string, p: Participant, r: AgentResult) => {
-    turns.push({ title, participant: p.id, result: r });
-    fileParts.push(render(title, r));
-    ctxParts.push(renderForContext(title, r));
+  const record = (title: string, p: Participant, run: IsolatedRun, phase: TurnPhase, round?: number) => {
+    turns.push(toTurn(title, p, run, phase, round));
+    fileParts.push(render(title, run.result));
+    ctxParts.push(renderForContext(title, run.result));
   };
 
   // Round 1 — independent proposals (parallel; each isolated so they don't peek).
   log(`Round 1 — independent proposals: ${participants.map((p) => p.id).join(", ")}`);
   const proposals = await Promise.all(
-    participants.map(async (p) => ({ p, r: await runIsolated(p, proposePrompt(task), repoPath) })),
+    participants.map(async (p) => ({ p, run: await runIsolated(p, proposePrompt(task), repoPath) })),
   );
-  for (const { p, r } of proposals) record(`Proposal — ${p.display}`, p, r);
+  for (const { p, run } of proposals) record(`Proposal — ${p.display}`, p, run, "proposal");
 
   // A debate needs at least two voices. Fewer than 2 successful proposals means
   // the surviving agent would "debate" a monologue — abort loudly instead of
   // producing a plausible-looking but worthless artifact (real-run lesson, 2026-06-11).
-  const okProposals = proposals.filter(({ r }) => r.ok).length;
+  const okProposals = proposals.filter(({ run }) => run.result.ok).length;
   if (okProposals < 2) {
     const failures = proposals
-      .filter(({ r }) => !r.ok)
-      .map(({ p, r }) => `${p.id}: ${(r as { error: string }).error}`)
+      .filter(({ run }) => !run.result.ok)
+      .map(({ p, run }) => `${p.id}: ${(run.result as { error: string }).error}`)
       .join(" | ");
     const aborted = `only ${okProposals}/${participants.length} proposals succeeded — no debate possible. Failures: ${failures}`;
     log(`ABORTED — ${aborted}`);
@@ -249,9 +360,9 @@ export async function runDebate(
     log(`Round ${round + 1} — reactions`);
     const ctx = ctxParts.join("\n");
     const reactions = await Promise.all(
-      participants.map(async (p) => ({ p, r: await runIsolated(p, reactPrompt(ctx, p.display), repoPath) })),
+      participants.map(async (p) => ({ p, run: await runIsolated(p, reactPrompt(ctx, p.display), repoPath) })),
     );
-    for (const { p, r } of reactions) record(`Round ${round} reaction — ${p.display}`, p, r);
+    for (const { p, run } of reactions) record(`Round ${round} reaction — ${p.display}`, p, run, "reaction", round);
   }
 
   // Respondeo — opt-in judge turn (transcript-only: no repoPath, even in repo mode).
@@ -262,8 +373,9 @@ export async function runDebate(
   if (judge) {
     const debateCtx = ctxParts.join("\n"); // clean transcript snapshot BEFORE the respondeo turn
     log(`Respondeo — ${judge.display} renders the consolidatio`);
-    const r = await runIsolated(judge, respondeoPrompt(debateCtx));
-    record(`Respondeo — ${judge.display}`, judge, r);
+    const run = await runIsolated(judge, respondeoPrompt(debateCtx));
+    record(`Respondeo — ${judge.display}`, judge, run, "respondeo");
+    const r = run.result;
     respondeo = r.ok
       ? { status: parseRespondeoStatus(r.text), text: r.text }
       : { status: "FAILED", text: `Respondeo turn failed: ${r.error}` };

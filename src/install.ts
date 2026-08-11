@@ -109,7 +109,7 @@ export type InitDeps = {
   findAlternatives?: (bin: string) => Promise<string[]>;
 };
 
-const defaultCanary = async (p: Participant): Promise<boolean> => (await runIsolated(p, CANARY_PROMPT)).ok;
+const defaultCanary = async (p: Participant): Promise<boolean> => (await runIsolated(p, CANARY_PROMPT)).result.ok;
 
 export type InitResult = { exitCode: number; configPath: string; serialized: string; report: string };
 

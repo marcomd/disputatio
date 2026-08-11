@@ -116,18 +116,25 @@ npm test
   through to the CLI — the parser does NOT validate it (the CLI does; bad values
   surface in the raw capture / `--doctor`), so the parser stays version-agnostic.
 - **`src/adapters.ts`** — transport layer. One job: spawn a CLI, capture output,
-  classify success/failure. `Participant` = `{ id, display, vendor, run(prompt, cwd) }`.
-- **`src/debate.ts`** — orchestration. Round 1 = parallel independent proposals
+  classify success/failure. `Participant` = `{ id, display, vendor, canExecute,
+  run(prompt, cwd) }`. Each classifier also extracts Tier-0 `Evidence` from the stream it
+  already parses (`ranCommands`, `toolCalls`, claude's `agentTurns`/`permissionDenials`).
+- **`src/debate.ts`** — orchestration + Tier-0 measurement (`Turn` carries `phase`,
+  `round`, `promptBytes`, `agentMs`, `turnMs`, `canExecute`; `summarizeEvidence` is the
+  run-level evidence-validity check). Round 1 = parallel independent proposals
   (abort if <2 succeed); then N reaction rounds where each agent reacts to the full
   transcript snapshot; then the opt-in **respondeo** (judge) renders the consolidatio.
   On a RESOLVED respondeo the judge then acts as **synthesizer** for the **redactio**
-  (`runFinalize`) — authoring the deliverable from the determination, transcript-only
-  like respondeo. `runContinuation` re-judges after the human answers (used by
+  (`runFinalize`) — authoring the deliverable from the determination; unlike respondeo it
+  MAY be repo-grounded (it accepts `repoPath`). `runContinuation` re-judges after the human answers (used by
   `--continue`). Both are exported so the CLI can drive them standalone over a saved debate.
 
 Data flow: `index` builds `Participant[]` → `runDebate` → per-turn `runIsolated`
 (temp dir, or throwaway git worktree in repo mode) → `Participant.run` → `runCli`
 (spawn). Results accumulate into a transcript string + per-turn `Turn[]` records.
+**`runIsolated` returns a measured wrapper**, `{ result, agentMs, turnMs, promptBytes }`,
+not a bare `AgentResult` — it is the measurement bracket, so every caller unwraps
+`.result` (breaking change in v0.8.0).
 
 ## Non-obvious invariants — do not break these
 
@@ -218,10 +225,11 @@ exists — budget control is claude-only).
   so a mid-debate crash loses the run (restart from scratch). This is separate from
   `--continue` (a workflow step, not a crash recovery). A persisted `state.json` spine
   (planned in `docs/4_PLAN.md` §3) would give both; not built for v0.
-- **Repo-grounded redactio.** `runFinalize` is transcript-only (the debate already put
-  the evidence in the transcript). Giving the synthesizer read-only repo access — to
-  ground the deliverable in real files, like the debaters — is a follow-up; it shares the
-  open question of judge/finalizer repo access.
+- **Redactio tool grant.** `runFinalize` IS repo-groundable (it takes `repoPath` and runs
+  in a worktree) — the old "transcript-only" note here was stale; `4_PLAN.md` §11 was
+  right. What is open: in the 2026-08-04 run the synthesizer turn recorded
+  `permission_denials: 1`, so the judge's allowlist blocked a command it wanted. Match the
+  finalizer's tool grant to its repo-grounded intent.
 
 ## Design docs
 

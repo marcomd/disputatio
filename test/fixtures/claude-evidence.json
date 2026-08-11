@@ -1,0 +1,1 @@
+{"type":"result","subtype":"success","is_error":false,"result":"pong","num_turns":12,"permission_denials":[{"tool_name":"Bash","tool_input":{"command":"git diff"}}],"total_cost_usd":0.25,"usage":{"input_tokens":3,"output_tokens":5}}

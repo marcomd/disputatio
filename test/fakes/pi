@@ -10,6 +10,13 @@ if [ -n "$FAKE_HANG" ]; then
   sleep 8        # outlive the per-test bound unless the whole group is killed
   exit 0
 fi
+# FAKE_KILL_SELF: die by SIGNAL with no output at all — reproduces the pi reaction turn
+# of the 2026-08-04 run (code=null, empty stdout AND stderr, not a timeout). Before the
+# capture recorded `signal`, that turn was undiagnosable.
+if [ -n "$FAKE_KILL_SELF" ]; then
+  kill -"$FAKE_KILL_SELF" $$
+  sleep 5   # unreachable if the signal lands; bounds the test if it does not
+fi
 # FAKE_ARGV_FILE: record argv (one arg per line) so tests can assert passed flags.
 [ -n "$FAKE_ARGV_FILE" ] && printf '%s\n' "$@" > "$FAKE_ARGV_FILE"
 [ -n "$FAKE_STDOUT_FILE" ] && cat "$FAKE_STDOUT_FILE"

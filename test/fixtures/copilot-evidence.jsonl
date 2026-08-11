@@ -1,0 +1,7 @@
+{"type":"session.tools_updated","data":{"model":"gpt-5-mini"}}
+{"type":"tool.execution_start","data":{"toolCallId":"c1","toolName":"grep","arguments":{"pattern":"x"}}}
+{"type":"tool.execution_complete","data":{"toolCallId":"c1","success":true}}
+{"type":"tool.execution_start","data":{"toolCallId":"c2","toolName":"view","arguments":{"path":"/tmp/a"}}}
+{"type":"tool.execution_complete","data":{"toolCallId":"c2","success":false}}
+{"type":"assistant.message","data":{"content":"pong","toolRequests":[]}}
+{"type":"result","exitCode":0,"usage":{"premiumRequests":0}}

@@ -576,20 +576,27 @@ measurement is actually running — an item may not sit there because work is *p
 | Redactio (`final-report.md`, repo-groundable) | `src/debate.ts` `runFinalize` |
 | `--continue` (re-judge + versioned verdicts), `--finalize` | `src/index.ts` |
 | Per-turn raw captures | `.debate/*/raw/` |
+| Tier-0 turn instrumentation (`phase`/`round`/`promptBytes`/`agentMs`/`turnMs`) | `src/debate.ts`, `test/debate.test.ts` |
+| Per-turn evidence counts + `canExecute` capability flag | `src/adapters.ts`, `test/adapters.test.ts` |
+| Evidence-validity check (`summarizeEvidence`) + stderr run summary | `src/debate.ts`, `src/index.ts` |
+| Signal capture on killed CLIs (`signal=SIGKILL`, not `exit=null`) | `src/adapters.ts`, `../research/run-2026-08-04-*` |
 | Offline test suite; npm packaging (`prepack` → `dist/`) | `test/`, `package.json` |
 
 **M0 is complete:** the transport round-trips with correct classification and `doctor`
 reports status.
 
-**M1 is complete as a phase sequence, but NOT as the gate treatment.** A cross-vendor
-lineup does run proposals → reactions → respondeo unattended and produce a deliverable.
-What is missing is the part §8's condition B depends on: **the tool cannot enforce, or even
-report, that any executable evidence was gathered.** Evidence is encouraged in prose
-(`reactPrompt`), there is no verifier phase and no evidence ledger, so a zero-execution
-debate succeeds and is indistinguishable from a grounded one. Until a run-level
-execution check exists (§8 — cheap, and available today for `codex`), "M1 runs the gate
-path" overstates it: it runs the *phases* of the gate path. Nothing above required the
-premise to be true.
+**M1 is complete as a phase sequence. As of v0.8.0 the gate's reporting prerequisite is
+also met.** A cross-vendor lineup runs proposals → reactions → respondeo unattended and
+produces a deliverable, and the run now **reports** whether any executable evidence was
+gathered: per-turn `ranCommands`/`toolCalls`, a `canExecute` capability flag, and a
+run-level check that flags turns which could execute, succeeded, and ran nothing
+(`summarizeEvidence`). A zero-execution debate is no longer indistinguishable from a
+grounded one — in `--repo` mode it says so loudly on stderr.
+
+What is still missing is **enforcement**: the check reports, it does not gate, and there
+is no verifier phase. That is deliberate — thresholds belong with the gate run (§7 of
+`5_METRICS.md`), not ahead of it. Evidence remains *encouraged* in prose (`reactPrompt`)
+rather than required.
 
 ### Deviations, recorded honestly
 
@@ -630,8 +637,8 @@ is the exact failure this refresh exists to correct.
 
 | # | Item | Blocked on / why deferred |
 | --- | --- | --- |
-| **P0** | **M2 premise-validation gate** (§8) | **NOT STARTED.** Every other row waits behind it. Two real prerequisites, both in P1: the evidence-validity check (without it condition B cannot be shown to have exercised the moat) and Tier-0 KPIs (without them a null result is undiagnosable). |
-| **P1** | **Evidence-validity check + Tier-0 KPI instrumentation** (`5_METRICS.md` §8) | **Gate-blocking, and small.** Needs real code: per-turn timings and `promptBytes` are not recorded, and nothing counts executed commands — though codex's raw capture already carries `command_execution` items, so the check is cheap. **Next increment.** |
+| **P0** | **M2 premise-validation gate** (§8) | **NOT STARTED — but no longer blocked.** Both prerequisites landed in v0.8.0: the evidence-validity check (condition B can now be shown to have exercised the moat) and Tier-0 KPIs (a null result is now diagnosable). This is the next thing to do. |
+| ~~P1~~ | ~~Evidence-validity check + Tier-0 KPI instrumentation~~ | **DONE in v0.8.0** (`5_METRICS.md` §8 steps 1-3). Steps 4-5 (`metrics.json`, history aggregator) remain, but are reporting convenience and do NOT block the gate. |
 | P2 | Tier-1 KPIs + the `disputatio` trailer / normalization layer (§5) | Needs a claim ledger; design work + extra per-debate calls. Do it when Tier-1 metrics are wanted, not before. |
 | P3 | `state.json` + crash-resume, per-run provenance, version-drift check (§3, §4) | One artifact serves all three. Painful only on long runs so far. |
 | P4 | `--continue` **re-debate** path (re-engage debaters with human input) | Today `--continue` re-judges alone and honestly says so by returning NEEDS_INPUT again. |

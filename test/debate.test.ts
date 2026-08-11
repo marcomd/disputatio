@@ -8,13 +8,13 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { runDebate, runFinalize, runContinuation, parseRespondeoStatus } from "../src/debate.ts";
+import { runDebate, runFinalize, runContinuation, parseRespondeoStatus, summarizeEvidence } from "../src/debate.ts";
 import type { Participant, AgentResult } from "../src/adapters.ts";
 
 const execFileAsync = promisify(execFile);
 
-function fake(id: string, vendor: string, run: Participant["run"]): Participant {
-  return { id, vendor, display: id, run };
+function fake(id: string, vendor: string, run: Participant["run"], canExecute = true): Participant {
+  return { id, vendor, display: id, canExecute, run };
 }
 const ok = (text: string): AgentResult => ({ ok: true, text, costUsd: 0.5 });
 const fail = (error: string): AgentResult => ({ ok: false, error });
@@ -261,4 +261,182 @@ test("worktree isolation: agents run in a throwaway worktree, never the real che
   assert.equal(wt.stdout.trim().split("\n").length, 1);            // all worktrees cleaned up
 
   await rm(repo, { recursive: true, force: true });
+});
+
+// --- P1: Tier-0 turn instrumentation (docs/5_METRICS.md §8 steps 1-2) ------------------
+
+test("every turn records phase, promptBytes and both timing brackets", async () => {
+  const a = fake("a", "v1", async () => ok("proposal A"));
+  const b = fake("b", "v2", async () => ok("proposal B"));
+  const judge = fake("j", "v3", async () => ok("STATUS: NEEDS_INPUT\n\nunresolved"));
+  const out = await runDebate("task", [a, b], 1, undefined, judge);
+
+  assert.equal(out.turns.length, 5); // 2 proposals + 2 reactions + respondeo
+  for (const t of out.turns) {
+    assert.ok(t.promptBytes > 0, `${t.title} has no promptBytes`);
+    assert.ok(typeof t.agentMs === "number" && t.agentMs >= 0, `${t.title} agentMs`);
+    assert.ok(typeof t.turnMs === "number" && t.turnMs >= t.agentMs, `${t.title} turnMs < agentMs`);
+    assert.equal(typeof t.canExecute, "boolean");
+  }
+  assert.deepEqual(out.turns.map((t) => t.phase), ["proposal", "proposal", "reaction", "reaction", "respondeo"]);
+  // Cross-layer: turns built by the real path must be exempted by the real check too —
+  // 5 turns recorded, but the respondeo is transcript-only so only 4 are considered.
+  assert.equal(summarizeEvidence(out.turns).turns, 4);
+});
+
+test("round is set on reaction turns only, and counts from 1", async () => {
+  const a = fake("a", "v1", async () => ok("A"));
+  const b = fake("b", "v2", async () => ok("B"));
+  const out = await runDebate("task", [a, b], 2);
+
+  const proposals = out.turns.filter((t) => t.phase === "proposal");
+  const reactions = out.turns.filter((t) => t.phase === "reaction");
+  assert.equal(proposals.length, 2);
+  assert.equal(reactions.length, 4);
+  for (const t of proposals) assert.equal(t.round, undefined);
+  assert.deepEqual(reactions.map((t) => t.round), [1, 1, 2, 2]);
+});
+
+test("promptBytes grows with the transcript and is measured in BYTES, not characters", async () => {
+  // Unrecoverable after the fact (§8 step 2): the prompt is never persisted, so if it is
+  // not captured at spawn time it is gone. Multi-byte content must not undercount.
+  const a = fake("a", "v1", async () => ok("café ☕ proposal"));
+  const b = fake("b", "v2", async () => ok("B"));
+  const out = await runDebate("task", [a, b], 1);
+
+  const proposal = out.turns.find((t) => t.phase === "proposal" && t.participant === "a")!;
+  const reaction = out.turns.find((t) => t.phase === "reaction" && t.participant === "a")!;
+  assert.ok(reaction.promptBytes > proposal.promptBytes, "reaction prompt carries the transcript");
+  // "café ☕" is 6 chars but 10 bytes — a char count would understate the real payload.
+  assert.ok(reaction.promptBytes > Buffer.byteLength("café ☕ proposal", "utf8"));
+});
+
+test("canExecute propagates from the participant onto the turn record", async () => {
+  // The whole point of the flag: ranCommands 0 is only a finding when canExecute is true.
+  const shell = fake("shell", "v1", async () => ok("A"), true);
+  const shellless = fake("shellless", "v2", async () => ok("B"), false);
+  const out = await runDebate("task", [shell, shellless], 1);
+
+  for (const t of out.turns.filter((t) => t.participant === "shell")) assert.equal(t.canExecute, true);
+  for (const t of out.turns.filter((t) => t.participant === "shellless")) assert.equal(t.canExecute, false);
+});
+
+test("a FAILED turn is still instrumented (timings survive the failure path)", async () => {
+  // The 2026-08-04 pi turn died silently; its cost in wall-clock was invisible.
+  const a = fake("a", "v1", async () => ok("A"));
+  const b = fake("b", "v2", async () => ok("B"));
+  const c = fake("c", "v3", async (prompt) => (prompt.includes("debate so far") ? fail("signal=SIGKILL") : ok("C")));
+  const out = await runDebate("task", [a, b, c], 1);
+
+  const failed = out.turns.find((t) => !t.result.ok)!;
+  assert.equal(failed.phase, "reaction");
+  assert.equal(failed.round, 1);
+  assert.ok(failed.promptBytes > 0);
+  assert.ok(typeof failed.turnMs === "number");
+});
+
+test("redactio and continuation turns carry their own phase", async () => {
+  const judge = fake("j", "v3", async () => ok("drafted"));
+  const fin = await runFinalize(judge, "q", "transcript", "determination");
+  assert.equal(fin.phase, "redactio");
+  assert.ok(fin.promptBytes > 0);
+
+  const cont = await runContinuation(judge, "q", "transcript", "prior", "answers");
+  assert.equal(cont.phase, "continuation");
+  assert.ok(cont.promptBytes > 0);
+});
+
+// --- P1: the evidence-validity check (docs/4_PLAN.md §8, §11 P1) -----------------------
+
+test("evidence check: a turn that COULD execute and did not is flagged ungrounded", async () => {
+  const turns = [
+    { phase: "proposal", title: "P — a", canExecute: true, result: { ok: true, text: "x", evidence: { ranCommands: 4 } } },
+    { phase: "proposal", title: "P — b", canExecute: true, result: { ok: true, text: "x", evidence: { ranCommands: 0 } } },
+  ] as unknown as Parameters<typeof summarizeEvidence>[0];
+  const s = summarizeEvidence(turns);
+  assert.equal(s.totalCommands, 4);
+  assert.equal(s.executedTurns, 1);
+  assert.deepEqual(s.ungrounded, ["P — b"]);
+});
+
+test("evidence check: shell-less participants are NOT flagged for running no commands", async () => {
+  // The correction this run forced: pi/copilot cannot execute by invariant, so their
+  // ranCommands 0 is compliance. A raw count would score them identically to a turn
+  // that could have gathered evidence and chose not to.
+  const turns = [
+    { phase: "proposal", title: "P — pi", canExecute: false, result: { ok: true, text: "x", evidence: { ranCommands: 0, toolCalls: 24 } } },
+    { phase: "proposal", title: "P — copilot", canExecute: false, result: { ok: true, text: "x", evidence: { ranCommands: 0, toolCalls: 7 } } },
+  ] as unknown as Parameters<typeof summarizeEvidence>[0];
+  const s = summarizeEvidence(turns);
+  assert.deepEqual(s.ungrounded, []);
+  assert.equal(s.totalToolCalls, 31);
+});
+
+test("evidence check: a CLI that reports nothing is 'unobservable', not 'ungrounded'", async () => {
+  // agy is text-only: it CAN execute but emits no stream, so ranCommands is undefined.
+  // Unknown must not be reported as known-zero.
+  const turns = [
+    { phase: "proposal", title: "P — agy", canExecute: true, result: { ok: true, text: "x" } },
+  ] as unknown as Parameters<typeof summarizeEvidence>[0];
+  const s = summarizeEvidence(turns);
+  assert.deepEqual(s.ungrounded, []);
+  assert.deepEqual(s.unobservable, ["P — agy"]);
+});
+
+test("evidence check: judge turns are exempt (transcript-only by invariant)", async () => {
+  const turns = [
+    { phase: "respondeo", title: "R — j", canExecute: true, result: { ok: true, text: "x", evidence: { ranCommands: 0 } } },
+    { phase: "continuation", title: "C — j", canExecute: true, result: { ok: true, text: "x", evidence: { ranCommands: 0 } } },
+  ] as unknown as Parameters<typeof summarizeEvidence>[0];
+  const s = summarizeEvidence(turns);
+  assert.deepEqual(s.ungrounded, []);
+  assert.equal(s.turns, 0);
+});
+
+test("evidence check: failed turns are not counted as ungrounded (they failed, not skipped)", async () => {
+  const turns = [
+    { phase: "reaction", title: "X — pi", canExecute: true, result: { ok: false, error: "signal=SIGKILL" } },
+  ] as unknown as Parameters<typeof summarizeEvidence>[0];
+  const s = summarizeEvidence(turns);
+  assert.deepEqual(s.ungrounded, []);
+  assert.deepEqual(s.unobservable, []);
+});
+
+test("evidence check: a whole debate with zero execution is reported as ungrounded", async () => {
+  // The gate-blocking case from 4_PLAN.md §11: today a zero-execution debate succeeds and
+  // is indistinguishable from a repo-grounded one.
+  const a = fake("a", "v1", async () => ok("A"), true);
+  const b = fake("b", "v2", async () => ok("B"), true);
+  const out = await runDebate("task", [a, b], 1);
+  const s = summarizeEvidence(out.turns);
+  assert.equal(s.executedTurns, 0);
+  assert.equal(s.turns, 4);
+  assert.equal(s.unobservable.length, 4); // in-process fakes report no evidence at all
+});
+
+test("evidence check: unobservable turns stay OUT of the executed/observed ratio", async () => {
+  // The denominator must be a ratio of KNOWN values. Folding an unknown in would let a
+  // gate read "1/2 ran commands" when the second turn's status was never reported.
+  const turns = [
+    { phase: "proposal", title: "P — codex", canExecute: true, result: { ok: true, text: "x", evidence: { ranCommands: 3, toolCalls: 3 } } },
+    { phase: "proposal", title: "P — agy", canExecute: true, result: { ok: true, text: "x" } },
+  ] as unknown as Parameters<typeof summarizeEvidence>[0];
+  const s = summarizeEvidence(turns);
+  assert.equal(s.turns, 2);          // considered
+  assert.equal(s.observedTurns, 1);  // …but only one reported anything
+  assert.equal(s.executedTurns, 1);
+  assert.deepEqual(s.unobservable, ["P — agy"]);
+  assert.deepEqual(s.ungrounded, []); // agy is unknown, NOT known-zero
+});
+
+test("evidence check: an all-unobservable debate has observedTurns 0, not executedTurns 0/N", async () => {
+  const turns = [
+    { phase: "proposal", title: "P — agy", canExecute: true, result: { ok: true, text: "x" } },
+    { phase: "reaction", title: "R — agy", canExecute: true, result: { ok: true, text: "x" } },
+  ] as unknown as Parameters<typeof summarizeEvidence>[0];
+  const s = summarizeEvidence(turns);
+  assert.equal(s.observedTurns, 0);
+  assert.equal(s.executedTurns, 0);
+  assert.deepEqual(s.ungrounded, []);
+  assert.equal(s.unobservable.length, 2);
 });

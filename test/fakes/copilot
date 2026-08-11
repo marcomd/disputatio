@@ -7,6 +7,13 @@ if [ -n "$FAKE_HANG" ]; then
   sleep 8
   exit 0
 fi
+# FAKE_KILL_SELF: die by SIGNAL after writing noise to stderr — the case where a
+# stderr-first error string would swallow the signal entirely.
+if [ -n "$FAKE_KILL_SELF" ]; then
+  [ -n "$FAKE_STDERR" ] && echo "$FAKE_STDERR" >&2
+  kill -"$FAKE_KILL_SELF" $$
+  sleep 5   # unreachable if the signal lands; bounds the test if it does not
+fi
 [ -n "$FAKE_ARGV_FILE" ] && printf '%s\n' "$@" > "$FAKE_ARGV_FILE"
 [ -n "$FAKE_STDOUT_FILE" ] && cat "$FAKE_STDOUT_FILE"
 [ -n "$FAKE_STDERR" ] && echo "$FAKE_STDERR" >&2

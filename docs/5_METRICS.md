@@ -349,26 +349,43 @@ A metric with no decision attached is a number, not a KPI.
 
 ---
 
-## 8. Next increment (specified, not built)
+## 8. Next increment — steps 1-3 BUILT (v0.8.0), 4-5 outstanding
 
 Smallest useful step, in TDD order per repo policy:
 
-1. **`agentMs` + `turnMs`** — time both brackets in `runIsolated` (`src/debate.ts`), so
-   isolation overhead stays separable from model latency (§3.2). Test against `test/fakes/`.
-2. **`phase` / `round` / `promptBytes` on the turn record** — stop parsing titles, and
-   capture the prompt size at spawn time, since it is unrecoverable afterwards (§4, §6.4).
-3. **`ranCommands` per turn** — count codex `command_execution` items in the classifier;
-   expose claude's `num_turns`/`permission_denials` as the proxy. This is what makes
-   `4_PLAN.md` §8's evidence-validity check enforceable, so it should land **before** the
-   gate runs, not after.
+1. ~~**`agentMs` + `turnMs`**~~ — **built.** Both bracketed in `runIsolated`
+   (`src/debate.ts`); `turnMs` is stamped after teardown so worktree overhead cannot hide
+   inside model latency (§3.2). Tested in `test/debate.test.ts`.
+2. ~~**`phase` / `round` / `promptBytes` on the turn record**~~ — **built.** `TurnPhase` is
+   explicit, so metrics never parse titles back out; `promptBytes` is captured at spawn in
+   BYTES (not characters) since the prompt is never persisted (§4, §6.4).
+3. ~~**`ranCommands` per turn**~~ — **built,** in the classifier as specified: codex
+   `item.completed` items with `item.type === "command_execution"`; claude's `num_turns` /
+   `permission_denials` as the proxy; `toolCalls` for the shell-less harnesses.
+
+   **Design correction found by the 2026-08-04 run** (not in the original spec): a raw
+   count is not enough. `pi` and `copilot-cli` are shell-less by invariant, so they always
+   report `ranCommands: 0` — a bare count scores them identically to a turn that could
+   have gathered evidence and chose not to. The turn record therefore also carries
+   `canExecute`, copied from the participant, and `ranCommands` distinguishes *undefined*
+   (this CLI reports nothing at all, e.g. `agy`) from *0* (known none). The check flags a
+   turn only when it **succeeded, could execute, and ran nothing** — `summarizeEvidence`
+   in `src/debate.ts`, surfaced on stderr by `index.ts`.
+
+   Counting belongs in the classifier, not in a script over the captures: a hand-written
+   regex pass over the same raw files double-counted codex (`item.started` carries the
+   same `item_type`) and inflated pi 20x by matching streaming deltas.
+
 4. **`metrics.json`** — a pure function `MetricsInput → Tier-0 metrics` (§4), written next
    to `debate.md`. Pure means unit-testable against captured fixtures with no CLI and no
-   filesystem at all.
+   filesystem at all. **Not built.** Every input now exists on `Turn`, so this is
+   assembly, not new measurement.
 5. **Artifact-history aggregator** — a separate reader over `.debate/<dir>` for verdict
    revisions, and over `.debate/*/metrics.json` for the cross-run baseline in §7. Kept out
-   of the pure function on purpose.
+   of the pure function on purpose. **Not built.**
 
-Steps 1–3 are the ones the M2 gate actually depends on; 4–5 are reporting convenience.
+Steps 1–3 were the ones the M2 gate actually depends on, and they are done; 4–5 are
+reporting convenience and remain open.
 
 Deliberately **not** in that increment: the claim ledger (Tier 1), any threshold, and any
 model-in-the-loop metric. Tier 0 first, because it is free, honest, and immediately useful

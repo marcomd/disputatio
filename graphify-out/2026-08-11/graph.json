@@ -1190,19 +1190,10 @@
       "norm_label": "agyadapter()"
     },
     {
-      "label": "CODEX_TOOL_ITEMS",
-      "file_type": "code",
-      "source_file": "src/adapters.ts",
-      "source_location": "L215",
-      "id": "src_adapters_codex_tool_items",
-      "community": 45,
-      "norm_label": "codex_tool_items"
-    },
-    {
       "label": "CodexOpts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L218",
+      "source_location": "L212",
       "id": "src_adapters_codexopts",
       "community": 45,
       "norm_label": "codexopts"
@@ -1211,7 +1202,7 @@
       "label": "codexAdapter()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L220",
+      "source_location": "L214",
       "id": "src_adapters_codexadapter",
       "community": 45,
       "norm_label": "codexadapter()"
@@ -1220,7 +1211,7 @@
       "label": "PiOpts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L285",
+      "source_location": "L275",
       "id": "src_adapters_piopts",
       "community": 45,
       "norm_label": "piopts"
@@ -1229,7 +1220,7 @@
       "label": "piAdapter()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L287",
+      "source_location": "L277",
       "id": "src_adapters_piadapter",
       "community": 45,
       "norm_label": "piadapter()"
@@ -1238,7 +1229,7 @@
       "label": "piMessageText()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L343",
+      "source_location": "L333",
       "id": "src_adapters_pimessagetext",
       "community": 45,
       "norm_label": "pimessagetext()"
@@ -1247,7 +1238,7 @@
       "label": "CopilotCliOpts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L353",
+      "source_location": "L343",
       "id": "src_adapters_copilotcliopts",
       "community": 45,
       "norm_label": "copilotcliopts"
@@ -1256,7 +1247,7 @@
       "label": "copilotCliAdapter()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L355",
+      "source_location": "L345",
       "id": "src_adapters_copilotcliadapter",
       "community": 45,
       "norm_label": "copilotcliadapter()"
@@ -2030,7 +2021,7 @@
       "label": "[0.7.2] \u2014 fix gate design flaws and metric formulas found in review (docs only)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L48",
+      "source_location": "L43",
       "id": "disputatio_changelog_0_7_2_fix_gate_design_flaws_and_metric_formulas_found_in_review_docs_only",
       "community": 35,
       "norm_label": "[0.7.2] \u2014 fix gate design flaws and metric formulas found in review (docs only)"
@@ -2039,7 +2030,7 @@
       "label": "[0.7.1] \u2014 roadmap refresh + protocol KPI spec (docs only)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L109",
+      "source_location": "L104",
       "id": "disputatio_changelog_0_7_1_roadmap_refresh_protocol_kpi_spec_docs_only",
       "community": 35,
       "norm_label": "[0.7.1] \u2014 roadmap refresh + protocol kpi spec (docs only)"
@@ -2048,7 +2039,7 @@
       "label": "[0.7.0] \u2014 add GitHub Copilot CLI adapter",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L158",
+      "source_location": "L153",
       "id": "disputatio_changelog_0_7_0_add_github_copilot_cli_adapter",
       "community": 35,
       "norm_label": "[0.7.0] \u2014 add github copilot cli adapter"
@@ -2057,7 +2048,7 @@
       "label": "[0.6.1] \u2014 refresh agent guidance and package docs",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L164",
+      "source_location": "L159",
       "id": "disputatio_changelog_0_6_1_refresh_agent_guidance_and_package_docs",
       "community": 35,
       "norm_label": "[0.6.1] \u2014 refresh agent guidance and package docs"
@@ -2066,7 +2057,7 @@
       "label": "[0.6.0] \u2014 add Pi (earendil-works/pi) adapter",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L172",
+      "source_location": "L167",
       "id": "disputatio_changelog_0_6_0_add_pi_earendil_works_pi_adapter",
       "community": 35,
       "norm_label": "[0.6.0] \u2014 add pi (earendil-works/pi) adapter"
@@ -2075,7 +2066,7 @@
       "label": "[0.5.2] \u2014 test: lock --max-budget-usd default and override",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L185",
+      "source_location": "L180",
       "id": "disputatio_changelog_0_5_2_test_lock_max_budget_usd_default_and_override",
       "community": 35,
       "norm_label": "[0.5.2] \u2014 test: lock --max-budget-usd default and override"
@@ -2084,7 +2075,7 @@
       "label": "[0.5.1] \u2014 raise default judge budget from $2 to $5",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L191",
+      "source_location": "L186",
       "id": "disputatio_changelog_0_5_1_raise_default_judge_budget_from_2_to_5",
       "community": 35,
       "norm_label": "[0.5.1] \u2014 raise default judge budget from $2 to $5"
@@ -2093,7 +2084,7 @@
       "label": "[0.5.0] \u2014 `--budget` flag + structured budget-exhaustion detection",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L200",
+      "source_location": "L195",
       "id": "disputatio_changelog_0_5_0_budget_flag_structured_budget_exhaustion_detection",
       "community": 35,
       "norm_label": "[0.5.0] \u2014 `--budget` flag + structured budget-exhaustion detection"
@@ -2102,7 +2093,7 @@
       "label": "[0.4.0] \u2014 redactio (final deliverable) + `--continue` / `--finalize` / `--debate`",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L224",
+      "source_location": "L219",
       "id": "disputatio_changelog_0_4_0_redactio_final_deliverable_continue_finalize_debate",
       "community": 35,
       "norm_label": "[0.4.0] \u2014 redactio (final deliverable) + `--continue` / `--finalize` / `--debate`"
@@ -2111,7 +2102,7 @@
       "label": "[0.3.0] \u2014 inline quaestio by default; `--rounds`/`--repo` flags",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L260",
+      "source_location": "L255",
       "id": "disputatio_changelog_0_3_0_inline_quaestio_by_default_rounds_repo_flags",
       "community": 35,
       "norm_label": "[0.3.0] \u2014 inline quaestio by default; `--rounds`/`--repo` flags"
@@ -2120,7 +2111,7 @@
       "label": "[0.2.2] \u2014 fix: The npm doc now has a short version that links to the one on github",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L285",
+      "source_location": "L280",
       "id": "disputatio_changelog_0_2_2_fix_the_npm_doc_now_has_a_short_version_that_links_to_the_one_on_github",
       "community": 35,
       "norm_label": "[0.2.2] \u2014 fix: the npm doc now has a short version that links to the one on github"
@@ -2129,7 +2120,7 @@
       "label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled JS)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L287",
+      "source_location": "L282",
       "id": "disputatio_changelog_0_2_1_fix_the_published_binary_couldn_t_run_ship_bundled_js",
       "community": 35,
       "norm_label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled js)"
@@ -2138,7 +2129,7 @@
       "label": "[0.2.0] \u2014 portable config + installable `disputatio` binary",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L305",
+      "source_location": "L300",
       "id": "disputatio_changelog_0_2_0_portable_config_installable_disputatio_binary",
       "community": 35,
       "norm_label": "[0.2.0] \u2014 portable config + installable `disputatio` binary"
@@ -2147,7 +2138,7 @@
       "label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L333",
+      "source_location": "L328",
       "id": "disputatio_changelog_0_1_0_respondeo_the_judge_stage_first_scholastic_protocol_step",
       "community": 35,
       "norm_label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)"
@@ -2156,7 +2147,7 @@
       "label": "[0.0.6] \u2014 Per-participant reasoning `effort` in `debate.yaml`",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L375",
+      "source_location": "L370",
       "id": "disputatio_changelog_0_0_6_per_participant_reasoning_effort_in_debate_yaml",
       "community": 35,
       "norm_label": "[0.0.6] \u2014 per-participant reasoning `effort` in `debate.yaml`"
@@ -2165,7 +2156,7 @@
       "label": "[0.0.5] \u2014 Process-group kill + first three-vendor repo-grounded run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L395",
+      "source_location": "L390",
       "id": "disputatio_changelog_0_0_5_process_group_kill_first_three_vendor_repo_grounded_run",
       "community": 35,
       "norm_label": "[0.0.5] \u2014 process-group kill + first three-vendor repo-grounded run"
@@ -2174,7 +2165,7 @@
       "label": "[0.0.4] \u2014 `doctor` preflight (M0, canary half)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L414",
+      "source_location": "L409",
       "id": "disputatio_changelog_0_0_4_doctor_preflight_m0_canary_half",
       "community": 35,
       "norm_label": "[0.0.4] \u2014 `doctor` preflight (m0, canary half)"
@@ -2183,7 +2174,7 @@
       "label": "[0.0.3] \u2014 Hardening after the first real-repo run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L444",
+      "source_location": "L439",
       "id": "disputatio_changelog_0_0_3_hardening_after_the_first_real_repo_run",
       "community": 35,
       "norm_label": "[0.0.3] \u2014 hardening after the first real-repo run"
@@ -2192,7 +2183,7 @@
       "label": "[0.0.2] \u2014 Agent tooling & knowledge graph",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L477",
+      "source_location": "L472",
       "id": "disputatio_changelog_0_0_2_agent_tooling_knowledge_graph",
       "community": 35,
       "norm_label": "[0.0.2] \u2014 agent tooling & knowledge graph"
@@ -2201,7 +2192,7 @@
       "label": "[0.0.1] \u2014 Kaizen MVP v0",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L492",
+      "source_location": "L487",
       "id": "disputatio_changelog_0_0_1_kaizen_mvp_v0",
       "community": 35,
       "norm_label": "[0.0.1] \u2014 kaizen mvp v0"
@@ -7979,9 +7970,9 @@
       "source_file": "test/debate.test.ts",
       "source_location": "L11",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_debate_test_ts",
-      "target": "src_debate_summarizeevidence"
+      "target": "src_debate_summarizeevidence",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -8462,9 +8453,9 @@
       "source_file": "test/fixtures/claude-evidence.json",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_fixtures_claude_evidence_json",
-      "target": "fixtures_claude_evidence_is_error"
+      "target": "fixtures_claude_evidence_is_error",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8472,9 +8463,9 @@
       "source_file": "test/fixtures/claude-evidence.json",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_fixtures_claude_evidence_json",
-      "target": "fixtures_claude_evidence_num_turns"
+      "target": "fixtures_claude_evidence_num_turns",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8482,9 +8473,9 @@
       "source_file": "test/fixtures/claude-evidence.json",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_fixtures_claude_evidence_json",
-      "target": "fixtures_claude_evidence_permission_denials"
+      "target": "fixtures_claude_evidence_permission_denials",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8492,9 +8483,9 @@
       "source_file": "test/fixtures/claude-evidence.json",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_fixtures_claude_evidence_json",
-      "target": "fixtures_claude_evidence_result"
+      "target": "fixtures_claude_evidence_result",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8502,9 +8493,9 @@
       "source_file": "test/fixtures/claude-evidence.json",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_fixtures_claude_evidence_json",
-      "target": "fixtures_claude_evidence_subtype"
+      "target": "fixtures_claude_evidence_subtype",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8512,9 +8503,9 @@
       "source_file": "test/fixtures/claude-evidence.json",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_fixtures_claude_evidence_json",
-      "target": "fixtures_claude_evidence_total_cost_usd"
+      "target": "fixtures_claude_evidence_total_cost_usd",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8522,9 +8513,9 @@
       "source_file": "test/fixtures/claude-evidence.json",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_fixtures_claude_evidence_json",
-      "target": "fixtures_claude_evidence_type"
+      "target": "fixtures_claude_evidence_type",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8532,9 +8523,9 @@
       "source_file": "test/fixtures/claude-evidence.json",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "test_fixtures_claude_evidence_json",
-      "target": "fixtures_claude_evidence_usage"
+      "target": "fixtures_claude_evidence_usage",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8542,9 +8533,9 @@
       "source_file": "test/fixtures/claude-evidence.json",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "fixtures_claude_evidence_usage",
-      "target": "fixtures_claude_evidence_usage_input_tokens"
+      "target": "fixtures_claude_evidence_usage_input_tokens",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8552,9 +8543,9 @@
       "source_file": "test/fixtures/claude-evidence.json",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "fixtures_claude_evidence_usage",
-      "target": "fixtures_claude_evidence_usage_output_tokens"
+      "target": "fixtures_claude_evidence_usage_output_tokens",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8800,16 +8791,6 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/adapters.ts",
-      "source_location": "L215",
-      "weight": 1.0,
-      "source": "src_adapters_ts",
-      "target": "src_adapters_codex_tool_items",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/adapters.ts",
       "source_location": "L137",
       "weight": 1,
       "confidence_score": 1,
@@ -8852,9 +8833,9 @@
       "source_file": "src/adapters.ts",
       "source_location": "L85",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_adapters_ts",
-      "target": "src_adapters_evidence"
+      "target": "src_adapters_evidence",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8862,9 +8843,9 @@
       "source_file": "src/adapters.ts",
       "source_location": "L24",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_adapters_ts",
-      "target": "src_adapters_exitlabel"
+      "target": "src_adapters_exitlabel",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9648,9 +9629,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L245",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_debate_ts",
-      "target": "src_debate_evidence_phases"
+      "target": "src_debate_evidence_phases",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9658,9 +9639,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L233",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_debate_ts",
-      "target": "src_debate_evidencesummary"
+      "target": "src_debate_evidencesummary",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9698,9 +9679,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L40",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_debate_ts",
-      "target": "src_debate_isolatedrun"
+      "target": "src_debate_isolatedrun",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9828,9 +9809,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L247",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_debate_ts",
-      "target": "src_debate_summarizeevidence"
+      "target": "src_debate_summarizeevidence",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9838,9 +9819,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L282",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_debate_ts",
-      "target": "src_debate_toturn"
+      "target": "src_debate_toturn",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9858,9 +9839,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L22",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_debate_ts",
-      "target": "src_debate_turnphase"
+      "target": "src_debate_turnphase",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -10011,9 +9992,9 @@
       "source_file": "src/index.ts",
       "source_location": "L14",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_debate_summarizeevidence"
+      "target": "src_debate_summarizeevidence",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -10022,9 +10003,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L315",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_debate_runcontinuation",
-      "target": "src_debate_toturn"
+      "target": "src_debate_toturn",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -10033,9 +10014,9 @@
       "source_file": "src/debate.ts",
       "source_location": "L307",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_debate_runfinalize",
-      "target": "src_debate_toturn"
+      "target": "src_debate_toturn",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -10213,9 +10194,9 @@
       "source_file": "src/index.ts",
       "source_location": "L373",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_index_ts",
-      "target": "src_index_ev"
+      "target": "src_index_ev",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -10760,9 +10741,9 @@
       "source_file": "CHANGELOG.md",
       "source_location": "L5",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
-      "target": "disputatio_changelog_0_8_0_tier_0_turn_instrumentation_the_evidence_validity_check_p1"
+      "target": "disputatio_changelog_0_8_0_tier_0_turn_instrumentation_the_evidence_validity_check_p1",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11620,9 +11601,9 @@
       "source_file": "research/run-2026-08-04-shell-less-adapters-and-worktrees.md",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "research_run_2026_08_04_shell_less_adapters_and_worktrees_md",
-      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_real_run_2026_08_04_shell_less_adapters_worktree_isolation"
+      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_real_run_2026_08_04_shell_less_adapters_worktree_isolation",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11630,9 +11611,9 @@
       "source_file": "research/run-2026-08-04-shell-less-adapters-and-worktrees.md",
       "source_location": "L39",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "research_run_2026_08_04_shell_less_adapters_and_worktrees_real_run_2026_08_04_shell_less_adapters_worktree_isolation",
-      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_finding_1_shell_less_adapters_cannot_see_git_at_all_in_a_worktree"
+      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_finding_1_shell_less_adapters_cannot_see_git_at_all_in_a_worktree",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11640,9 +11621,9 @@
       "source_file": "research/run-2026-08-04-shell-less-adapters-and-worktrees.md",
       "source_location": "L77",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "research_run_2026_08_04_shell_less_adapters_and_worktrees_real_run_2026_08_04_shell_less_adapters_worktree_isolation",
-      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_finding_2_a_signal_killed_turn_is_undiagnosable"
+      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_finding_2_a_signal_killed_turn_is_undiagnosable",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11650,9 +11631,9 @@
       "source_file": "research/run-2026-08-04-shell-less-adapters-and-worktrees.md",
       "source_location": "L108",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "research_run_2026_08_04_shell_less_adapters_and_worktrees_real_run_2026_08_04_shell_less_adapters_worktree_isolation",
-      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_finding_3_rancommands_needs_a_capability_flag_not_just_a_count"
+      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_finding_3_rancommands_needs_a_capability_flag_not_just_a_count",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11660,9 +11641,9 @@
       "source_file": "research/run-2026-08-04-shell-less-adapters-and-worktrees.md",
       "source_location": "L123",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "research_run_2026_08_04_shell_less_adapters_and_worktrees_real_run_2026_08_04_shell_less_adapters_worktree_isolation",
-      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_finding_4_the_redactio_was_denied_a_command_it_tried_to_run"
+      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_finding_4_the_redactio_was_denied_a_command_it_tried_to_run",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11670,9 +11651,9 @@
       "source_file": "research/run-2026-08-04-shell-less-adapters-and-worktrees.md",
       "source_location": "L8",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "research_run_2026_08_04_shell_less_adapters_and_worktrees_real_run_2026_08_04_shell_less_adapters_worktree_isolation",
-      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_run_shape"
+      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_run_shape",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11680,9 +11661,9 @@
       "source_file": "research/run-2026-08-04-shell-less-adapters-and-worktrees.md",
       "source_location": "L135",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "research_run_2026_08_04_shell_less_adapters_and_worktrees_real_run_2026_08_04_shell_less_adapters_worktree_isolation",
-      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_what_this_run_says_about_priority"
+      "target": "research_run_2026_08_04_shell_less_adapters_and_worktrees_what_this_run_says_about_priority",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14280,9 +14261,9 @@
       "source_file": "docs/5_METRICS.md",
       "source_location": "L352",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_5_metrics_disputatio_protocol_kpis",
-      "target": "docs_5_metrics_8_next_increment_steps_1_3_built_v0_8_0_4_5_outstanding"
+      "target": "docs_5_metrics_8_next_increment_steps_1_3_built_v0_8_0_4_5_outstanding",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",

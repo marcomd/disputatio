@@ -266,3 +266,100 @@ test("copilot-cli: custom bin override is used", async () => {
   const r = await copilotCliAdapter(undefined, { bin: join(here, "fakes", "copilot") }).run("ping", cwd);
   assert.equal(r.ok, true);
 });
+
+// --- P1: signal capture (5_METRICS.md §8) ---------------------------------------------
+
+test("REGRESSION — a signal-killed CLI reports the SIGNAL, not a bare `exit=null`", async () => {
+  // The 2026-08-04 run's pi reaction returned code=null with empty stdout AND stderr,
+  // and the error read `exit=null ` — cause undiagnosable, because runCli dropped the
+  // `signal` argument node passes to `close`. Capture it and say which signal it was.
+  process.env.FAKE_KILL_SELF = "KILL";
+  const r = await piAdapter().run("ping", cwd);
+  assert.equal(r.ok, false);
+  assert.equal(r.raw?.signal, "SIGKILL");
+  assert.equal(r.raw?.code, null);
+  assert.match(!r.ok ? r.error : "", /SIGKILL/);
+  assert.doesNotMatch(!r.ok ? r.error : "", /exit=null/);
+});
+
+test("REGRESSION — copilot: stderr noise must not swallow the signal", async () => {
+  // copilot was the one adapter whose error string put stderr BEFORE the exit label, so a
+  // signal death that printed any warning reported only the warning — the same blind spot
+  // the signal capture exists to close, in the one place the fix had not reached.
+  process.env.FAKE_KILL_SELF = "KILL";
+  process.env.FAKE_STDERR = "npm warn deprecated";
+  const r = await copilotCliAdapter(undefined, { bin: join(here, "fakes", "copilot") }).run("ping", cwd);
+  assert.equal(r.ok, false);
+  assert.equal(r.raw?.signal, "SIGKILL");
+  assert.match(!r.ok ? r.error : "", /signal=SIGKILL/);
+  assert.match(!r.ok ? r.error : "", /npm warn deprecated/); // stderr still reported, just not INSTEAD
+});
+
+test("signal is null on a normal exit (no false positives)", async () => {
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "pi-success.jsonl");
+  const r = await piAdapter().run("ping", cwd);
+  assert.equal(r.ok, true);
+  assert.equal(r.raw?.signal, null);
+});
+
+// --- P1: canExecute capability flag ----------------------------------------------------
+
+test("canExecute reflects whether the adapter grants a shell at all", () => {
+  // Not cosmetic: `ranCommands === 0` means "gathered no executable evidence" only for
+  // participants that COULD execute. pi and copilot are shell-less by invariant, so a
+  // raw count would score them evidence-free for obeying their own allowlist.
+  assert.equal(claudeAdapter().canExecute, true);       // Bash(...) in --allowedTools
+  assert.equal(codexAdapter().canExecute, true);        // -s read-only = OS-sandboxed shell
+  assert.equal(agyAdapter().canExecute, true);          // --sandbox
+  assert.equal(piAdapter().canExecute, false);          // --tools read,grep,find,ls
+  assert.equal(copilotCliAdapter().canExecute, false);  // --available-tools view,glob,grep
+});
+
+// --- P1: per-turn evidence counts ------------------------------------------------------
+
+test("codex: counts command_execution items as ranCommands", async () => {
+  // Count item.completed ONLY. item.started carries the same item_type, so counting both
+  // double-reports every command (the error a first hand-analysis of the run made).
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "codex-evidence.jsonl");
+  const r = await codexAdapter().run("ping", cwd);
+  assert.equal(r.ok, true);
+  assert.equal(r.evidence?.ranCommands, 3);
+  // toolCalls is NOT an alias of ranCommands: the fixture also carries a `web_search`
+  // item (a tool call that runs no command), and a `reasoning` item (narration, not a
+  // tool). Aliasing the two would report a read-only codex turn as zero tool activity.
+  assert.equal(r.evidence?.toolCalls, 4);
+});
+
+test("pi: counts tool calls, and reports ranCommands 0 (shell-less)", async () => {
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "pi-evidence.jsonl");
+  const r = await piAdapter().run("ping", cwd);
+  assert.equal(r.ok, true);
+  assert.equal(r.evidence?.toolCalls, 2);
+  assert.equal(r.evidence?.ranCommands, 0);
+});
+
+test("copilot-cli: counts tool calls, and reports ranCommands 0 (shell-less)", async () => {
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "copilot-evidence.jsonl");
+  const r = await copilotCliAdapter().run("ping", cwd);
+  assert.equal(r.ok, true);
+  assert.equal(r.evidence?.toolCalls, 2);
+  assert.equal(r.evidence?.ranCommands, 0);
+});
+
+test("claude: exposes num_turns + permission_denials as the evidence proxy", async () => {
+  // The envelope does not break out shell commands, so ranCommands stays UNDEFINED
+  // (unknown) rather than 0 (known-none) — the distinction the gate depends on.
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "claude-evidence.json");
+  const r = await claudeAdapter().run("ping", cwd);
+  assert.equal(r.ok, true);
+  assert.equal(r.evidence?.agentTurns, 12);
+  assert.equal(r.evidence?.permissionDenials, 1);
+  assert.equal(r.evidence?.ranCommands, undefined);
+});
+
+test("evidence counting tolerates a stream with no tool activity", async () => {
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "codex-success.jsonl");
+  const r = await codexAdapter().run("ping", cwd);
+  assert.equal(r.ok, true);
+  assert.equal(r.evidence?.ranCommands, 0);
+});

@@ -42,7 +42,7 @@ function excerpt(s: string, n = 120): string {
 async function diagnose(p: Participant): Promise<Diagnosis> {
   const base = { id: p.id, display: p.display, vendor: p.vendor };
   try {
-    const r = await runIsolated(p, CANARY_PROMPT);
+    const { result: r } = await runIsolated(p, CANARY_PROMPT);
     return r.ok
       ? { ...base, ok: true, detail: excerpt(r.text) || "(empty success)" }
       : { ...base, ok: false, detail: excerpt(r.error) };

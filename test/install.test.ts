@@ -44,6 +44,7 @@ function stubBuild(working: Set<string>) {
     id: spec.adapter,
     display: spec.adapter,
     vendor: spec.adapter,
+    canExecute: true,
     run: async () => (working.has(spec.bin ?? spec.adapter) ? { ok: true, text: "pong" } : { ok: false, error: "stale shim" }),
   });
 }
