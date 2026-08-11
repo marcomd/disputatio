@@ -8,7 +8,7 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { runDebate, runFinalize, runContinuation, parseRespondeoStatus, summarizeEvidence } from "../src/debate.ts";
+import { runDebate, runFinalize, runContinuation, parseRespondeoStatus, summarizeEvidence, finalizeRetryHint } from "../src/debate.ts";
 import type { Participant, AgentResult } from "../src/adapters.ts";
 
 const execFileAsync = promisify(execFile);
@@ -439,4 +439,100 @@ test("evidence check: an all-unobservable debate has observedTurns 0, not execut
   assert.equal(s.executedTurns, 0);
   assert.deepEqual(s.ungrounded, []);
   assert.equal(s.unobservable.length, 2);
+});
+
+// --- Redactio timeout recovery (2026-08-11) --------------------------------------------
+
+test("the redactio runs on the SYNTHESIZER participant when one is given", async () => {
+  // The redactio's input is the whole transcript plus repo traversal and it is the LAST
+  // turn, so it earns a longer wall-clock cap than a debater. That means a distinct
+  // participant instance, which runDebate must actually use.
+  const seen: string[] = [];
+  const a = fake("a", "v1", async () => ok("A"));
+  const b = fake("b", "v2", async () => ok("B"));
+  const judge = fake("judge", "v3", async () => ok("STATUS: RESOLVED\n\nruling"));
+  const synth = fake("synth", "v3", async () => { seen.push("synth"); return ok("the deliverable"); });
+
+  const out = await runDebate("task", [a, b], 0, undefined, judge, synth);
+  assert.equal(out.respondeo?.status, "RESOLVED");
+  assert.equal(out.finalReport?.text, "the deliverable");
+  assert.deepEqual(seen, ["synth"]);
+  assert.equal(out.turns.find((t) => t.phase === "redactio")?.participant, "synth");
+  assert.equal(out.turns.find((t) => t.phase === "respondeo")?.participant, "judge");
+});
+
+test("the judge doubles as synthesizer when no separate one is given (unchanged default)", async () => {
+  const a = fake("a", "v1", async () => ok("A"));
+  const b = fake("b", "v2", async () => ok("B"));
+  const judge = fake("judge", "v3", async (p) =>
+    ok(p.includes("determination") || p.includes("deliverable") ? "drafted" : "STATUS: RESOLVED\n\nruling"));
+  const out = await runDebate("task", [a, b], 0, undefined, judge);
+  assert.equal(out.turns.find((t) => t.phase === "redactio")?.participant, "judge");
+});
+
+test("finalizeRetryHint always yields a runnable command, tailored to the failure", () => {
+  // The 2026-08-11 run printed "redactio failed: timeout" and NOTHING else, while
+  // `--finalize` would have recovered it from the saved RESOLVED respondeo. The recovery
+  // existed and was invisible exactly when it was needed.
+  const dir = ".debate/debate-x";
+
+  const t = finalizeRetryHint("timeout", dir, "/repo");
+  assert.match(t, /--finalize/);
+  assert.match(t, /--timeout <minutes>/);   // placeholder when no concrete value is known
+  assert.match(t, /--debate \.debate\/debate-x/);
+  assert.match(t, /--repo \/repo/);
+
+  const b = finalizeRetryHint("budget", dir);
+  assert.match(b, /--budget <usd>/);
+  assert.doesNotMatch(b, /--repo/); // no repo in the original run → none in the hint
+
+  const o = finalizeRetryHint("other", dir);
+  assert.match(o, /--finalize/);
+  assert.doesNotMatch(o, /--budget/);
+  assert.doesNotMatch(o, /--timeout/);
+});
+
+test("a timed-out redactio records kind 'timeout' and keeps the cost it already spent", async () => {
+  // The 2026-08-11 shape end-to-end: RESOLVED verdict on disk, deliverable turn dies. The
+  // debate itself still succeeded, so this must be non-fatal AND must carry enough for the
+  // CLI to print the right recovery flag.
+  const a = fake("a", "v1", async () => ok("A"));
+  const b = fake("b", "v2", async () => ok("B"));
+  const judge = fake("judge", "v3", async () => ok("STATUS: RESOLVED\n\nruling"));
+  const synth = fake("synth", "v3", async () => ({ ok: false, error: "timeout", costUsd: 3.26 }));
+
+  const out = await runDebate("task", [a, b], 0, undefined, judge, synth);
+  assert.equal(out.respondeo?.status, "RESOLVED");   // the verdict survives
+  assert.equal(out.finalReport, undefined);
+  assert.equal(out.finalReportError?.kind, "timeout");
+  assert.equal(out.finalReportError?.budgetExhausted, false);
+  assert.equal(finalizeRetryHint(out.finalReportError!.kind, ".debate/d"), "disputatio --finalize --timeout <minutes> --debate .debate/d");
+  // …and the spend on the dead turn is visible in the transcript, not silently dropped.
+  assert.match(out.transcript, /FAILED: timeout _\(spent before failing: \$3\.2600\)_/);
+});
+
+test("a budget-exhausted redactio still records kind 'budget'", async () => {
+  const a = fake("a", "v1", async () => ok("A"));
+  const b = fake("b", "v2", async () => ok("B"));
+  const judge = fake("judge", "v3", async () => ok("STATUS: RESOLVED\n\nruling"));
+  const synth = fake("synth", "v3", async () => ({ ok: false, error: "Reached maximum budget", budgetExhausted: true as const }));
+
+  const out = await runDebate("task", [a, b], 0, undefined, judge, synth);
+  assert.equal(out.finalReportError?.kind, "budget");
+  assert.equal(out.finalReportError?.budgetExhausted, true);
+});
+
+test("finalizeRetryHint suggests a CONCRETE value when the caller knows the failed cap", () => {
+  // "--timeout <minutes>" makes the user guess. The CLI knows which cap just failed, so
+  // the hint should be copy-pasteable rather than a template.
+  assert.equal(
+    finalizeRetryHint("timeout", ".debate/d", undefined, 20),
+    "disputatio --finalize --timeout 20 --debate .debate/d",
+  );
+  assert.equal(
+    finalizeRetryHint("budget", ".debate/d", "/repo", 10),
+    "disputatio --finalize --budget 10 --debate .debate/d --repo /repo",
+  );
+  // A suggestion is meaningless for an unclassified failure — plain retry, no noise.
+  assert.equal(finalizeRetryHint("other", ".debate/d", undefined, 20), "disputatio --finalize --debate .debate/d");
 });

@@ -91,7 +91,7 @@ export type Evidence = {
 
 export type AgentResult =
   | { ok: true; text: string; costUsd?: number; evidence?: Evidence; raw?: CliCapture }
-  | { ok: false; error: string; budgetExhausted?: true; evidence?: Evidence; raw?: CliCapture };
+  | { ok: false; error: string; budgetExhausted?: true; costUsd?: number; evidence?: Evidence; raw?: CliCapture };
 
 export type Participant = {
   id: string;
@@ -114,6 +114,23 @@ function spawnFailure(r: CliCapture): string | null {
 }
 
 // --- Claude Code: rich JSON envelope -------------------------------------------------
+
+// Cost + activity from a claude envelope, for the paths that do NOT own the happy path —
+// notably a TIMED-OUT turn. The 2026-08-11 redactio was killed at 578s of a 600s cap,
+// mid `tool_use`, having spent $3.26; returning on `timedOut` before parsing threw that
+// number away, so an expensive dead turn was recorded as costless. Returns null when the
+// kill left nothing parsable — unknown must stay unknown, never a fabricated zero.
+function claudeEnvelopeMeta(stdout: string): { costUsd?: number; evidence: Evidence } | null {
+  let j: any;
+  try { j = JSON.parse(stdout); } catch { return null; }
+  if (!j || typeof j !== "object") return null;
+  const evidence: Evidence = {
+    ...(typeof j.num_turns === "number" && { agentTurns: j.num_turns }),
+    ...(Array.isArray(j.permission_denials) && { permissionDenials: j.permission_denials.length }),
+  };
+  return { ...(typeof j.total_cost_usd === "number" && { costUsd: j.total_cost_usd }), evidence };
+}
+
 export type ClaudeOpts = { maxBudgetUsd?: number; timeoutMs?: number; effort?: string };
 
 export function claudeAdapter(model = "sonnet", opts: ClaudeOpts = {}): Participant {
@@ -142,7 +159,11 @@ export function claudeAdapter(model = "sonnet", opts: ClaudeOpts = {}): Particip
         // Reasoning effort, to dose token spend. Native flag; values: low|medium|high|xhigh|max.
         ...(opts.effort ? ["--effort", opts.effort] : []),
       ], cwd, timeoutMs);
-      if (r.timedOut) return { ok: false, error: "timeout", raw: r };
+      if (r.timedOut) {
+        // Killed mid-flight, but the partial envelope may still name what it spent.
+        const meta = claudeEnvelopeMeta(r.stdout);
+        return { ok: false, error: "timeout", ...(meta ?? {}), raw: r };
+      }
       const spawnErr = spawnFailure(r);
       if (spawnErr) return { ok: false, error: spawnErr, raw: r };
       try {

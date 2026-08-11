@@ -1,0 +1,1 @@
+{"is_error":true,"duration_api_ms":578241,"num_turns":34,"stop_reason":"tool_use","session_id":"00000000-0000-0000-0000-000000000000","total_cost_usd":3.26,"permission_denials":[],"usage":{"input_tokens":36,"output_tokens":30631}}

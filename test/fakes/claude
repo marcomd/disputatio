@@ -10,6 +10,25 @@ if [ -n "$FAKE_HANG" ]; then
   sleep 8        # outlive the per-test bound unless the whole group is killed
   exit 0
 fi
+# FAKE_HANG_MATCH: emit stdout, then hang, but ONLY when the prompt contains this string.
+# Lets one fake succeed on the respondeo and time out on the redactio in the same run —
+# the exact shape of the 2026-08-11 failure.
+if [ -n "$FAKE_HANG_MATCH" ]; then
+  for a in "$@"; do
+    case "$a" in *"$FAKE_HANG_MATCH"*)
+      [ -n "$FAKE_HANG_STDOUT_FILE" ] && cat "$FAKE_HANG_STDOUT_FILE"
+      sleep 8
+      exit 0 ;;
+    esac
+  done
+fi
+# FAKE_SLEEP_AFTER: emit stdout FIRST, then hang — reproduces a CLI killed mid-flight
+# that had already written a partial envelope (2026-08-11 redactio timeout).
+if [ -n "$FAKE_SLEEP_AFTER" ]; then
+  [ -n "$FAKE_STDOUT_FILE" ] && cat "$FAKE_STDOUT_FILE"
+  sleep "$FAKE_SLEEP_AFTER"
+  exit 0
+fi
 # FAKE_ARGV_FILE: record argv (one arg per line) so tests can assert passed flags.
 [ -n "$FAKE_ARGV_FILE" ] && printf '%s\n' "$@" > "$FAKE_ARGV_FILE"
 [ -n "$FAKE_STDOUT_FILE" ] && cat "$FAKE_STDOUT_FILE"

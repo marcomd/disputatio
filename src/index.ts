@@ -11,7 +11,7 @@ import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { claudeAdapter, agyAdapter, codexAdapter, piAdapter, copilotCliAdapter, type Participant } from "./adapters.ts";
 import { parseDebateConfig, type ParticipantSpec, type DebateConfig } from "./config.ts";
-import { runDebate, runFinalize, runContinuation, parseRespondeoStatus, summarizeEvidence } from "./debate.ts";
+import { runDebate, runFinalize, runContinuation, parseRespondeoStatus, summarizeEvidence, finalizeRetryHint, redactioFailureKind } from "./debate.ts";
 import { runDoctor, allHealthy, formatDiagnoses, CANARY_TIMEOUT_MS } from "./doctor.ts";
 import { resolveConfigText, userConfigPath, runInit } from "./install.ts";
 import { resolveQuaestioInput } from "./quaestio.ts";
@@ -36,6 +36,9 @@ function usage(exitCode: number): never {
   console.error("             worktree of this repo (git repos only; HEAD is what they see)");
   console.error("  --budget   override the judge/synthesizer per-turn budget cap in USD (default: $5);");
   console.error("             use when the redactio fails with 'Reached maximum budget'");
+  console.error("  --timeout  PER-TURN wall-clock cap in minutes (default 10; config: timeoutMinutes).");
+  console.error("             Not a cap on the whole run. The redactio gets 2x this, since its input");
+  console.error("             is the entire transcript. Use when a turn fails with 'timeout'.");
   console.error("  --config   debate.yaml selecting participants/models/budgets + an optional judge");
   console.error("             (see examples/debate.yaml — a TEMPLATE, never auto-loaded). When omitted,");
   console.error(`             reads ${userConfigPath()} if present, else the built-in lineup: claude + codex, no judge`);
@@ -56,6 +59,7 @@ let repoArg: string | undefined;
 let continueArg: string | undefined;
 let debateArg: string | undefined;
 let budgetArg: string | undefined;
+let timeoutArg: string | undefined;
 let finalizeMode = false;
 let doctorMode = false;
 let initMode = false;
@@ -85,6 +89,9 @@ for (let i = 0; i < args.length; i++) {
   } else if (args[i] === "--budget") {
     budgetArg = args[++i];
     if (!budgetArg || isNaN(Number(budgetArg)) || Number(budgetArg) <= 0) usage(1);
+  } else if (args[i] === "--timeout") {
+    timeoutArg = args[++i];
+    if (!timeoutArg || isNaN(Number(timeoutArg)) || Number(timeoutArg) <= 0) usage(1);
   } else if (args[i] === "--doctor") {
     doctorMode = true;
   } else if (args[i] === "--init") {
@@ -185,7 +192,25 @@ const { text: cfgText, source: cfgSource } = await resolveConfigText(configPath)
 const cfg: DebateConfig = cfgText !== null ? parseDebateConfig(cfgText) : {};
 
 const specs: ParticipantSpec[] = cfg.participants ?? DEFAULT_SPECS;
-const timeoutMs = (cfg.timeoutMinutes ?? 10) * 60_000;
+// Precedence mirrors --budget: flag > config > default. PER TURN, not per run.
+const timeoutMs = (Number(timeoutArg) || cfg.timeoutMinutes || 10) * 60_000;
+
+// The redactio reads the ENTIRE transcript and (in repo mode) traverses the repo, as the
+// LAST turn of the run. A uniform per-turn cap fits it worst and costs most when it bites:
+// on 2026-08-11 it was killed at 578s of a 600s cap, mid tool_use, discarding $3.26 and
+// the deliverable. Give the synthesizer room rather than making every debater wait longer.
+const SYNTHESIZER_TIMEOUT_FACTOR = 2;
+const synthTimeoutMs = timeoutMs * SYNTHESIZER_TIMEOUT_FACTOR;
+
+// What to propose after a redactio failure. The synthesizer already ran at
+// SYNTHESIZER_TIMEOUT_FACTOR x the per-turn cap, so suggesting the current --timeout back
+// would be advice it has already tried; propose the value that DOUBLES what it just had.
+// Budget likewise doubles the cap that was actually in force for the judge/synthesizer.
+const retrySuggestion = (kind: "timeout" | "budget" | "other"): number | undefined => {
+  if (kind === "timeout") return (timeoutMs / 60_000) * 2;
+  if (kind === "budget") return (Number(budgetArg) || cfg.judge?.maxBudgetUsd || 5) * 2;
+  return undefined;
+};
 
 // --doctor: preflight only — needs the lineup (+ optional --config), nothing else.
 // Branch BEFORE the task-file/rounds/repo logic so `--doctor` never gets mistaken
@@ -212,6 +237,8 @@ if (continueArg !== undefined || finalizeMode) {
   const transcript = await readFile(`${dir}/debate.md`, "utf8");
   const quaestio = extractTask(transcript);
   const judge = buildParticipant(withBudget(cfg.judge ?? DEFAULT_JUDGE), timeoutMs);
+  // Same model and budget, more wall-clock — see SYNTHESIZER_TIMEOUT_FACTOR.
+  const synthesizer = buildParticipant(withBudget(cfg.judge ?? DEFAULT_JUDGE), synthTimeoutMs);
   console.error(`[disputatio] config: ${cfgSource}`);
 
   // --repo grounds ONLY the redactio (the deliverable), in a read-only worktree of HEAD.
@@ -237,12 +264,10 @@ if (continueArg !== undefined || finalizeMode) {
       process.exit(1);
     }
     console.error(`[disputatio] finalize — drafting deliverable for ${dir} with ${judge.display}`);
-    const fin = await runFinalize(judge, quaestio, transcript, prevDetermination, finalizeRepo);
+    const fin = await runFinalize(synthesizer, quaestio, transcript, prevDetermination, finalizeRepo);
     await writeFile(`${dir}/raw/finalize-respondeo.json`, JSON.stringify(fin, null, 2), "utf8");
     if (!fin.result.ok) {
-      const hint = fin.result.budgetExhausted
-        ? `\n[disputatio]    retry: disputatio --finalize --budget <usd> --debate ${dir}${finalizeRepo ? ` --repo ${finalizeRepo}` : ""}`
-        : "";
+      const hint = `\n[disputatio]    retry: ${finalizeRetryHint(redactioFailureKind(fin.result), dir, finalizeRepo, retrySuggestion(redactioFailureKind(fin.result)))}`;
       console.error(`[disputatio] finalize FAILED: ${fin.result.error}${hint}`);
       process.exit(1);
     }
@@ -276,16 +301,14 @@ if (continueArg !== undefined || finalizeMode) {
   }
 
   // RESOLVED → author the deliverable (final-report.md is overwritten: it is the CURRENT deliverable).
-  const fin = await runFinalize(judge, quaestio, transcript, turn.result.text, finalizeRepo);
+  const fin = await runFinalize(synthesizer, quaestio, transcript, turn.result.text, finalizeRepo);
   await writeFile(`${dir}/raw/continue-${nextNum}-final-report.json`, JSON.stringify(fin, null, 2), "utf8");
   if (fin.result.ok) {
     await writeFile(`${dir}/final-report.md`, fin.result.text, "utf8");
     console.error(`[disputatio] final report: ${dir}/final-report.md`);
     console.log(`${dir}/final-report.md`);
   } else {
-    const hint = fin.result.budgetExhausted
-      ? `\n[disputatio]    retry: disputatio --finalize --budget <usd> --debate ${dir}${finalizeRepo ? ` --repo ${finalizeRepo}` : ""}`
-      : "";
+    const hint = `\n[disputatio]    retry: ${finalizeRetryHint(redactioFailureKind(fin.result), dir, finalizeRepo, retrySuggestion(redactioFailureKind(fin.result)))}`;
     console.error(`[disputatio] ⚠️ finalize failed: ${fin.result.error}${hint}`);
     console.log(respPath);
   }
@@ -338,6 +361,7 @@ if (vendors.size < participants.length) {
 }
 
 const judge = cfg.judge ? buildParticipant(withBudget(cfg.judge), timeoutMs) : undefined;
+const synthesizer = cfg.judge ? buildParticipant(withBudget(cfg.judge), synthTimeoutMs) : undefined;
 
 // Correlated-error guard for the judge. display encodes adapter+model, so an exact
 // match means a debater is grading its OWN argument (same vendor AND model) — the loud
@@ -350,7 +374,7 @@ if (judge) {
   }
 }
 
-const outcome = await runDebate(task, participants, rounds, repoPath, judge);
+const outcome = await runDebate(task, participants, rounds, repoPath, judge, synthesizer);
 
 const id = `debate-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 const dir = `.debate/${id}`;
@@ -415,9 +439,10 @@ if (outcome.finalReport) {
   await writeFile(`${dir}/final-report.md`, outcome.finalReport.text, "utf8");
   console.error(`[disputatio] final report: ${dir}/final-report.md`);
 } else if (outcome.finalReportError) {
-  const hint = outcome.finalReportError.budgetExhausted
-    ? `\n[disputatio]    retry: disputatio --finalize --budget <usd> --debate ${dir}${repoPath ? ` --repo ${repoPath}` : ""}`
-    : "";
+  // ALWAYS printed. The debate + a RESOLVED respondeo are already on disk, so this failure
+  // is recoverable — and on 2026-08-11 the recovery went unmentioned precisely because the
+  // failure was a timeout rather than budget exhaustion.
+  const hint = `\n[disputatio]    retry: ${finalizeRetryHint(outcome.finalReportError.kind, dir, repoPath, retrySuggestion(outcome.finalReportError.kind))}`;
   console.error(`[disputatio] ⚠️ redactio failed: ${outcome.finalReportError.message}${hint}`);
 }
 

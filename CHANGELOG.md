@@ -2,6 +2,42 @@
 
 All notable changes to Disputatio are documented here.
 
+## [0.9.0] — recoverable redactio: `--timeout`, unconditional retry hint, honest timeout cost
+
+The 2026-08-11 run produced a RESOLVED verdict and then lost its deliverable to a
+per-turn timeout. The CLI printed `⚠️ redactio failed: timeout` and stopped — even though
+`--finalize` would have recovered it from the saved respondeo, and even though the killed
+turn had already spent $3.26. Three separate defects, one bad experience.
+
+- **`--timeout <minutes>`** — per-TURN wall-clock cap, exposed as a flag. The
+  `timeoutMinutes` config key already existed; only the CLI override was missing.
+  Precedence mirrors `--budget`: flag > config > default 10. `--help` says explicitly that
+  it is per turn, not per run.
+- **The synthesizer gets 2x the cap.** The redactio reads the ENTIRE transcript, traverses
+  the repo, and is the LAST turn, so a uniform per-turn cap fits it worst and costs most
+  when it bites: the 2026-08-11 redactio was killed at 578s of 600s, mid `tool_use`, at
+  `num_turns: 34`. `runDebate` takes an optional `synthesizer` participant (defaults to the
+  judge) — same model and budget, more wall-clock.
+- **The retry hint is now printed for EVERY redactio failure**, not only budget
+  exhaustion, via one `finalizeRetryHint()` helper shared by all three call sites. The
+  suggested flag varies by cause: `--timeout` on timeout, `--budget` on exhaustion, bare
+  retry otherwise. `finalReportError` carries a `kind` so the cause is not re-derived from
+  an error string. The hint is **copy-pasteable**: it names a concrete value rather than a
+  `<minutes>` placeholder, and that value doubles what the synthesizer actually had (it
+  already ran at 2x the per-turn cap, so echoing the current `--timeout` back would be
+  advice it has just tried).
+- **A timed-out claude turn reports the cost it already spent.** The adapter returned on
+  `timedOut` before parsing stdout, discarding the partial envelope's `total_cost_usd` and
+  `num_turns`. It now salvages both — and still returns `null`/undefined when the kill left
+  nothing parsable, so unknown stays unknown. `AgentResult`'s failure branch gained
+  `costUsd`, and the transcript renders `_(spent before failing: $X)_` on failed turns.
+
+**Deliberately NOT added: an interactive "continue or exit?" prompt.** The failure is
+already recoverable from disk, so the only useful answer to such a prompt is a command the
+tool can simply print. Blocking on stdin would also break unattended and agent-driven runs
+(stdout is the artifact path, by invariant), and a question asked ~25 minutes in, when
+nobody is watching, helps least.
+
 ## [0.8.0] — Tier-0 turn instrumentation + the evidence-validity check (P1)
 
 `4_PLAN.md` §11's P1, the gate-blocking increment: until now Disputatio could not enforce,

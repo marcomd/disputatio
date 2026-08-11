@@ -363,3 +363,28 @@ test("evidence counting tolerates a stream with no tool activity", async () => {
   assert.equal(r.ok, true);
   assert.equal(r.evidence?.ranCommands, 0);
 });
+
+// --- Timeout accounting (2026-08-11 redactio) ------------------------------------------
+
+test("claude: a timed-out turn still reports the cost it already spent", async () => {
+  // The 2026-08-11 redactio was killed at 578s of a 600s cap, mid `tool_use`, having
+  // spent $3.26. The adapter returned on `timedOut` BEFORE parsing stdout, so that cost
+  // vanished from every artifact — a $3.26 turn recorded as costless is the same class of
+  // error as an unknown read as a zero.
+  process.env.FAKE_STDOUT_FILE = join(fixtures, "claude-timeout-partial.json");
+  process.env.FAKE_SLEEP_AFTER = "5";
+  const r = await claudeAdapter("opus", { timeoutMs: 300 }).run("ping", cwd);
+  assert.equal(r.ok, false);
+  assert.equal(!r.ok && r.error, "timeout");   // still a timeout, still a failure
+  assert.equal(r.costUsd, 3.26);               // …but the spend is not silently dropped
+  assert.equal(r.evidence?.agentTurns, 34);    // and the work it did is still visible
+});
+
+test("claude: a timeout with NO parsable output reports no cost, not a fake zero", async () => {
+  process.env.FAKE_SLEEP = "5"; // killed before writing anything
+  const r = await claudeAdapter("opus", { timeoutMs: 300 }).run("ping", cwd);
+  assert.equal(r.ok, false);
+  assert.equal(!r.ok && r.error, "timeout");
+  assert.equal(r.costUsd, undefined);
+  assert.equal(r.evidence, undefined);
+});

@@ -938,6 +938,105 @@
       "norm_label": "total_cost_usd"
     },
     {
+      "label": "claude-timeout-partial.json",
+      "file_type": "code",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "id": "test_fixtures_claude_timeout_partial_json",
+      "community": 56,
+      "norm_label": "claude-timeout-partial.json"
+    },
+    {
+      "label": "is_error",
+      "file_type": "code",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "id": "fixtures_claude_timeout_partial_is_error",
+      "community": 56,
+      "norm_label": "is_error"
+    },
+    {
+      "label": "duration_api_ms",
+      "file_type": "code",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "id": "fixtures_claude_timeout_partial_duration_api_ms",
+      "community": 56,
+      "norm_label": "duration_api_ms"
+    },
+    {
+      "label": "num_turns",
+      "file_type": "code",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "id": "fixtures_claude_timeout_partial_num_turns",
+      "community": 56,
+      "norm_label": "num_turns"
+    },
+    {
+      "label": "stop_reason",
+      "file_type": "code",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "id": "fixtures_claude_timeout_partial_stop_reason",
+      "community": 56,
+      "norm_label": "stop_reason"
+    },
+    {
+      "label": "session_id",
+      "file_type": "code",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "id": "fixtures_claude_timeout_partial_session_id",
+      "community": 56,
+      "norm_label": "session_id"
+    },
+    {
+      "label": "total_cost_usd",
+      "file_type": "code",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "id": "fixtures_claude_timeout_partial_total_cost_usd",
+      "community": 56,
+      "norm_label": "total_cost_usd"
+    },
+    {
+      "label": "permission_denials",
+      "file_type": "code",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "id": "fixtures_claude_timeout_partial_permission_denials",
+      "community": 56,
+      "norm_label": "permission_denials"
+    },
+    {
+      "label": "usage",
+      "file_type": "code",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "id": "fixtures_claude_timeout_partial_usage",
+      "community": 56,
+      "norm_label": "usage"
+    },
+    {
+      "label": "input_tokens",
+      "file_type": "code",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "id": "fixtures_claude_timeout_partial_usage_input_tokens",
+      "community": 56,
+      "norm_label": "input_tokens"
+    },
+    {
+      "label": "output_tokens",
+      "file_type": "code",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "id": "fixtures_claude_timeout_partial_usage_output_tokens",
+      "community": 56,
+      "norm_label": "output_tokens"
+    },
+    {
       "label": "settings.json",
       "file_type": "code",
       "source_file": ".claude/settings.json",
@@ -1154,10 +1253,19 @@
       "norm_label": "spawnfailure()"
     },
     {
+      "label": "claudeEnvelopeMeta()",
+      "file_type": "code",
+      "source_file": "src/adapters.ts",
+      "source_location": "L123",
+      "id": "src_adapters_claudeenvelopemeta",
+      "community": 45,
+      "norm_label": "claudeenvelopemeta()"
+    },
+    {
       "label": "ClaudeOpts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L117",
+      "source_location": "L134",
       "id": "src_adapters_claudeopts",
       "community": 45,
       "norm_label": "claudeopts"
@@ -1166,7 +1274,7 @@
       "label": "claudeAdapter()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L119",
+      "source_location": "L136",
       "id": "src_adapters_claudeadapter",
       "community": 45,
       "norm_label": "claudeadapter()"
@@ -1175,7 +1283,7 @@
       "label": "AgyOpts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L180",
+      "source_location": "L201",
       "id": "src_adapters_agyopts",
       "community": 45,
       "norm_label": "agyopts"
@@ -1184,7 +1292,7 @@
       "label": "agyAdapter()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L182",
+      "source_location": "L203",
       "id": "src_adapters_agyadapter",
       "community": 45,
       "norm_label": "agyadapter()"
@@ -1193,7 +1301,7 @@
       "label": "CODEX_TOOL_ITEMS",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L215",
+      "source_location": "L236",
       "id": "src_adapters_codex_tool_items",
       "community": 45,
       "norm_label": "codex_tool_items"
@@ -1202,7 +1310,7 @@
       "label": "CodexOpts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L218",
+      "source_location": "L239",
       "id": "src_adapters_codexopts",
       "community": 45,
       "norm_label": "codexopts"
@@ -1211,7 +1319,7 @@
       "label": "codexAdapter()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L220",
+      "source_location": "L241",
       "id": "src_adapters_codexadapter",
       "community": 45,
       "norm_label": "codexadapter()"
@@ -1220,7 +1328,7 @@
       "label": "PiOpts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L285",
+      "source_location": "L306",
       "id": "src_adapters_piopts",
       "community": 45,
       "norm_label": "piopts"
@@ -1229,7 +1337,7 @@
       "label": "piAdapter()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L287",
+      "source_location": "L308",
       "id": "src_adapters_piadapter",
       "community": 45,
       "norm_label": "piadapter()"
@@ -1238,7 +1346,7 @@
       "label": "piMessageText()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L343",
+      "source_location": "L364",
       "id": "src_adapters_pimessagetext",
       "community": 45,
       "norm_label": "pimessagetext()"
@@ -1247,7 +1355,7 @@
       "label": "CopilotCliOpts",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L353",
+      "source_location": "L374",
       "id": "src_adapters_copilotcliopts",
       "community": 45,
       "norm_label": "copilotcliopts"
@@ -1256,7 +1364,7 @@
       "label": "copilotCliAdapter()",
       "file_type": "code",
       "source_file": "src/adapters.ts",
-      "source_location": "L355",
+      "source_location": "L376",
       "id": "src_adapters_copilotcliadapter",
       "community": 45,
       "norm_label": "copilotcliadapter()"
@@ -1429,7 +1537,7 @@
       "source_file": "src/install.ts",
       "source_location": "L112",
       "id": "src_install_defaultcanary",
-      "community": 1,
+      "community": 47,
       "norm_label": "defaultcanary()"
     },
     {
@@ -1526,7 +1634,7 @@
       "label": "render()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L62",
+      "source_location": "L63",
       "id": "src_debate_render",
       "community": 1,
       "norm_label": "render()"
@@ -1535,7 +1643,7 @@
       "label": "renderForContext()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L72",
+      "source_location": "L76",
       "id": "src_debate_renderforcontext",
       "community": 1,
       "norm_label": "renderforcontext()"
@@ -1544,7 +1652,7 @@
       "label": "gitLock",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L79",
+      "source_location": "L83",
       "id": "src_debate_gitlock",
       "community": 1,
       "norm_label": "gitlock"
@@ -1553,25 +1661,25 @@
       "label": "withGitLock()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L80",
+      "source_location": "L84",
       "id": "src_debate_withgitlock",
-      "community": 1,
+      "community": 47,
       "norm_label": "withgitlock()"
     },
     {
       "label": "runIsolated()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L99",
+      "source_location": "L103",
       "id": "src_debate_runisolated",
-      "community": 1,
+      "community": 47,
       "norm_label": "runisolated()"
     },
     {
       "label": "proposePrompt()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L134",
+      "source_location": "L138",
       "id": "src_debate_proposeprompt",
       "community": 1,
       "norm_label": "proposeprompt()"
@@ -1580,7 +1688,7 @@
       "label": "reactPrompt()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L140",
+      "source_location": "L144",
       "id": "src_debate_reactprompt",
       "community": 1,
       "norm_label": "reactprompt()"
@@ -1589,7 +1697,7 @@
       "label": "respondeoPrompt()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L151",
+      "source_location": "L155",
       "id": "src_debate_respondeoprompt",
       "community": 1,
       "norm_label": "respondeoprompt()"
@@ -1598,7 +1706,7 @@
       "label": "parseRespondeoStatus()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L169",
+      "source_location": "L173",
       "id": "src_debate_parserespondeostatus",
       "community": 1,
       "norm_label": "parserespondeostatus()"
@@ -1607,7 +1715,7 @@
       "label": "finalizePrompt()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L180",
+      "source_location": "L184",
       "id": "src_debate_finalizeprompt",
       "community": 1,
       "norm_label": "finalizeprompt()"
@@ -1616,7 +1724,7 @@
       "label": "continuePrompt()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L209",
+      "source_location": "L213",
       "id": "src_debate_continueprompt",
       "community": 1,
       "norm_label": "continueprompt()"
@@ -1625,7 +1733,7 @@
       "label": "EvidenceSummary",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L233",
+      "source_location": "L237",
       "id": "src_debate_evidencesummary",
       "community": 1,
       "norm_label": "evidencesummary"
@@ -1634,7 +1742,7 @@
       "label": "EVIDENCE_PHASES",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L245",
+      "source_location": "L249",
       "id": "src_debate_evidence_phases",
       "community": 1,
       "norm_label": "evidence_phases"
@@ -1643,7 +1751,7 @@
       "label": "summarizeEvidence()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L247",
+      "source_location": "L251",
       "id": "src_debate_summarizeevidence",
       "community": 1,
       "norm_label": "summarizeevidence()"
@@ -1652,16 +1760,43 @@
       "label": "toTurn()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L282",
+      "source_location": "L286",
       "id": "src_debate_toturn",
       "community": 1,
       "norm_label": "toturn()"
     },
     {
+      "label": "RedactioFailure",
+      "file_type": "code",
+      "source_file": "src/debate.ts",
+      "source_location": "L312",
+      "id": "src_debate_redactiofailure",
+      "community": 1,
+      "norm_label": "redactiofailure"
+    },
+    {
+      "label": "redactioFailureKind()",
+      "file_type": "code",
+      "source_file": "src/debate.ts",
+      "source_location": "L316",
+      "id": "src_debate_redactiofailurekind",
+      "community": 1,
+      "norm_label": "redactiofailurekind()"
+    },
+    {
+      "label": "finalizeRetryHint()",
+      "file_type": "code",
+      "source_file": "src/debate.ts",
+      "source_location": "L325",
+      "id": "src_debate_finalizeretryhint",
+      "community": 1,
+      "norm_label": "finalizeretryhint()"
+    },
+    {
       "label": "runFinalize()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L303",
+      "source_location": "L340",
       "id": "src_debate_runfinalize",
       "community": 1,
       "norm_label": "runfinalize()"
@@ -1670,7 +1805,7 @@
       "label": "runContinuation()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L311",
+      "source_location": "L348",
       "id": "src_debate_runcontinuation",
       "community": 1,
       "norm_label": "runcontinuation()"
@@ -1679,7 +1814,7 @@
       "label": "runDebate()",
       "file_type": "code",
       "source_file": "src/debate.ts",
-      "source_location": "L318",
+      "source_location": "L355",
       "id": "src_debate_rundebate",
       "community": 1,
       "norm_label": "rundebate()"
@@ -1742,7 +1877,7 @@
       "label": "args",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L49",
+      "source_location": "L52",
       "id": "src_index_args",
       "community": 46,
       "norm_label": "args"
@@ -1751,7 +1886,7 @@
       "label": "positionals",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L63",
+      "source_location": "L67",
       "id": "src_index_positionals",
       "community": 46,
       "norm_label": "positionals"
@@ -1760,7 +1895,7 @@
       "label": "DEFAULT_SPECS",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L102",
+      "source_location": "L109",
       "id": "src_index_default_specs",
       "community": 46,
       "norm_label": "default_specs"
@@ -1769,7 +1904,7 @@
       "label": "DEFAULT_JUDGE",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L103",
+      "source_location": "L110",
       "id": "src_index_default_judge",
       "community": 46,
       "norm_label": "default_judge"
@@ -1778,7 +1913,7 @@
       "label": "buildParticipant()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L105",
+      "source_location": "L112",
       "id": "src_index_buildparticipant",
       "community": 45,
       "norm_label": "buildparticipant()"
@@ -1787,7 +1922,7 @@
       "label": "withBudget()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L120",
+      "source_location": "L127",
       "id": "src_index_withbudget",
       "community": 46,
       "norm_label": "withbudget()"
@@ -1796,7 +1931,7 @@
       "label": "respondeoNum()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L127",
+      "source_location": "L134",
       "id": "src_index_respondeonum",
       "community": 46,
       "norm_label": "respondeonum()"
@@ -1805,7 +1940,7 @@
       "label": "resolveDebateDir()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L134",
+      "source_location": "L141",
       "id": "src_index_resolvedebatedir",
       "community": 46,
       "norm_label": "resolvedebatedir()"
@@ -1814,7 +1949,7 @@
       "label": "loadLatestRespondeo()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L145",
+      "source_location": "L152",
       "id": "src_index_loadlatestrespondeo",
       "community": 46,
       "norm_label": "loadlatestrespondeo()"
@@ -1823,16 +1958,25 @@
       "label": "extractTask()",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L159",
+      "source_location": "L166",
       "id": "src_index_extracttask",
       "community": 46,
       "norm_label": "extracttask()"
     },
     {
+      "label": "retrySuggestion()",
+      "file_type": "code",
+      "source_file": "src/index.ts",
+      "source_location": "L209",
+      "id": "src_index_retrysuggestion",
+      "community": 46,
+      "norm_label": "retrysuggestion()"
+    },
+    {
       "label": "input",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L296",
+      "source_location": "L319",
       "id": "src_index_input",
       "community": 46,
       "norm_label": "input"
@@ -1841,7 +1985,7 @@
       "label": "participants",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L333",
+      "source_location": "L356",
       "id": "src_index_participants",
       "community": 46,
       "norm_label": "participants"
@@ -1850,7 +1994,7 @@
       "label": "vendors",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L335",
+      "source_location": "L358",
       "id": "src_index_vendors",
       "community": 46,
       "norm_label": "vendors"
@@ -1859,7 +2003,7 @@
       "label": "ev",
       "file_type": "code",
       "source_file": "src/index.ts",
-      "source_location": "L373",
+      "source_location": "L397",
       "id": "src_index_ev",
       "community": 46,
       "norm_label": "ev"
@@ -2018,10 +2162,19 @@
       "norm_label": "changelog"
     },
     {
-      "label": "[0.8.0] \u2014 Tier-0 turn instrumentation + the evidence-validity check (P1)",
+      "label": "[0.9.0] \u2014 recoverable redactio: `--timeout`, unconditional retry hint, honest timeout cost",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
       "source_location": "L5",
+      "id": "disputatio_changelog_0_9_0_recoverable_redactio_timeout_unconditional_retry_hint_honest_timeout_cost",
+      "community": 35,
+      "norm_label": "[0.9.0] \u2014 recoverable redactio: `--timeout`, unconditional retry hint, honest timeout cost"
+    },
+    {
+      "label": "[0.8.0] \u2014 Tier-0 turn instrumentation + the evidence-validity check (P1)",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L41",
       "id": "disputatio_changelog_0_8_0_tier_0_turn_instrumentation_the_evidence_validity_check_p1",
       "community": 35,
       "norm_label": "[0.8.0] \u2014 tier-0 turn instrumentation + the evidence-validity check (p1)"
@@ -2030,7 +2183,7 @@
       "label": "[0.7.2] \u2014 fix gate design flaws and metric formulas found in review (docs only)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L48",
+      "source_location": "L84",
       "id": "disputatio_changelog_0_7_2_fix_gate_design_flaws_and_metric_formulas_found_in_review_docs_only",
       "community": 35,
       "norm_label": "[0.7.2] \u2014 fix gate design flaws and metric formulas found in review (docs only)"
@@ -2039,7 +2192,7 @@
       "label": "[0.7.1] \u2014 roadmap refresh + protocol KPI spec (docs only)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L109",
+      "source_location": "L145",
       "id": "disputatio_changelog_0_7_1_roadmap_refresh_protocol_kpi_spec_docs_only",
       "community": 35,
       "norm_label": "[0.7.1] \u2014 roadmap refresh + protocol kpi spec (docs only)"
@@ -2048,7 +2201,7 @@
       "label": "[0.7.0] \u2014 add GitHub Copilot CLI adapter",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L158",
+      "source_location": "L194",
       "id": "disputatio_changelog_0_7_0_add_github_copilot_cli_adapter",
       "community": 35,
       "norm_label": "[0.7.0] \u2014 add github copilot cli adapter"
@@ -2057,7 +2210,7 @@
       "label": "[0.6.1] \u2014 refresh agent guidance and package docs",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L164",
+      "source_location": "L200",
       "id": "disputatio_changelog_0_6_1_refresh_agent_guidance_and_package_docs",
       "community": 35,
       "norm_label": "[0.6.1] \u2014 refresh agent guidance and package docs"
@@ -2066,7 +2219,7 @@
       "label": "[0.6.0] \u2014 add Pi (earendil-works/pi) adapter",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L172",
+      "source_location": "L208",
       "id": "disputatio_changelog_0_6_0_add_pi_earendil_works_pi_adapter",
       "community": 35,
       "norm_label": "[0.6.0] \u2014 add pi (earendil-works/pi) adapter"
@@ -2075,7 +2228,7 @@
       "label": "[0.5.2] \u2014 test: lock --max-budget-usd default and override",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L185",
+      "source_location": "L221",
       "id": "disputatio_changelog_0_5_2_test_lock_max_budget_usd_default_and_override",
       "community": 35,
       "norm_label": "[0.5.2] \u2014 test: lock --max-budget-usd default and override"
@@ -2084,7 +2237,7 @@
       "label": "[0.5.1] \u2014 raise default judge budget from $2 to $5",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L191",
+      "source_location": "L227",
       "id": "disputatio_changelog_0_5_1_raise_default_judge_budget_from_2_to_5",
       "community": 35,
       "norm_label": "[0.5.1] \u2014 raise default judge budget from $2 to $5"
@@ -2093,7 +2246,7 @@
       "label": "[0.5.0] \u2014 `--budget` flag + structured budget-exhaustion detection",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L200",
+      "source_location": "L236",
       "id": "disputatio_changelog_0_5_0_budget_flag_structured_budget_exhaustion_detection",
       "community": 35,
       "norm_label": "[0.5.0] \u2014 `--budget` flag + structured budget-exhaustion detection"
@@ -2102,7 +2255,7 @@
       "label": "[0.4.0] \u2014 redactio (final deliverable) + `--continue` / `--finalize` / `--debate`",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L224",
+      "source_location": "L260",
       "id": "disputatio_changelog_0_4_0_redactio_final_deliverable_continue_finalize_debate",
       "community": 35,
       "norm_label": "[0.4.0] \u2014 redactio (final deliverable) + `--continue` / `--finalize` / `--debate`"
@@ -2111,7 +2264,7 @@
       "label": "[0.3.0] \u2014 inline quaestio by default; `--rounds`/`--repo` flags",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L260",
+      "source_location": "L296",
       "id": "disputatio_changelog_0_3_0_inline_quaestio_by_default_rounds_repo_flags",
       "community": 35,
       "norm_label": "[0.3.0] \u2014 inline quaestio by default; `--rounds`/`--repo` flags"
@@ -2120,7 +2273,7 @@
       "label": "[0.2.2] \u2014 fix: The npm doc now has a short version that links to the one on github",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L285",
+      "source_location": "L321",
       "id": "disputatio_changelog_0_2_2_fix_the_npm_doc_now_has_a_short_version_that_links_to_the_one_on_github",
       "community": 35,
       "norm_label": "[0.2.2] \u2014 fix: the npm doc now has a short version that links to the one on github"
@@ -2129,7 +2282,7 @@
       "label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled JS)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L287",
+      "source_location": "L323",
       "id": "disputatio_changelog_0_2_1_fix_the_published_binary_couldn_t_run_ship_bundled_js",
       "community": 35,
       "norm_label": "[0.2.1] \u2014 fix: the published binary couldn't run (ship bundled js)"
@@ -2138,7 +2291,7 @@
       "label": "[0.2.0] \u2014 portable config + installable `disputatio` binary",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L305",
+      "source_location": "L341",
       "id": "disputatio_changelog_0_2_0_portable_config_installable_disputatio_binary",
       "community": 35,
       "norm_label": "[0.2.0] \u2014 portable config + installable `disputatio` binary"
@@ -2147,7 +2300,7 @@
       "label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L333",
+      "source_location": "L369",
       "id": "disputatio_changelog_0_1_0_respondeo_the_judge_stage_first_scholastic_protocol_step",
       "community": 35,
       "norm_label": "[0.1.0] \u2014 `respondeo`: the judge stage (first scholastic-protocol step)"
@@ -2156,7 +2309,7 @@
       "label": "[0.0.6] \u2014 Per-participant reasoning `effort` in `debate.yaml`",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L375",
+      "source_location": "L411",
       "id": "disputatio_changelog_0_0_6_per_participant_reasoning_effort_in_debate_yaml",
       "community": 35,
       "norm_label": "[0.0.6] \u2014 per-participant reasoning `effort` in `debate.yaml`"
@@ -2165,7 +2318,7 @@
       "label": "[0.0.5] \u2014 Process-group kill + first three-vendor repo-grounded run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L395",
+      "source_location": "L431",
       "id": "disputatio_changelog_0_0_5_process_group_kill_first_three_vendor_repo_grounded_run",
       "community": 35,
       "norm_label": "[0.0.5] \u2014 process-group kill + first three-vendor repo-grounded run"
@@ -2174,7 +2327,7 @@
       "label": "[0.0.4] \u2014 `doctor` preflight (M0, canary half)",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L414",
+      "source_location": "L450",
       "id": "disputatio_changelog_0_0_4_doctor_preflight_m0_canary_half",
       "community": 35,
       "norm_label": "[0.0.4] \u2014 `doctor` preflight (m0, canary half)"
@@ -2183,7 +2336,7 @@
       "label": "[0.0.3] \u2014 Hardening after the first real-repo run",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L444",
+      "source_location": "L480",
       "id": "disputatio_changelog_0_0_3_hardening_after_the_first_real_repo_run",
       "community": 35,
       "norm_label": "[0.0.3] \u2014 hardening after the first real-repo run"
@@ -2192,7 +2345,7 @@
       "label": "[0.0.2] \u2014 Agent tooling & knowledge graph",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L477",
+      "source_location": "L513",
       "id": "disputatio_changelog_0_0_2_agent_tooling_knowledge_graph",
       "community": 35,
       "norm_label": "[0.0.2] \u2014 agent tooling & knowledge graph"
@@ -2201,7 +2354,7 @@
       "label": "[0.0.1] \u2014 Kaizen MVP v0",
       "file_type": "document",
       "source_file": "CHANGELOG.md",
-      "source_location": "L492",
+      "source_location": "L528",
       "id": "disputatio_changelog_0_0_1_kaizen_mvp_v0",
       "community": 35,
       "norm_label": "[0.0.1] \u2014 kaizen mvp v0"
@@ -2516,7 +2669,7 @@
       "label": "Architecture (seven files, clean layers)",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L80",
+      "source_location": "L84",
       "id": "disputatio_claude_architecture_seven_files_clean_layers",
       "community": 29,
       "norm_label": "architecture (seven files, clean layers)"
@@ -2525,7 +2678,7 @@
       "label": "Non-obvious invariants \u2014 do not break these",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L139",
+      "source_location": "L143",
       "id": "disputatio_claude_non_obvious_invariants_do_not_break_these",
       "community": 29,
       "norm_label": "non-obvious invariants \u2014 do not break these"
@@ -2534,7 +2687,7 @@
       "label": "Best practices",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L190",
+      "source_location": "L205",
       "id": "disputatio_claude_best_practices",
       "community": 29,
       "norm_label": "best practices"
@@ -2543,7 +2696,7 @@
       "label": "Known v0 limitations (summary of `docs/4_PLAN.md` \u00a711)",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L210",
+      "source_location": "L225",
       "id": "disputatio_claude_known_v0_limitations_summary_of_docs_4_plan_md_11",
       "community": 29,
       "norm_label": "known v0 limitations (summary of `docs/4_plan.md` \u00a711)"
@@ -2552,7 +2705,7 @@
       "label": "Design docs",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L234",
+      "source_location": "L249",
       "id": "disputatio_claude_design_docs",
       "community": 29,
       "norm_label": "design docs"
@@ -2561,7 +2714,7 @@
       "label": "Private area",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L247",
+      "source_location": "L262",
       "id": "disputatio_claude_private_area",
       "community": 29,
       "norm_label": "private area"
@@ -2570,7 +2723,7 @@
       "label": "Versioning \u2014 do this at the end of every change",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L258",
+      "source_location": "L273",
       "id": "disputatio_claude_versioning_do_this_at_the_end_of_every_change",
       "community": 29,
       "norm_label": "versioning \u2014 do this at the end of every change"
@@ -2579,7 +2732,7 @@
       "label": "graphify",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L282",
+      "source_location": "L297",
       "id": "disputatio_claude_graphify",
       "community": 29,
       "norm_label": "graphify"
@@ -3047,7 +3200,7 @@
       "label": "What this run says about priority",
       "file_type": "document",
       "source_file": "research/run-2026-08-04-shell-less-adapters-and-worktrees.md",
-      "source_location": "L135",
+      "source_location": "L136",
       "id": "research_run_2026_08_04_shell_less_adapters_and_worktrees_what_this_run_says_about_priority",
       "community": 54,
       "norm_label": "what this run says about priority"
@@ -3339,6 +3492,78 @@
       "id": "research_pre_m0_handrun_implication_for_next_steps",
       "community": 31,
       "norm_label": "implication for next steps"
+    },
+    {
+      "label": "run-2026-08-11-redactio-timeout.md",
+      "file_type": "document",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L1",
+      "id": "research_run_2026_08_11_redactio_timeout_md",
+      "community": 57,
+      "norm_label": "run-2026-08-11-redactio-timeout.md"
+    },
+    {
+      "label": "Real run, 2026-08-11 \u2014 the redactio timeout, and why it looked like a lost run",
+      "file_type": "document",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L1",
+      "id": "research_run_2026_08_11_redactio_timeout_real_run_2026_08_11_the_redactio_timeout_and_why_it_looked_like_a_lost_run",
+      "community": 57,
+      "norm_label": "real run, 2026-08-11 \u2014 the redactio timeout, and why it looked like a lost run"
+    },
+    {
+      "label": "What happened",
+      "file_type": "document",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L7",
+      "id": "research_run_2026_08_11_redactio_timeout_what_happened",
+      "community": 57,
+      "norm_label": "what happened"
+    },
+    {
+      "label": "What the killed turn actually cost",
+      "file_type": "document",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L19",
+      "id": "research_run_2026_08_11_redactio_timeout_what_the_killed_turn_actually_cost",
+      "community": 57,
+      "norm_label": "what the killed turn actually cost"
+    },
+    {
+      "label": "Three distinct defects",
+      "file_type": "document",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L35",
+      "id": "research_run_2026_08_11_redactio_timeout_three_distinct_defects",
+      "community": 57,
+      "norm_label": "three distinct defects"
+    },
+    {
+      "label": "Fixed in v0.9.0",
+      "file_type": "document",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L54",
+      "id": "research_run_2026_08_11_redactio_timeout_fixed_in_v0_9_0",
+      "community": 57,
+      "norm_label": "fixed in v0.9.0"
+    },
+    {
+      "label": "Rejected: an interactive \"continue or exit?\" prompt",
+      "file_type": "document",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L62",
+      "id": "research_run_2026_08_11_redactio_timeout_rejected_an_interactive_continue_or_exit_prompt",
+      "community": 57,
+      "norm_label": "rejected: an interactive \"continue or exit?\" prompt"
+    },
+    {
+      "label": "Note for the next timeout",
+      "file_type": "document",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L73",
+      "id": "research_run_2026_08_11_redactio_timeout_note_for_the_next_timeout",
+      "community": 57,
+      "norm_label": "note for the next timeout"
     },
     {
       "label": "real-run-2026-06-23-phrase-removal-anonymized.md",
@@ -7937,6 +8162,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "test_debate_test_ts",
+      "target": "src_debate_finalizeretryhint"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "test/debate.test.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_debate_test_ts",
       "target": "src_debate_parserespondeostatus"
     },
     {
@@ -8619,6 +8855,106 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_fixtures_claude_timeout_partial_json",
+      "target": "fixtures_claude_timeout_partial_duration_api_ms"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_fixtures_claude_timeout_partial_json",
+      "target": "fixtures_claude_timeout_partial_is_error"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_fixtures_claude_timeout_partial_json",
+      "target": "fixtures_claude_timeout_partial_num_turns"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_fixtures_claude_timeout_partial_json",
+      "target": "fixtures_claude_timeout_partial_permission_denials"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_fixtures_claude_timeout_partial_json",
+      "target": "fixtures_claude_timeout_partial_session_id"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_fixtures_claude_timeout_partial_json",
+      "target": "fixtures_claude_timeout_partial_stop_reason"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_fixtures_claude_timeout_partial_json",
+      "target": "fixtures_claude_timeout_partial_total_cost_usd"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_fixtures_claude_timeout_partial_json",
+      "target": "fixtures_claude_timeout_partial_usage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "fixtures_claude_timeout_partial_usage",
+      "target": "fixtures_claude_timeout_partial_usage_input_tokens"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/fixtures/claude-timeout-partial.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "fixtures_claude_timeout_partial_usage",
+      "target": "fixtures_claude_timeout_partial_usage_output_tokens"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": ".claude/settings.json",
       "source_location": "L2",
       "weight": 1,
@@ -8780,6 +9116,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/adapters.ts",
+      "source_location": "L123",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_adapters_ts",
+      "target": "src_adapters_claudeenvelopemeta"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/adapters.ts",
       "source_location": "L54",
       "weight": 1,
       "confidence_score": 1,
@@ -8802,9 +9148,9 @@
       "source_file": "src/adapters.ts",
       "source_location": "L215",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_adapters_ts",
-      "target": "src_adapters_codex_tool_items",
-      "confidence_score": 1.0
+      "target": "src_adapters_codex_tool_items"
     },
     {
       "relation": "contains",
@@ -9686,6 +10032,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/debate.ts",
+      "source_location": "L322",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_debate_ts",
+      "target": "src_debate_finalizeretryhint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/debate.ts",
       "source_location": "L42",
       "weight": 1,
       "confidence_score": 1,
@@ -9741,6 +10097,26 @@
       "confidence_score": 1,
       "source": "src_debate_ts",
       "target": "src_debate_reactprompt"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/debate.ts",
+      "source_location": "L312",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_debate_ts",
+      "target": "src_debate_redactiofailure"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/debate.ts",
+      "source_location": "L316",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_debate_ts",
+      "target": "src_debate_redactiofailurekind"
     },
     {
       "relation": "contains",
@@ -10042,6 +10418,39 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/debate.ts",
+      "source_location": "L431",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_debate_rundebate",
+      "target": "src_debate_redactiofailurekind"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_index_ts",
+      "target": "src_debate_redactiofailurekind"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_index_ts",
+      "target": "src_debate_finalizeretryhint"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/debate.ts",
       "source_location": "L262",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -10296,6 +10705,16 @@
       "confidence_score": 1.0,
       "source": "src_index_ts",
       "target": "src_index_respondeonum"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L209",
+      "weight": 1.0,
+      "source": "src_index_ts",
+      "target": "src_index_retrysuggestion",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -10763,6 +11182,16 @@
       "confidence_score": 1.0,
       "source": "disputatio_changelog_changelog",
       "target": "disputatio_changelog_0_8_0_tier_0_turn_instrumentation_the_evidence_validity_check_p1"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "disputatio_changelog_changelog",
+      "target": "disputatio_changelog_0_9_0_recoverable_redactio_timeout_unconditional_retry_hint_honest_timeout_cost"
     },
     {
       "relation": "contains",
@@ -11973,6 +12402,76 @@
       "confidence_score": 1,
       "source": "research_pre_m0_handrun_pre_m0_hand_run_debate_result_2026_06_07",
       "target": "research_pre_m0_handrun_verifier_grounded_in_executable_evidence_the_moat"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "research_run_2026_08_11_redactio_timeout_md",
+      "target": "research_run_2026_08_11_redactio_timeout_real_run_2026_08_11_the_redactio_timeout_and_why_it_looked_like_a_lost_run"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L54",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "research_run_2026_08_11_redactio_timeout_real_run_2026_08_11_the_redactio_timeout_and_why_it_looked_like_a_lost_run",
+      "target": "research_run_2026_08_11_redactio_timeout_fixed_in_v0_9_0"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L73",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "research_run_2026_08_11_redactio_timeout_real_run_2026_08_11_the_redactio_timeout_and_why_it_looked_like_a_lost_run",
+      "target": "research_run_2026_08_11_redactio_timeout_note_for_the_next_timeout"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "research_run_2026_08_11_redactio_timeout_real_run_2026_08_11_the_redactio_timeout_and_why_it_looked_like_a_lost_run",
+      "target": "research_run_2026_08_11_redactio_timeout_rejected_an_interactive_continue_or_exit_prompt"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L35",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "research_run_2026_08_11_redactio_timeout_real_run_2026_08_11_the_redactio_timeout_and_why_it_looked_like_a_lost_run",
+      "target": "research_run_2026_08_11_redactio_timeout_three_distinct_defects"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "research_run_2026_08_11_redactio_timeout_real_run_2026_08_11_the_redactio_timeout_and_why_it_looked_like_a_lost_run",
+      "target": "research_run_2026_08_11_redactio_timeout_what_happened"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "research/run-2026-08-11-redactio-timeout.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "research_run_2026_08_11_redactio_timeout_real_run_2026_08_11_the_redactio_timeout_and_why_it_looked_like_a_lost_run",
+      "target": "research_run_2026_08_11_redactio_timeout_what_the_killed_turn_actually_cost"
     },
     {
       "relation": "contains",
@@ -16253,5 +16752,5 @@
       "source_file": "assets/images/Cover.jpg"
     }
   ],
-  "built_at_commit": "9590efc923f48b41922e9fca8e1c47e495341ecc"
+  "built_at_commit": "d05eeacb9ad8ad3437d53ff7d93db0148bd18dd9"
 }

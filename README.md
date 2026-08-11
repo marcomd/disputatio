@@ -10,7 +10,7 @@ Pi, GitHub Copilot CLI — run as their native CLIs, not as raw LLM API calls. I
 copy-paste-between-terminals workflow many developers already do by hand: ask one
 agent, have another critique it, iterate, converge.
 
-> **Status: experimental, early MVP — v0.8.0.** Rough but runnable. The core premise —
+> **Status: experimental, early MVP — v0.9.0.** Rough but runnable. The core premise —
 > that cross-vendor adversarial review, grounded in independently gathered executable
 > evidence, catches material risks a strong single-agent review misses — is **not yet
 > validated**; v0 exists to dogfood the workflow on real tasks. The validation gate that

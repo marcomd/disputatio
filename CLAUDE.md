@@ -44,6 +44,10 @@ node src/index.ts --continue "Sync translation; files are comment-free; translat
 # (re)draft the final-report.md deliverable from an already-RESOLVED debate
 node src/index.ts --finalize [--debate .debate/debate-<ts>]
 
+# per-TURN wall-clock cap in minutes (default 10; config key: timeoutMinutes).
+# the redactio gets 2x this — it reads the whole transcript and is the last turn.
+node src/index.ts "..." --timeout 20
+
 # test suite (fixture-based fake CLIs — no real agent calls, fast)
 npm test
 ```
@@ -176,6 +180,17 @@ silently reintroduces bugs that were already caught:
   effort control (effort is baked into the model name, e.g. `(High)`) and `index.ts`
   warns if `effort` is set for it; `pi` takes `--thinking {off,minimal,low,medium,
   high,xhigh}`. Keep the per-CLI mapping when adding adapters.
+- **A failed redactio is RECOVERABLE — always print the retry.** The transcript and a
+  RESOLVED `respondeo.md` are already on disk, so `--finalize` re-runs the turn that died.
+  The hint used to be printed only for budget exhaustion, so the 2026-08-11 timeout looked
+  like a lost run ($3.26 and 578s of a 600s cap, discarded mid `tool_use`). `index.ts`
+  prints `finalizeRetryHint(kind, …)` for EVERY redactio failure. Do not replace this with
+  an interactive prompt: stdout is the artifact path and unattended/agent-driven runs must
+  not block on stdin.
+- **A timed-out turn still reports what it spent.** `claude`'s partial envelope carries
+  `total_cost_usd`/`num_turns` even when killed; the adapter salvages them instead of
+  returning on `timedOut` first. A $3.26 turn recorded as costless is the same class of
+  error as an unknown counted as a zero.
 - **Exit 126/127 from a spawned CLI is a setup failure, not an agent failure** (stale
   asdf shims shadow real binaries on this machine — `codex` needs
   `bin: /opt/homebrew/bin/codex` in debate.yaml). Keep the hint in `spawnFailure`.

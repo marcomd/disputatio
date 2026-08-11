@@ -1,16 +1,16 @@
 # Graph Report - Disputatio  (2026-08-11)
 
 ## Corpus Check
-- 57 files · ~84,609 words
+- 59 files · ~87,615 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 779 nodes · 869 edges · 55 communities (46 shown, 9 thin omitted)
+- 804 nodes · 896 edges · 57 communities (48 shown, 9 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.79)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9590efc9`
+- Built from commit: `d05eeacb`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -70,9 +70,11 @@
 - [[_COMMUNITY_Community 52|Community 52]]
 - [[_COMMUNITY_Community 53|Community 53]]
 - [[_COMMUNITY_Community 54|Community 54]]
+- [[_COMMUNITY_Community 56|Community 56]]
+- [[_COMMUNITY_Community 57|Community 57]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Changelog` - 22 edges
+1. `Changelog` - 23 edges
 2. `Disputatio: Implementation Plan` - 21 edges
 3. `What You Must Do When Invoked` - 16 edges
 4. `/graphify` - 15 edges
@@ -105,15 +107,15 @@
 - **AI Debate Participant Lineup** — Cover_claude_participant, Cover_codex_participant, Cover_gemini_participant [EXTRACTED 1.00]
 - **AI Tribunal Visual Metaphor** — Cover_claude_participant, Cover_codex_participant, Cover_gemini_participant, Cover_judge_role, Cover_scales_of_justice, Cover_gavel [INFERRED 0.84]
 
-## Communities (55 total, 9 thin omitted)
+## Communities (57 total, 9 thin omitted)
 
 ### Community 0 - "Debate Engine & Transport Core"
 Cohesion: 0.09
 Nodes (38): AgentResult, agyAdapter, Antigravity Text-Only Output, claudeAdapter, Claude JSON Envelope Classification, codexAdapter, Codex JSONL Stream Classification, Participant Protocol (+30 more)
 
 ### Community 1 - "Headless CLI Capabilities"
-Cohesion: 0.10
-Nodes (24): continuePrompt(), DebateOutcome, EVIDENCE_PHASES, EvidenceSummary, execFileAsync, finalizePrompt(), gitLock, IsolatedRun (+16 more)
+Cohesion: 0.09
+Nodes (24): continuePrompt(), DebateOutcome, EVIDENCE_PHASES, EvidenceSummary, execFileAsync, finalizePrompt(), finalizeRetryHint(), gitLock (+16 more)
 
 ### Community 2 - "Source Code Modules"
 Cohesion: 0.06
@@ -224,8 +226,8 @@ Cohesion: 0.33
 Nodes (5): Files, Installed versions on this machine (2026-06-05), Provenance, Research: Headless Invocation & Output Capture of AI Coding-Agent CLIs, Why this discipline matters
 
 ### Community 35 - "Community 35"
-Cohesion: 0.09
-Nodes (22): [0.0.1] — Kaizen MVP v0, [0.0.2] — Agent tooling & knowledge graph, [0.0.3] — Hardening after the first real-repo run, [0.0.4] — `doctor` preflight (M0, canary half), [0.0.5] — Process-group kill + first three-vendor repo-grounded run, [0.0.6] — Per-participant reasoning `effort` in `debate.yaml`, [0.1.0] — `respondeo`: the judge stage (first scholastic-protocol step), [0.2.0] — portable config + installable `disputatio` binary (+14 more)
+Cohesion: 0.08
+Nodes (23): [0.0.1] — Kaizen MVP v0, [0.0.2] — Agent tooling & knowledge graph, [0.0.3] — Hardening after the first real-repo run, [0.0.4] — `doctor` preflight (M0, canary half), [0.0.5] — Process-group kill + first three-vendor repo-grounded run, [0.0.6] — Per-participant reasoning `effort` in `debate.yaml`, [0.1.0] — `respondeo`: the judge stage (first scholastic-protocol step), [0.2.0] — portable config + installable `disputatio` binary (+15 more)
 
 ### Community 37 - "Community 37"
 Cohesion: 0.07
@@ -260,8 +262,8 @@ Cohesion: 0.12
 Nodes (13): args, DEFAULT_JUDGE, DEFAULT_SPECS, ev, execFileAsync, input, loadLatestRespondeo(), participants (+5 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.29
-Nodes (8): AgentResult, Participant, allHealthy(), diagnose(), Diagnosis, excerpt(), formatDiagnoses(), runDoctor()
+Cohesion: 0.22
+Nodes (11): AgentResult, Participant, runIsolated(), withGitLock(), allHealthy(), diagnose(), Diagnosis, excerpt() (+3 more)
 
 ### Community 48 - "Community 48"
 Cohesion: 0.29
@@ -291,12 +293,20 @@ Nodes (10): is_error, num_turns, permission_denials, result, subtype, total_cost
 Cohesion: 0.25
 Nodes (7): Finding 1 — shell-less adapters cannot see git at all in a worktree, Finding 2 — a signal-killed turn is undiagnosable, Finding 3 — `ranCommands` needs a capability flag, not just a count, Finding 4 — the redactio was denied a command it tried to run, Real run, 2026-08-04 — shell-less adapters × worktree isolation, Run shape, What this run says about priority
 
+### Community 56 - "Community 56"
+Cohesion: 0.18
+Nodes (10): duration_api_ms, is_error, num_turns, permission_denials, session_id, stop_reason, total_cost_usd, usage (+2 more)
+
+### Community 57 - "Community 57"
+Cohesion: 0.25
+Nodes (7): Fixed in v0.9.0, Note for the next timeout, Real run, 2026-08-11 — the redactio timeout, and why it looked like a lost run, Rejected: an interactive "continue or exit?" prompt, Three distinct defects, What happened, What the killed turn actually cost
+
 ## Ambiguous Edges - Review These
 - `codexAdapter` → `README Codex Adapter Deferred Note`  [AMBIGUOUS]
   README.md · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **519 isolated node(s):** `name`, `version`, `description`, `type`, `license` (+514 more)
+- **536 isolated node(s):** `name`, `version`, `description`, `type`, `license` (+531 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -306,11 +316,11 @@ _Questions this graph is uniquely positioned to answer:_
 - **What is the exact relationship between `codexAdapter` and `README Codex Adapter Deferred Note`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _519 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _536 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Debate Engine & Transport Core` be split into smaller, more focused modules?**
   _Cohesion score 0.09103840682788052 - nodes in this community are weakly interconnected._
 - **Should `Headless CLI Capabilities` be split into smaller, more focused modules?**
-  _Cohesion score 0.09879032258064516 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09475806451612903 - nodes in this community are weakly interconnected._
 - **Should `Source Code Modules` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
 - **Should `Design Principles & Prior Art` be split into smaller, more focused modules?**

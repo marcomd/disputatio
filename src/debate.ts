@@ -53,6 +53,7 @@ export type DebateOutcome = {
     text: string;           // written verbatim to final-report.md
   };
   finalReportError?: {      // set when the redactio ran but failed (debate + verdict still succeeded)
+    kind: RedactioFailure;  // drives which retry flag the CLI suggests
     budgetExhausted: boolean;
     message: string;
   };
@@ -64,7 +65,10 @@ function render(title: string, r: AgentResult): string {
     const cost = r.costUsd ? `\n\n_(cost: $${r.costUsd.toFixed(4)})_` : "";
     return `## ${title}\n\n${r.text}${cost}\n`;
   }
-  return `## ${title}\n\n> ⚠️ FAILED: ${r.error}\n`;
+  // A failed turn can still have spent money (a timeout kills mid-flight). Report it, or
+  // the transcript's cost footnotes quietly understate what the run actually cost.
+  const cost = r.costUsd ? ` _(spent before failing: $${r.costUsd.toFixed(4)})_` : "";
+  return `## ${title}\n\n> ⚠️ FAILED: ${r.error}${cost}\n`;
 }
 
 // Prompt-context view (fed back to agents): no cost footnotes, no raw error
@@ -295,6 +299,39 @@ function toTurn(
   };
 }
 
+// A failed redactio is RECOVERABLE: the debate transcript and a RESOLVED respondeo are
+// already on disk, and `--finalize` re-runs exactly the turn that died. In the 2026-08-11
+// run that recovery existed and was never mentioned — the CLI printed
+// "redactio failed: timeout" and stopped — so the user reasonably read a dead turn as a
+// lost run. Name the command every time, with the flag that addresses the cause.
+//
+// Deliberately NOT an interactive prompt: the answer is a command the tool can simply
+// print, and blocking on stdin would break unattended and agent-driven runs (stdout is
+// the artifact path, by invariant) — while asking a question ~25 minutes in, when nobody
+// is watching, helps least.
+export type RedactioFailure = "timeout" | "budget" | "other";
+
+// Which remedy the failure calls for. Budget first: an exhausted turn can also be slow,
+// but raising the cap is what unblocks it.
+export function redactioFailureKind(r: AgentResult): RedactioFailure {
+  if (!r.ok && r.budgetExhausted) return "budget";
+  if (!r.ok && r.error === "timeout") return "timeout";
+  return "other";
+}
+
+// `suggest` is the concrete value to propose (minutes / USD). The CLI knows which cap just
+// failed, so the hint should be copy-pasteable; the `<minutes>`/`<usd>` placeholders are
+// the fallback for callers that do not.
+export function finalizeRetryHint(
+  kind: RedactioFailure, debateDir: string, repoPath?: string, suggest?: number,
+): string {
+  const remedy =
+    kind === "timeout" ? ` --timeout ${suggest ?? "<minutes>"}`
+    : kind === "budget" ? ` --budget ${suggest ?? "<usd>"}`
+    : ""; // an unclassified failure has no remedy to name — a bare retry is the honest advice
+  return `disputatio --finalize${remedy} --debate ${debateDir}${repoPath ? ` --repo ${repoPath}` : ""}`;
+}
+
 // The redactio turn: author the deliverable from a RESOLVED determination. UNLIKE the
 // respondeo (which is transcript-only by invariant — it must ASK, not guess), the
 // synthesizer MAY be repo-grounded: with repoPath it runs in a read-only throwaway
@@ -321,6 +358,11 @@ export async function runDebate(
   rounds: number,
   repoPath?: string,
   judge?: Participant,
+  // The redactio may run on its OWN participant instance — same model and budget, but a
+  // longer wall-clock cap. Its input is the entire transcript plus repo traversal and it
+  // is the LAST turn, so a uniform per-turn cap fits it worst and costs most when it bites
+  // (2026-08-11: killed at 578s of 600s, $3.26 discarded). Defaults to the judge.
+  synthesizer?: Participant,
 ): Promise<DebateOutcome> {
   const header = `# Disputatio debate\n\n## Task\n\n${task}\n`;
   const fileParts: string[] = [header];
@@ -386,15 +428,15 @@ export async function runDebate(
     // the clean debate transcript (not the respondeo turn re-appended). A failed redactio
     // is non-fatal — it's recorded, but the debate + verdict still succeeded.
     if (respondeo.status === "RESOLVED") {
-      log(`Redactio — ${judge.display} drafts the final deliverable`);
+      log(`Redactio — ${(synthesizer ?? judge).display} drafts the final deliverable`);
       // Repo-grounded when the debate ran with --repo: the deliverable cites real files.
-      const turn = await runFinalize(judge, task, debateCtx, respondeo.text, repoPath);
+      const turn = await runFinalize(synthesizer ?? judge, task, debateCtx, respondeo.text, repoPath);
       turns.push(turn);
       fileParts.push(render(turn.title, turn.result));
       if (turn.result.ok) {
         finalReport = { text: turn.result.text };
       } else {
-        finalReportError = { budgetExhausted: turn.result.budgetExhausted === true, message: turn.result.error };
+        finalReportError = { kind: redactioFailureKind(turn.result), budgetExhausted: turn.result.budgetExhausted === true, message: turn.result.error };
       }
     }
   }
